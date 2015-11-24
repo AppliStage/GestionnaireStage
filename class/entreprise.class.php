@@ -45,12 +45,11 @@ class Entreprise {
    
    /** 
     * Supprime l'offre de stage passer en parametre 
-    * @param s stage à supprimer
+    * @param s id du stage à supprimer
     * @return True si l'offre à été supprimer, false sinon.
     */
-	public function supprOffre( $s) {
-      
-      //apres
+	public function supprOffre( $s) {      
+      unset($this->_stages[$s]);
 	  
 	}
 
