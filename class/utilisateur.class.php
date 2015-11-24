@@ -1,4 +1,5 @@
 <?php
+include_once "myPDO.include.php";
 
 class Utilisateur{
 	
@@ -45,7 +46,29 @@ class Utilisateur{
 	 * il n'exite pas déjà.
 	 * @return Renvoi true si l'utilisateur à pu s'inscrire, false sinon.
 	 */
-	function inscription(){
+	function inscription($nom, $prenom, $adresse, $ville, $cp, $mail, $login, $pass){
+		$res = false;
+		$pdo = myPDO::getInstance() ;
 		
+		$query = $pdo->prepare(<<<SQL
+					SELECT count(IDENTIFIANT) as nb
+					FROM ETUDIANT
+					WHERE IDENTIFIANT = ?
+					OR MAIL = ?
+SQL
+		);
+		$nb = $query->execute(array($login, $mail));
+		$nb = $nb->fetch();
+		
+		if($nb['nb']==0){
+			$stmt = $pdo->prepare(<<<SQL
+					INSERT INTO ETUDIANT(NOMPERS,PNOMPERS,ADRPERS,VILLEPERS,CPPERS,MAILPERS,IDENTIFIANT,PASSWORD)
+					VALUES (?,?,?,?,?,?,?,?)
+SQL
+			);
+		
+			$res = $stmt->execute(array($nom,$prenom,$adresse,$ville,$cp,$mail,$login,$pass));
+		}
+		return $res;
 	}
 } 
