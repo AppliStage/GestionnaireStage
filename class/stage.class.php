@@ -21,7 +21,7 @@ class Stage {
     * Constructeur d'un Stage, 
     * L'id et le garant sont defnit si le stage à déjà été enregistrer.
     */
-   public function __construct(Date dateDebut, Date dateFin, String titre, String description, Entreprise entreprise){
+   public function __construct($dateDebut, $dateFin, $titre, $description, $entreprise){
       // TODO: implement
    }
 
