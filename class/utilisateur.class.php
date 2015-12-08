@@ -17,6 +17,9 @@ abstract class Utilisateur{
 	
 	// Adresse de l'utilisateur
 	protected $_adresse;
+
+	// Telephone de l'utilisateur
+	protected $_tel;
 	
 	/**
 	 * Constructeur d'un utilistateur
@@ -67,6 +70,10 @@ abstract class Utilisateur{
 	
 	public function getAdresse(){
 		return $this->_adresse;
+	}
+
+	public function getTel(){
+		return $this->tel;
 	}
 	
 } 
