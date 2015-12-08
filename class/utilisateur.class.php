@@ -20,17 +20,15 @@ abstract class Utilisateur{
 
 	// Telephone de l'utilisateur
 	protected $_tel;
+
 	
 	/**
 	 * Constructeur d'un utilistateur
 	 */
-	
-/*	function __construct($nom, $prenom, $mail, $adresse){
-		$this->_nom = $nom;
-		$this->_prenom = $prenom;
-		$this->_mail = $mail;
-		$this->_adresse = $adresse;
-	}*/
+
+	function __construct(){
+
+	}
 	
 	
 	/**
