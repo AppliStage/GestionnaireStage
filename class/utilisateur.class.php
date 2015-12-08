@@ -1,7 +1,7 @@
 <?php
 include_once "myPDO.include.php";
 
-class Utilisateur{
+abstract class Utilisateur{
 	
 	// Nom de l'utilisateur
 	protected $_nom;
@@ -22,12 +22,12 @@ class Utilisateur{
 	 * Constructeur d'un utilistateur
 	 */
 	
-	function __construct($nom, $prenom, $mail, $adresse){
+/*	function __construct($nom, $prenom, $mail, $adresse){
 		$this->_nom = $nom;
 		$this->_prenom = $prenom;
 		$this->_mail = $mail;
 		$this->_adresse = $adresse;
-	}
+	}*/
 	
 	
 	/**
@@ -37,38 +37,36 @@ class Utilisateur{
 	 * @param password
 	 * @return Renvoi true si l'utilisateur c'est connecté, false sinon.
 	 */
-	function auth($login, $pass){
-		
-	}
+	abstract function auth($login, $pass);
 	
 	/**
 	 * Vérifie le contenu des attributs et enregistre l'utilisateur si
 	 * il n'exite pas déjà.
-	 * @return Renvoi true si l'utilisateur à pu s'inscrire, false sinon.
+	 * @return Renvoie true si l'utilisateur a pu s'inscrire, false sinon.
 	 */
-	function inscription($nom, $prenom, $adresse, $ville, $cp, $mail, $login, $pass){
-		$res = false;
-		$pdo = myPDO::getInstance() ;
-		
-		$query = $pdo->prepare(<<<SQL
-					SELECT count(IDENTIFIANT) as nb
-					FROM ETUDIANT
-					WHERE IDENTIFIANT = ?
-					OR MAIL = ?
-SQL
-		);
-		$nb = $query->execute(array($login, $mail));
-		$nb = $nb->fetch();
-		
-		if($nb['nb']==0){
-			$stmt = $pdo->prepare(<<<SQL
-					INSERT INTO ETUDIANT(NOMPERS,PNOMPERS,ADRPERS,VILLEPERS,CPPERS,MAILPERS,IDENTIFIANT,PASSWORD)
-					VALUES (?,?,?,?,?,?,?,?)
-SQL
-			);
-		
-			$res = $stmt->execute(array($nom,$prenom,$adresse,$ville,$cp,$mail,$login,$pass));
-		}
-		return $res;
+	abstract function inscription($nom, $prenom, $adresse, $ville, $cp, $mail, $login,$pass =null);
+	
+	
+	// Les getters de la foliiiiiiiie !!!!!
+
+	public function getNom(){
+		return $this->_nom;
 	}
+	
+	public function getPrenom(){
+		return $this->_prenom;
+	}
+	
+	public function getId(){
+		return $this->_id;
+	}
+	
+	public function getMail(){
+		return $this->_mail;
+	}
+	
+	public function getAdresse(){
+		return $this->_adresse;
+	}
+	
 } 
