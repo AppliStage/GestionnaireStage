@@ -46,25 +46,26 @@ SQL
 	 * 
 	 */	
 
-	function inscription($nom, $prenom, $adresse, $ville, $cp, $mail, $login, $pass){
+	function inscription($nom, $prenom, $adresse=null, $ville=null, $cp=null, $mail,
+	       				$login=null,$pass =null){
 		$res = false;
 		$pdo = myPDO::getInstance() ;
 		
 		$query = $pdo->prepare(<<<SQL
-					SELECT count(IDENTIFIANT) as nb
-					FROM ETUDIANT
-					WHERE IDENTIFIANT = ?
-					OR MAIL = ?
+					SELECT count(numEtudiant) as nb
+					FROM Etudiant
+					WHERE nom = ?
+					AND prenom =?
+					AND mail = ?
 SQL
 		);
-		$nb = $query->execute(array($login, $mail));
+		$nb = $query->execute(array($nom, $prenom, $mail));
 		$nb = $nb->fetch();
 		
 		if($nb['nb']==0){
 			$stmt = $pdo->prepare(<<<SQL
-					INSERT INTO ETUDIANT(NOMPERS,PNOMPERS,ADRPERS,VILLEPERS,
-						    CPPERS,MAILPERS,IDENTIFIANT,PASSWORD)
-						VALUES (?,?,?,?,?,?,?,?)
+					INSERT INTO Etudiant()
+						VALUES ()
 SQL
 			);
 		

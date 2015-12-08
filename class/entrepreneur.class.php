@@ -9,9 +9,11 @@ class Entrepreneur extends Utilisateur {
      * Constructeur d'un entrepreneur
      */
     public function __construct($nom, $prenom, $mail, $adresse) {
-        
-		super($nom, $prenom, $mail, $adresse);
-        $_entreprises = array();
+	    	$this->nom = $nom;
+	    	$this->nom = $prenom;
+	    	$this->nom = $mail;
+	    	$this->nom = $adresse;
+		$_entreprises = array();
 		
     }
 
