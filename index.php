@@ -25,30 +25,29 @@ $p->appendContent(<<<HTML
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="index.php">GestionnaireStage</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="index.php">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li class="active"><a href="./">Static top <span class="sr-only">(current)</span></a></li>
-            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+	    <li>
+	      <form class="form-inline" style="padding-top:8px">
+		<div class="form-group">
+		  <label class="sr-only" for="exampleInputEmail3">Email address</label>
+		  <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+		</div>
+		<div class="form-group">
+		  <label class="sr-only" for="exampleInputPassword3">Password</label>
+		  <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+		</div>
+		<button type="submit" class="btn btn-default">Sign in</button>
+		<a class="btn btn-default" href="inscription.php" role="button">Sign up</a>
+	      </form>
+	    </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -59,13 +58,46 @@ $p->appendContent(<<<HTML
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Navbar example</h1>
+        <h1>Stage</h1>
         <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>To see the difference between static and fixed top navbars, just scroll.</p>
         <p>
           <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
         </p>
       </div>
+      
+      <table class="table table-striped">
+      <thead> 
+	<tr> <th>#</th> <th>Entreprise</th> <th>Intitulé du poste</th> <th>Lieu</th> </tr> </thead> 
+	<tbody> 
+	  <tr> <th scope="row">1</th> <td>HSBC</td> <td>Servir le café</td> <td>France, Paris</td> </tr> 
+	  <tr> <th scope="row">2</th> <td>Lego</td> <td>Servir le café</td> <td>France, Toulouse</td> </tr>
+	  <tr> <th scope="row">3</th> <td>HBO</td> <td>Servir le café</td> <td>Chine, Chongqing </td> </tr>
+	  
+	  <!--<tr> 
+	    <nav>
+	      <ul class="pagination">
+		<li>
+		  <a href="#" aria-label="Previous">
+		    <span aria-hidden="true">&laquo;</span>
+		  </a>
+		</li>
+		<li><a href="#">1</a></li>
+		<li><a href="#">2</a></li>
+		<li><a href="#">3</a></li>
+		<li><a href="#">4</a></li>
+		<li><a href="#">5</a></li>
+		<li>
+		  <a href="#" aria-label="Next">
+		    <span aria-hidden="true">&raquo;</span>
+		  </a>
+		</li>
+	      </ul>
+	    </nav>
+	  </tr>-->
+	</tbody>
+      </table>
+      
 
     </div> <!-- /container -->
 HTML
