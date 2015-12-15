@@ -1,1 +1,10 @@
-@CHARSET "UTF-8";
+// Classes
+.show {
+  display: block !important;
+}
+.hidden {
+  display: none !important;
+}
+.invisible {
+  visibility: hidden;
+}

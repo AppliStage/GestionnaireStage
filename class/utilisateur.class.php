@@ -20,6 +20,8 @@ abstract class Utilisateur{
 
 	// Telephone de l'utilisateur
 	protected $_tel;
+	
+	const session_key = "__user__";
 
 	
 	/**
@@ -39,6 +41,36 @@ abstract class Utilisateur{
 	 * @return Renvoi true si l'utilisateur c'est connecté, false sinon.
 	 */
 	abstract function auth($login, $pass);
+	
+	private static function startSession() {
+		
+		$res = false;
+		
+		if (session_id() == "") {
+		
+			if (!headers_sent()) {
+			
+				$res = session_start();
+				//$_SESSION[self::session_key]['connected'] = true;
+				
+			}
+			
+			if (!$res) {
+			
+				throw new SessionException();
+			
+			}
+			
+		}
+		
+	}
+	
+	public static function isConnected() {
+
+		self::startSession();
+		return isset($_SESSION[self::session_key]) && $_SESSION[self::session_key]['connected'];
+		
+	}
 	
 	/**
 	 * Vérifie le contenu des attributs et enregistre l'utilisateur si
