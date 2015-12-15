@@ -45,8 +45,7 @@ abstract class Utilisateur{
 	 * il n'exite pas déjà.
 	 * @return Renvoie true si l'utilisateur a pu s'inscrire, false sinon.
 	 */
-	abstract function inscription($nom, $prenom, $adresse=null, $ville=null, $cp=null, $mail,
-	       				$login=null,$pass =null);
+	abstract function inscription($nom, $prenom, $adresse=null, $mail, $pass =null, $tel = null, $fonction=null);
 	
 	
 	// Les getters de la foliiiiiiiie !!!!!
