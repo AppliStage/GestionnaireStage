@@ -57,27 +57,60 @@ $p->appendContent(<<<HTML
 
     <div class="container">
 
-      <form class="form-signup">
-        <h2 class="form-signup-heading">Inscrivez vous</h2>
-        
-        <label for="inputNom" class="sr-only">Nom</label>
-        <input type="text" id="inputNom" class="form-control" placeholder="Votre nom" required>
-        <label for="inputPrenom" class="sr-only">Prenoom</label>
-        <input type="text" id="inputPrenom" class="form-control" placeholder="Votre prénom" required>
-        
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
-      </form>
-
+	<div class="jumbotron">
+	  <h1>I.U.T rcc</h1>
+		<div class="inlineP"> 
+			<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum
+			</p>
+		</div>
+			<form class="form-horizontal">
+				<h2 class="form-signup-heading">Inscrivez vous</h2>
+				  <div class="form-group">
+				    <label for="inputNom" class="col-sm-2 control-label">Nom: </label>
+				    <div class="col-sm-10">
+				      <input type="text" id="inputNom" class="form-control" required>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputPrenom" class="col-sm-2 control-label">Prenom: </label>
+				    <div class="col-sm-10">
+				      <input type="text" id="inputPrenom" class="form-control" required>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">Email: </label>
+				    <div class="col-sm-10">
+				      <input type="email" class="form-control" id="inputEmail3" required>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+				    <div class="col-sm-10">
+				      <input type="password" class="form-control" id="inputPassword3" required>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="inputEmail3" class="col-sm-2 control-label">Tel: </label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="inputTel" >
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <div class="checkbox">
+					<label>
+					  <input type="checkbox"> Remember me
+					</label>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10">
+				    	<button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
+				    </div>
+				  </div>
+			</form>
+	</div>
     </div> <!-- /container -->
 HTML
 );
