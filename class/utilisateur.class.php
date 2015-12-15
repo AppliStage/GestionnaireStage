@@ -1,5 +1,5 @@
 <?php
-include_once "myPDO.include.php";
+include_once "../myPDO.include.php";
 
 abstract class Utilisateur{
 	
@@ -40,7 +40,7 @@ abstract class Utilisateur{
 	 * @param password
 	 * @return Renvoi true si l'utilisateur c'est connecté, false sinon.
 	 */
-	abstract function auth($login, $pass);
+	//abstract function auth($login, $pass);
 	
 	private static function startSession() {
 		
@@ -77,8 +77,7 @@ abstract class Utilisateur{
 	 * il n'exite pas déjà.
 	 * @return Renvoie true si l'utilisateur a pu s'inscrire, false sinon.
 	 */
-	abstract function inscription($nom, $prenom, $adresse=null, $ville=null, $cp=null, $mail,
-	       				$login=null,$pass =null);
+	//abstract function inscription($nom, $prenom, $mail, $pass =null, $tel = null,$adresse=null, $fonction=null);
 	
 	
 	// Les getters de la foliiiiiiiie !!!!!

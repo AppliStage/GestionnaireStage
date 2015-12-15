@@ -11,6 +11,18 @@ $p->appendToHead(<<<head
     <meta name="author" content="">
 head
 );
+
+if(isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['mail']) and isset($_POST['pass']) and isset($_POST['tel'])){
+  $nom = $p->escapeString($_POST['nom']);
+  $prenom = $p->escapeString($_POST['prenom']);
+  $mail = $p->escapeString($_POST['mail']);
+  $pass = $p->escapeString($_POST['pass']);
+  $tel = $p->escapeString($_POST['tel']);
+  
+  if(!(Entrepreneur::inscription($nom,$prenom,$mail,$pass,$tel))){
+    /* le code ici c'est celui si l'inscription n'a pas marché */
+  }
+  }
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("navbar-static/-top.css");
 $p->appendCssUrl("style/signup.css");
@@ -68,31 +80,31 @@ $p->appendContent(<<<HTML
 				  <div class="form-group">
 				    <label for="inputNom" class="col-sm-2 control-label">Nom: </label>
 				    <div class="col-sm-10">
-				      <input type="text" id="inputNom" class="form-control" required>
+				      <input type="text" id="inputNom" name = "nom" class="form-control" required>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputPrenom" class="col-sm-2 control-label">Prenom: </label>
 				    <div class="col-sm-10">
-				      <input type="text" id="inputPrenom" class="form-control" required>
+				      <input type="text" id="inputPrenom" name="prenom" class="form-control" required>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputEmail3" class="col-sm-2 control-label">Email: </label>
 				    <div class="col-sm-10">
-				      <input type="email" class="form-control" id="inputEmail3" required>
+				      <input type="email" class="form-control" name="mail" id="inputEmail3" required>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 				    <div class="col-sm-10">
-				      <input type="password" class="form-control" id="inputPassword3" required>
+				      <input type="password" class="form-control"  name ="pass" id="inputPassword3" required>
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="inputEmail3" class="col-sm-2 control-label">Tel: </label>
 				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="inputTel" >
+				      <input type="text" class="form-control" id="inputTel" name="tel" >
 				    </div>
 				  </div>
 				  <div class="form-group">
