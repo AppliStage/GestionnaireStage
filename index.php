@@ -37,12 +37,12 @@ $p->appendContent(<<<HTML
 	    <li>
 	      <form class="form-inline" style="padding-top:8px">
 		<div class="form-group">
-		  <label class="sr-only" for="exampleInputEmail3">Email address</label>
-		  <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+		  <label class="sr-only" for="mail">Email address</label>
+		  <input type="email" class="form-control" id="mail" placeholder="Email">
 		</div>
 		<div class="form-group">
-		  <label class="sr-only" for="exampleInputPassword3">Password</label>
-		  <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+		  <label class="sr-only" for="pass">Password</label>
+		  <input type="password" class="form-control" id="pass" placeholder="Password">
 		</div>
 		<button type="submit" class="btn btn-default">Sign in</button>
 		<a class="btn btn-default" href="inscription.php" role="button">Sign up</a>
