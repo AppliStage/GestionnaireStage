@@ -1,6 +1,9 @@
 <?php
 session_start();
-include 'autoload.inc.php';
+include_once 'autoload.inc.php';
+include "class/utilisateur.class.php";
+include "class/entrepreneur.class.php";
+
 
 $p = new webpage("Iut Stage");
 $p->appendToHead(<<<head
@@ -35,22 +38,12 @@ $p->appendContent(<<<HTML
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-			<li>
-			  <form method="POST" action="cible.php" name="connexion" class="form-inline" style="padding-top:8px">
-				<div class="form-group">
-				  <label class="sr-only" for="mail">Email address</label>
-				  <input type="email" class="form-control" name="mail" placeholder="Email">
-				</div>
-				<div class="form-group">
-				  <label class="sr-only" for="pass">Password</label>
-				  <input type="password" class="form-control" name="pass" placeholder="Password">
-				</div>
-				<button name="login" type="submit" class="btn btn-default">Sign in</button>
-				<a class="btn btn-default" href="inscription.php" role="button">Sign up</a>
-			  </form>
-			</li>
-          </ul>
+HTML
+);
+			if (!Utilisateur::isConnected())
+				$p->appendContent(Entrepreneur::loginFormSHA1("cible.php"));
+
+$p->appendContent(<<<HTML
         </div><!--/.nav-collapse -->
       </div>
     </nav>

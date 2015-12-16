@@ -1,5 +1,4 @@
 <?php
-include_once "../myPDO.include.php";
 
 abstract class Utilisateur{
 	
@@ -33,42 +32,30 @@ abstract class Utilisateur{
 	}
 	
 	
-	/**
-	 * Cherche dans la table "Utilisateur" un enregistrement pour lequel le
-	 * login et le mot de passe correspondes aux paramêtres.
-	 * @param login
-	 * @param password
-	 * @return Renvoi true si l'utilisateur c'est connecté, false sinon.
-	 */
-	//abstract function auth($login, $pass);
-	
-	private static function startSession() {
-		
-		$res = false;
-		
-		if (session_id() == "") {
-		
-			if (!headers_sent()) {
-			
-				$res = session_start();
-				//$_SESSION[self::session_key]['connected'] = true;
-				
-			}
-			
-			if (!$res) {
-			
-				throw new SessionException();
-			
-			}
-			
-		}
-		
-	}
-	
-	public static function isConnected() {
+   /**
+    * Démarrer une session
+    * @throws SessionException si la session ne peut être démarrée
+    *
+    * @return void
+    */
+    protected static function startSession() {
+        // Vision la plus contraignante et donc la plus fiable
+        // Si les en-têtes ont deja été envoyés, c'est trop tard...
+        if (headers_sent())
+            throw new SessionException("Impossible de démarrer une session si les en-têtes HTTP ont été envoyés") ;
+        // Si la session n'est pas demarrée, le faire
+        if (!session_id()) 
+        	session_start() ;
+    }
 
+
+
+	public static function isConnected() {
+		$rep=false;
 		self::startSession();
-		return isset($_SESSION[self::session_key]) && $_SESSION[self::session_key]['connected'];
+		if(isset($_SESSION[self::session_key]) && $_SESSION[self::session_key]['connected'])
+			$rep=true;
+		return $rep;
 		
 	}
 	
