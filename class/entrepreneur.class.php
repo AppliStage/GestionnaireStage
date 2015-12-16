@@ -1,10 +1,12 @@
 <?php
 
+include_once "../myPDO.include.php";
+
 class Entrepreneur extends Utilisateur {
    
    // Liste des entreprises géré par l'entrepreneur
    private $_entreprises;
-   private $fonction
+   private $fonction;
    const session_key = "__user__";
     
     /**
@@ -142,6 +144,21 @@ SQL
 		return $test;
 		
 	}
+	
+	public static function inscription($nom, $prenom, $mail, $pass =null, $tel = null,$adresse="", $fonction=""){
+	       				$pdo = myPDO::getInstance();
+	       				$res = false;
+	       				if(preg_match('([a-zA-Z]{3,30}\s*)',$nom) and preg_match('([a-zA-Z]{3,30}\s*)',$prenom)){
+					$stmt = $pdo->prepare(<<<SQL
+						     INSERT INTO Entrepreneur (numEntrepreneur,prenom,nom,adresse,mail,fonction,pass,tel)
+						      VALUES('',?,?,?,?,?,?,?)
+SQL
+);
+					$res = $stmt->execute(array($prenom,$nom,$adresse,$mail,$fonction,sha1($pass),$tel));
+					}
+					return $res;
+	       				
+	       				}
 	
 
 }
