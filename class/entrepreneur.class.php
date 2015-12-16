@@ -1,7 +1,8 @@
 <?php
 
 include_once "utilisateur.class.php";
-include "../myPDO.include.php";
+
+class AuthenticationException extends Exception { }
 
 class Entrepreneur extends Utilisateur {
    
@@ -94,14 +95,13 @@ class Entrepreneur extends Utilisateur {
           	throw new AuthenticationException("pas de login/pass fournis") ;
         }
 
-		$code = $data["code"];
 		self::startSession();
 
 		$pdo = myPDO::getInstance();
 		$rq1 = $pdo->prepare(<<<SQL
-		SELECT numEntrepreneur, prenom, nom, adresse, mail, fonction, 
+		SELECT numEntrepreneur, prenom, nom, adresse, mail, fonction
 		FROM Entrepreneur
-		WHERE SHA1(concat(pass, :challenge, SHA1(mail) )  ) = ?
+		WHERE SHA1(concat(pass, :challenge, SHA1(mail) )  ) = :code
 SQL
 );
 		$rq1->execute(array(
@@ -110,8 +110,8 @@ SQL
         unset($_SESSION[self::session_key]['challenge']) ;
 
 		$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-	    if (($utilisateur = $stmt->fetch()) !== false) {
-	        return $utilisateur ;
+	    if (($entrepreneur = $rq1->fetch()) !== false) {
+	        return $entrepreneur ;
 	    }
 	    else {
 	        throw new AuthenticationException("Login/pass incorrect") ;
@@ -134,12 +134,12 @@ SQL
         // Le formulaire avec le code JavaScript permettant le hachage SHA1
         // Le retour attendu par le serveur est SHA1(SHA1(pass)+challenge+SHA1(login))
         return <<<HTML
-			<script type='text/javascript' src='sha1.js'></script>
+			<script type='text/javascript' src='js/sha1.js'></script>
 			<script type='text/javascript'>
 			function crypter(f, challenge) {
-			    if (f.login.value.length && f.pass.value.length) {
-			        f.code.value = SHA1(SHA1(f.pass.value)+challenge+SHA1(f.login.value)) ;
-			        f.login.value = f.pass.value = '' ;
+			    if (f.mail.value.length && f.pass.value.length) {
+			        f.code.value = SHA1(SHA1(f.pass.value)+challenge+SHA1(f.mail.value)) ;
+			        f.mail.value = f.pass.value = '' ;
 			        return true ;
 			    }
 			    return false ;
@@ -148,7 +148,7 @@ SQL
 
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-				  <form method="POST" action="{$action}" name="connexion" class="form-inline" onSubmit="return crypter(this, '{$_SESSION[self::session_key]['challenge']}')" autocomplete='off' style="padding-top:8px">
+				  <form method="POST" action="{$action}" name="connexion" class="form-inline" onSubmit="return crypter(this, '{$_SESSION[self::session_key]['challenge']}')" style="padding-top:8px">
 					<div class="form-group">
 					  <label class="sr-only" for="mail">Email address</label>
 					  <input type="email" class="form-control" name="mail" placeholder="Email">
@@ -158,7 +158,7 @@ SQL
 					  <input type="password" class="form-control" name="pass" placeholder="Password">
 					  <input type='hidden' name='code'>
 					</div>
-					<button name="login" type="submit" class="btn btn-default">{$submitText}</button>
+					<button type="submit" class="btn btn-default">{$submitText}</button>
 					<a class="btn btn-default" href="inscription.php" role="button">Sign up</a>
 				  </form>
 				</li>

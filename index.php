@@ -65,7 +65,7 @@ HTML
 );
 
 if (Utilisateur::isConnected())
-  $p->appendContent("<h1>Bonjour ".Utilisateur::createFromSeesion()->getNom()."</h1>");
+	$p->appendContent("<h1>Bonjour ".Utilisateur::createFromSeesion()->getNom()."</h1>");
 
 $p->appendContent(<<<HTML
       <table class="table table-striped">

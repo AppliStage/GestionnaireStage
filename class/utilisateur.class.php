@@ -53,8 +53,10 @@ abstract class Utilisateur{
 	public static function isConnected() {
 		$rep=false;
 		self::startSession();
-		if(isset($_SESSION[self::session_key]) && $_SESSION[self::session_key]['connected'])
-			$rep=true;
+		if(isset($_SESSION[self::session_key])){
+			if (isset($_SESSION[self::session_key]['connected']) && $_SESSION[self::session_key]['connected'] ==true)
+				$rep=true;
+		}
 		return $rep;
 		
 	}
