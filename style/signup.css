@@ -1,0 +1,15 @@
+.form-horizontal {
+  margin: auto auto auto 55px;
+  display:inline-block;
+  width:420px;
+  vertical-align:top;
+}
+.inlineP {
+  width:45%;
+  display:inline-block;
+}
+.form-signup .form-signup-heading,
+.form-signup .checkbox {
+  margin-top:0px;
+  margin-bottom: 20px;
+}
