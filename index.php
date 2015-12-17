@@ -42,6 +42,18 @@ HTML
 );
 			if (!Utilisateur::isConnected())
 				$p->appendContent(Entrepreneur::loginFormSHA1("cible.php"));
+			else{
+				$p->appendContent(<<<HTML
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+				  <form method="POST" action="logoff.php" name="connexion" class="form-inline" style="padding-top:8px">
+					<button type="submit" class="btn btn-default" name="logout">Déconnexion</button>
+				  </form>
+				</li>
+	        </ul>
+HTML
+);
+			}
 
 $p->appendContent(<<<HTML
         </div><!--/.nav-collapse -->
@@ -64,8 +76,13 @@ $p->appendContent(<<<HTML
 HTML
 );
 
-if (Utilisateur::isConnected())
-	$p->appendContent("<h1>Bonjour ".Utilisateur::createFromSeesion()->getNom()."</h1>");
+if (Utilisateur::isConnected()){
+	try{
+		$user = Utilisateur::createFromSession();
+		var_dump($user);
+		//$p->appendContent("<h1>Bonjour ".$user->getNom()."</h1>");	
+	}catch(Exception $e){}
+}
 
 $p->appendContent(<<<HTML
       <table class="table table-striped">

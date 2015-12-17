@@ -7,7 +7,7 @@ class AuthenticationException extends Exception { }
 class Entrepreneur extends Utilisateur {
    
    // Liste des entreprises géré par l'entrepreneur
-   private $_entreprises;
+   private $entreprises;
    private $fonction;
    const session_key = "__user__";
 
@@ -41,25 +41,6 @@ class Entrepreneur extends Utilisateur {
 		
 	}
 
-
-
-	/*
-	 * Recupére l'entrepeneur dans les donées de sessions
-	 */
-	public static function createFromSession() {
-		
-		self::startSession();
-		
-		if (isSet($_SESSION[self::session_key]) && isSet($_SESSION[self::session_key]['user'])) {
-			
-			if ($_SESSION[self::session_key]['user'] instanceof Entrepneur) {
-				
-				return $_SESSION[self::session_key]['user'];
-				
-			}
-			
-		}
-	}
 
 	/**
 	 * Génére un code aléatoire (grain de sel)
@@ -99,7 +80,7 @@ class Entrepreneur extends Utilisateur {
 
 		$pdo = myPDO::getInstance();
 		$rq1 = $pdo->prepare(<<<SQL
-		SELECT numEntrepreneur, prenom, nom, adresse, mail, fonction
+		SELECT numEntrepreneur, prenom, nom, adresse, mail, fonction, tel
 		FROM Entrepreneur
 		WHERE SHA1(concat(pass, :challenge, SHA1(mail) )  ) = :code
 SQL
@@ -111,6 +92,10 @@ SQL
 
 		$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 	    if (($entrepreneur = $rq1->fetch()) !== false) {
+	    	$_SESSION[self::session_key]['connected'] = true;
+
+	    	$entrepreneur->entreprises = array();		
+	    	$entrepreneur->fonction = "";
 	        return $entrepreneur ;
 	    }
 	    else {

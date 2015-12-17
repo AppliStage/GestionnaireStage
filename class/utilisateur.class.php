@@ -1,24 +1,26 @@
 <?php
 
+Class NotInSessionException extends Exception{ }
+
 abstract class Utilisateur{
 	
 	// Nom de l'utilisateur
-	protected $_nom;
+	protected $nom;
 	
 	// Prenom de l'utilisateur
-	protected $_prenom;
+	protected $prenom;
 	
 	// Id de l'utilisateur
-	protected $_id;
+	protected $numEntrepreneur;
 	
 	// Mail de l'utilisateur
-	protected $_mail;
-	
+	protected $mail;
+
 	// Adresse de l'utilisateur
-	protected $_adresse;
+	protected $adresse;
 
 	// Telephone de l'utilisateur
-	protected $_tel;
+	protected $tel;
 	
 	const session_key = "__user__";
 
@@ -50,6 +52,24 @@ abstract class Utilisateur{
 
 
 
+    /**
+     * Lecture de l'objet User dans la session
+     * @throws NotInSessionException si l'objet n'est pas dans la session
+     *
+     * @return User
+     */
+    static public function createFromSession() {
+        // Mise en place de la session
+        self::startSession() ;
+        if (isset($_SESSION[self::session_key]['user'])) {
+
+            $u = $_SESSION[self::session_key]['user'] ;
+            return $u ;
+        }
+       	throw new NotInSessionException() ;
+   }
+
+
 	public static function isConnected() {
 		$rep=false;
 		self::startSession();
@@ -61,6 +81,19 @@ abstract class Utilisateur{
 		
 	}
 	
+    /**
+     * Déconnecter l'utilisateur
+     *
+     * @return void
+     */
+    public static function logoutIfRequested() {
+        if (isset($_REQUEST['logout'])) {
+            self::startSession() ;
+            unset($_SESSION[self::session_key]) ;
+        }
+    }
+
+
 	/**
 	 * Vérifie le contenu des attributs et enregistre l'utilisateur si
 	 * il n'exite pas déjà.
