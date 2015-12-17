@@ -15,7 +15,6 @@ $p->appendToHead(<<<head
 head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
-$p->appendCssUrl("navbar-static/-top.css");
 $p->appendCssUrl("style/style.css");
 
 $p->appendContent(<<<HTML
@@ -58,7 +57,7 @@ $p->appendContent(<<<HTML
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <p name="danger" class="bg-danger hidden">...</p>
+    <p name="danger" class="bg-danger hidden">Le login ou le mot de passe est incorrect !</p>
 
 
     <div class="container">
@@ -130,46 +129,4 @@ $p->appendToFooter(<<<Footer
     <script src="style/bootstrap-3.3.5-dist/js/ie10-viewport-bug-workaround.js"></script>
 Footer
 );
-/*
-$p->appendJS(<<<JS
-window.onload() = function {
-
-  document.forms['connexion'].elements['login'].onclick = function() {
-  
-	new Request({
-	
-	  url : "."
-	  method : "post"
-	  onSuccess : function(res) {
-		
-		document.getElementById("success").className = "bg-success show";
-		window.setTimeout(
-		  document.getElementById("success").className = "bg-success hidden",
-		  8000
-		  
-		);
-		
-	  }
-	  
-	  onError : function(status, message) {
-	  
-		document.getElementById("danger").className = "bg-danger show";
-		window.setTimeout(
-		  document.getElementById("danger").className = "bg-danger hidden",
-		  8000
-		  
-		);
-	  
-	  }
-	
-	});
-  
-  }
-
-}
-
-
-JS
-);
-*/
 echo $p->toHTML();

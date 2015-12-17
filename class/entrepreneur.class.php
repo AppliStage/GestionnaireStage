@@ -1,6 +1,7 @@
 <?php
 
 include_once "utilisateur.class.php";
+include_once "myPDO.include.php";
 
 class AuthenticationException extends Exception { }
 
@@ -158,7 +159,7 @@ HTML;
 	* Permet à un entrepreneur de s'inscrire dans la base de donnée
 	* @return true si l'inscription c'est faite correctement, false sinon.
 	*/
-	public static function inscription($nom, $prenom, $mail, $pass =null, $tel = null,$adresse="", $fonction=""){
+	public static function inscription($nom, $prenom, $mail, $pass, $tel = null,$adresse="", $fonction=""){
 	    $pdo = myPDO::getInstance();
 	    $res = false;
 	    if(preg_match('([a-zA-Z]{3,30}\s*)',$nom) and preg_match('([a-zA-Z]{3,30}\s*)',$prenom)){
