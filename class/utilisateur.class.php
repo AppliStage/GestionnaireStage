@@ -105,23 +105,23 @@ abstract class Utilisateur{
 	// Les getters de la foliiiiiiiie !!!!!
 
 	public function getNom(){
-		return $this->_nom;
+		return $this->nom;
 	}
 	
 	public function getPrenom(){
-		return $this->_prenom;
+		return $this->prenom;
 	}
 	
 	public function getId(){
-		return $this->_id;
+		return $this->id;
 	}
 	
 	public function getMail(){
-		return $this->_mail;
+		return $this->mail;
 	}
 	
 	public function getAdresse(){
-		return $this->_adresse;
+		return $this->adresse;
 	}
 
 	public function getTel(){

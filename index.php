@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once 'autoload.inc.php';
 include "class/utilisateur.class.php";
 include "class/entrepreneur.class.php";
@@ -79,8 +78,7 @@ HTML
 if (Utilisateur::isConnected()){
 	try{
 		$user = Utilisateur::createFromSession();
-		var_dump($user);
-		//$p->appendContent("<h1>Bonjour ".$user->getNom()."</h1>");	
+		$p->appendContent("<h1>Bonjour ".$user->getNom()."(test)</h1>");	
 	}catch(Exception $e){}
 }
 
