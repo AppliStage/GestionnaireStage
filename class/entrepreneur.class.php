@@ -5,6 +5,8 @@ include_once "myPDO.include.php";
 
 class AuthenticationException extends Exception { }
 
+class MailUtiliser extends Exception { }
+
 class Entrepreneur extends Utilisateur {
    
    // Liste des entreprises géré par l'entrepreneur
@@ -89,6 +91,8 @@ SQL
 		$rq1->execute(array(
         ':challenge' => isset($_SESSION[self::session_key]['challenge']) ? $_SESSION[self::session_key]['challenge'] : '',
         ':code'      => $data['code'])) ;
+
+        // oublie le grain de sel rapidement pour qu'il puisse plu être retrouvé
         unset($_SESSION[self::session_key]['challenge']) ;
 
 		$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
@@ -158,20 +162,29 @@ HTML;
 	/**
 	* Permet à un entrepreneur de s'inscrire dans la base de donnée
 	* @return true si l'inscription c'est faite correctement, false sinon.
+	* @throws si l'adresse mail est déja utilsé dans la base de donnée.
 	*/
 	public static function inscription($nom, $prenom, $mail, $pass, $tel = null,$adresse="", $fonction=""){
 	    $pdo = myPDO::getInstance();
-	    $res = false;
-	    if(preg_match('([a-zA-Z]{3,30}\s*)',$nom) and preg_match('([a-zA-Z]{3,30}\s*)',$prenom)){
-			$stmt = $pdo->prepare(<<<SQL
-				INSERT INTO Entrepreneur (numEntrepreneur,prenom,nom,adresse,mail,fonction,pass,tel)
-				VALUES('',?,?,?,?,?,?,?)
+
+	    $req = $pdo->prepare(<<<SQL
+	    	SELECT 'a'
+	    	FROM Entrepreneur
+	    	WHERE mail = ?
 SQL
-			);
+		);
+	    $req->execute(array($mail));
+
+	    if($req->fetch() != false)
+	    	throw new MailUtiliser("Cette adresse mail est déja utilisé.") ;
+
+		$req1 = $pdo->prepare(<<<SQL
+			INSERT INTO Entrepreneur (numEntrepreneur,prenom,nom,adresse,mail,fonction,pass,tel)
+			VALUES('',?,?,?,?,?,?,?)
+SQL
+		);
 						
-			$res = $stmt->execute(array($prenom,$nom,$adresse,$mail,$fonction,sha1($pass),$tel));
-		}
-		return $res;
+		$ins = $req1->execute(array($prenom,$nom,$adresse,$mail,$fonction,sha1($pass),$tel));
 	}
 	
 

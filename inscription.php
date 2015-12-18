@@ -18,45 +18,10 @@ $p->appendCssUrl("style/signup.css");
 $p->appendJsUrl('js/request.js') ;
 $p->appendJsUrl("js/sha1.js");
 
-$p->appendContent(<<<HTML
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.php">GestionnaireStage</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-	    <li>
-	      <form class="form-inline" style="padding-top:8px">
-		<div class="form-group">
-		  <label class="sr-only" for="exampleInputEmail3">Email address</label>
-		  <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
-		</div>
-		<div class="form-group">
-		  <label class="sr-only" for="exampleInputPassword3">Password</label>
-		  <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
-		</div>
-		<button type="submit" class="btn btn-default">Sign in</button>
-		<a class="btn btn-default" href="inscription.php" role="button">Sign up</a>
-	      </form>
-	    </li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+//inclusion de la barre de navigation
+include_once "navbar.inc.php";
 
+$p->appendContent(<<<HTML
 
     <div class="container">
 
@@ -66,36 +31,36 @@ $p->appendContent(<<<HTML
 				<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum
 				</p>
 			</div>
-				<form class="form-horizontal" name="inscription" >
+				<form class="form-horizontal" name="inscription" method="POST" action="enregistrement.php">
 					<h2 class="form-signup-heading">Inscrivez vous</h2>
 					  <div class="form-group">
 					    <label for="inputNom" class="col-sm-2 control-label">Nom: </label>
 					    <div class="col-sm-10">
-					      <input type="text" id="inputNom" name = "nom" class="form-control" required>
+					      <input type="text" id="inputNom" name = "nom" class="form-control" pattern="[a-zA-Z].+" required>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="inputPrenom" class="col-sm-2 control-label">Prenom: </label>
 					    <div class="col-sm-10">
-					      <input type="text" id="inputPrenom" name="prenom" class="form-control" required>
+					      <input type="text" id="inputPrenom" name="prenom" class="form-control" pattern="[a-zA-Z].+"required>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="inputEmail3" class="col-sm-2 control-label">Email: </label>
 					    <div class="col-sm-10">
-					      <input type="email" class="form-control" name="mail" id="inputEmail3" required>
+					      <input type="email" class="form-control" name="mail" id="inputEmail3" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
 					    <div class="col-sm-10">
-					      <input type="password" class="form-control"  name ="pass" id="inputPassword3" required>
+					      <input type="password" class="form-control"  name ="pass" id="inputPassword3" pattern="[0-9A-Za-z]{8,64}" required>
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label for="inputEmail3" class="col-sm-2 control-label">Tel: </label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="inputTel" name="tel" >
+					      <input type="tel" class="form-control" id="inputTel" name="tel" >
 					    </div>
 					  </div>
 					  <div class="form-group">
@@ -109,16 +74,22 @@ $p->appendContent(<<<HTML
 					  </div>
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					    	<button name="submit" class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
+					    	<button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
 					    </div>
 					  </div>
 				</form>
-			<p name="danger" class="bg-danger hidden">Le login ou le mot de passe est incorrect !</p>
-			<p name="success" class="bg-sucess hidden">Votre profil à bien été enregisté. Un mail de confirmation vous à été envoyé.</p>
-		</div>
-    </div> <!-- /container -->
 HTML
-);
+	);
+
+//Gestion des réponse de l'enregistrement d'un entrepreneur
+if(isset($_GET['ins'])){
+	($_GET['ins']=="true") ? 
+		$p->appendContent('<div name="success" class="alert alert-success " role="alert"> <strong>Merci de vous être enregistré. Un mail de confirmation vous à été envoyé pour confirmer votre inscription.</strong></div>') :	
+		$p->appendContent('<div name="danger" class="alert alert-danger " role="alert"><strong>Nous ne pouvons pas vous enregistrer. Cette adresse mail a déjà été utilser.</strong></div>');
+}
+
+$p->appendContent("</div></div> <!-- /container -->");
+
 
 $p->appendToFooter(<<<Footer
     <!-- Bootstrap core JavaScript
@@ -132,9 +103,15 @@ Footer
 );
 
 $p->appendJS(<<<JS
+
+JS
+);
+
+/*
+$p->appendJS(<<<JS
 window.onload = function () {
     // Désactivation de l'envoi du formulaire
-    document.forms['inscription'].onsubmit = function () { return false ; }
+    //document.forms['inscription'].onsubmit = function () { return false ; }
 
 	document.forms['inscription'].elements['submit'].onclick = function(){
 		var form = document.forms['inscription'];
@@ -171,6 +148,6 @@ window.onload = function () {
 
 }
 JS
-);
+);*/
 
 echo $p->toHTML();
