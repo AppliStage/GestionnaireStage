@@ -102,10 +102,7 @@ $p->appendToFooter(<<<Footer
 Footer
 );
 
-$p->appendJS(<<<JS
 
-JS
-);
 
 /*
 $p->appendJS(<<<JS

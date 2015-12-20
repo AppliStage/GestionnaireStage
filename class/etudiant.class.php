@@ -12,24 +12,41 @@ Class Etudiant extends Utilisateur{
 	private $_offres;
 
      /**
-     * Constructeur d'un etudiant
+     * Constructeur d'un etudiant en fonction de son login
+     * @param login de l'étudiant
+     * @return une instance d'étudiant sinon renvoi null
      */
-	private function __construct($nom, $prenom, $mail, $adresse, $id){
-		$this->_nom = $nom;
-		$this->_prenom = $prenom;
-		$this->_mail = $mail;
-		$this->_adresse = $adresse;
-		$this->_id = $id;
-		$this->_offres = array();
-	}
+	public static function createFromLogin($login){
+		self::startSession();
 
+		if( strlen($login) == 8){
+			$pdo = myPDO::getInstance();
+			$rq1 = $pdo->prepare(<<<SQL
+				SELECT loginEtudiant AS 'id', prenom, nom, mail, tel
+				FROM Etudiant
+				WHERE login = :login
+SQL
+			);
+			$rq1->execute(array(':login' => $login)) ;
+
+			$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+		    if (($etudiant = $rq1->fetch()) !== false) {
+		    	$_SESSION[self::session_key]['connected'] = true;
+
+		    	$etudiant->_cv = null;
+		    	$etudiant->_lettre = null;
+		    	$etudiant->_offres = array(); //TO-DO :  Liste de stages
+		        return $etudiant ;
+		    }
+		}
+		return null;
+	}
 
 	/** 
 	* Ajoute un stage à la listes des candidatures de l'étudiant.
 	* La BD est aussi mise à jour.
 	* @param s stage à rajouter.
 	 */
-
 	public function postulerStage($s){
 		$pdo = myPDO::getInstance();
 		$pdo->prepare(<<<SQL
@@ -42,36 +59,30 @@ SQL
 
 
 	/**
-	 *Ajoute un Etudiant dans la base de donéees
-	 * 
-	 */	
+	* Permet à un etudiant de s'inscrire dans la base de donnée, seul le login est obligatoire
+	* @throws si le login est déja utilsé dans la base de donnée.
+	*/
+	public static function inscription( $login, $nom="", $prenom="", $mail="", $tel=""){
+	    $pdo = myPDO::getInstance();
 
-	function inscription($nom, $prenom, $adresse=null, $ville=null, $cp=null, $mail,
-	       				$login=null,$pass =null){
-		$res = false;
-		$pdo = myPDO::getInstance() ;
-		
-		$query = $pdo->prepare(<<<SQL
-					SELECT count(numEtudiant) as nb
-					FROM Etudiant
-					WHERE nom = ?
-					AND prenom =?
-					AND mail = ?
+	    $req = $pdo->prepare(<<<SQL
+	    	SELECT 'a'
+	    	FROM Etudiant
+	    	WHERE login = ?
 SQL
 		);
-		$nb = $query->execute(array($nom, $prenom, $mail));
-		$nb = $nb->fetch();
-		
-		if($nb['nb']==0){
-			$stmt = $pdo->prepare(<<<SQL
-					INSERT INTO Etudiant()
-						VALUES ()
+	    $req->execute(array($login));
+
+	    if($req->fetch() != false)
+	    	throw new MailUtiliser("Ce compte exite déjà.") ;
+
+		$req1 = $pdo->prepare(<<<SQL
+			INSERT INTO Etudiant (login,prenom,nom,mail,tel)
+			VALUES(?,?,?,?,?,?,?)
 SQL
-			);
-		
-			$res = $stmt->execute(array($nom,$prenom,$adresse,$ville,$cp,$mail,$login,$pass));
-		}
-		return $res;
+		);
+						
+		$ins = $req1->execute(array($login,$prenom,$nom,$mail,$tel));
 	}
 
 }

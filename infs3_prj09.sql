@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Adminnistrateur`
+-- Structure de la table `Administrateur`
 --
 
-CREATE TABLE IF NOT EXISTS `Adminnistrateur` (
+CREATE TABLE IF NOT EXISTS `Administrateur` (
 `numAdmin` int(11) NOT NULL,
   `nom` varchar(64) NOT NULL,
   `prenom` varchar(64) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `Adminnistrateur` (
 
 CREATE TABLE IF NOT EXISTS `Commentaire` (
 `numCommentaire` int(11) NOT NULL,
-  `numEnseignant` int(11) NOT NULL,
+  `loginEnseignant` varchar(8) NOT NULL,
   `contenu` text NOT NULL,
   `dateEnvoi` date NOT NULL,
   `numEntreprise` int(11) NOT NULL
@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `Convention` (
 `numConcention` int(11) NOT NULL,
   `valide` tinyint(1) NOT NULL,
   `numAdmin` int(11) NOT NULL,
-  `numEnseignant` int(11) NOT NULL,
+  `loginEnseignant` varchar(8) NOT NULL,
   `numStage` int(11) NOT NULL,
-  `numEtudiant` int(11) NOT NULL
+  `loginEtudiant` varchar(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `Convention` (
 --
 
 CREATE TABLE IF NOT EXISTS `Enseignant` (
-`numEnseignant` int(11) NOT NULL,
+`loginEnseignant` varchar(8) NOT NULL,
   `prenom` varchar(64) NOT NULL,
   `nom` varchar(64) NOT NULL,
   `mail` varchar(256) NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `Entreprise` (
 --
 
 CREATE TABLE IF NOT EXISTS `Etudiant` (
-`numEtudiant` int(11) NOT NULL,
+`loginEtudiant` varchar(8) NOT NULL,
   `nom` varchar(64) NOT NULL,
   `prenom` varchar(64) NOT NULL,
   `mail` varchar(256) NOT NULL,
@@ -168,28 +168,28 @@ CREATE TABLE IF NOT EXISTS `Stage` (
 --
 
 --
--- Index pour la table `Adminnistrateur`
+-- Index pour la table `Administrateur`
 --
-ALTER TABLE `Adminnistrateur`
+ALTER TABLE `Administrateur`
  ADD PRIMARY KEY (`numAdmin`);
 
 --
 -- Index pour la table `Commentaire`
 --
 ALTER TABLE `Commentaire`
- ADD PRIMARY KEY (`numCommentaire`), ADD UNIQUE KEY `numEnseignant` (`numEnseignant`), ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
+ ADD PRIMARY KEY (`numCommentaire`), ADD UNIQUE KEY `loginEnseignant` (`loginEnseignant`), ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
 
 --
 -- Index pour la table `Convention`
 --
 ALTER TABLE `Convention`
- ADD PRIMARY KEY (`numConcention`), ADD UNIQUE KEY `numAdmin` (`numAdmin`), ADD UNIQUE KEY `numEnseignant` (`numEnseignant`), ADD UNIQUE KEY `numStage` (`numStage`), ADD UNIQUE KEY `numEtudiant` (`numEtudiant`);
+ ADD PRIMARY KEY (`numConcention`), ADD UNIQUE KEY `numAdmin` (`numAdmin`), ADD UNIQUE KEY `loginEnseignant` (`loginEnseignant`), ADD UNIQUE KEY `numStage` (`numStage`), ADD UNIQUE KEY `loginEtudiant` (`loginEtudiant`);
 
 --
 -- Index pour la table `Enseignant`
 --
 ALTER TABLE `Enseignant`
- ADD PRIMARY KEY (`numEnseignant`);
+ ADD PRIMARY KEY (`loginEnseignant`);
 
 --
 -- Index pour la table `Entrepreneur`
@@ -207,7 +207,7 @@ ALTER TABLE `Entreprise`
 -- Index pour la table `Etudiant`
 --
 ALTER TABLE `Etudiant`
- ADD PRIMARY KEY (`numEtudiant`);
+ ADD PRIMARY KEY (`loginEtudiant`);
 
 --
 -- Index pour la table `Stage`
@@ -220,9 +220,9 @@ ALTER TABLE `Stage`
 --
 
 --
--- AUTO_INCREMENT pour la table `Adminnistrateur`
+-- AUTO_INCREMENT pour la table `Administrateur`
 --
-ALTER TABLE `Adminnistrateur`
+ALTER TABLE `Administrateur`
 MODIFY `numAdmin` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Commentaire`
@@ -235,11 +235,6 @@ MODIFY `numCommentaire` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `Convention`
 MODIFY `numConcention` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT pour la table `Enseignant`
---
-ALTER TABLE `Enseignant`
-MODIFY `numEnseignant` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT pour la table `Entrepreneur`
 --
 ALTER TABLE `Entrepreneur`
@@ -249,11 +244,6 @@ MODIFY `numEntrepreneur` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 ALTER TABLE `Entreprise`
 MODIFY `numEtreprise` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `Etudiant`
---
-ALTER TABLE `Etudiant`
-MODIFY `numEtudiant` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Stage`
 --
@@ -267,17 +257,17 @@ MODIFY `numStage` int(11) NOT NULL AUTO_INCREMENT;
 -- Contraintes pour la table `Commentaire`
 --
 ALTER TABLE `Commentaire`
-ADD CONSTRAINT `fk_commentaireEnseignant` FOREIGN KEY (`numEnseignant`) REFERENCES `Enseignant` (`numEnseignant`),
+ADD CONSTRAINT `fk_commentaireEnseignant` FOREIGN KEY (`loginEnseignant`) REFERENCES `Enseignant` (`loginEnseignant`),
 ADD CONSTRAINT `fk_commentaireEntreprise` FOREIGN KEY (`numEntreprise`) REFERENCES `Entreprise` (`numEtreprise`);
 
 --
 -- Contraintes pour la table `Convention`
 --
 ALTER TABLE `Convention`
-ADD CONSTRAINT `fk_conventionAdmin` FOREIGN KEY (`numAdmin`) REFERENCES `Adminnistrateur` (`numAdmin`),
-ADD CONSTRAINT `fk_conventionEtudiant` FOREIGN KEY (`numEtudiant`) REFERENCES `Etudiant` (`numEtudiant`),
+ADD CONSTRAINT `fk_conventionAdmin` FOREIGN KEY (`numAdmin`) REFERENCES `Administrateur` (`numAdmin`),
+ADD CONSTRAINT `fk_conventionEtudiant` FOREIGN KEY (`loginEtudiant`) REFERENCES `Etudiant` (`loginEtudiant`),
 ADD CONSTRAINT `fk_conventionStage` FOREIGN KEY (`numStage`) REFERENCES `Stage` (`numStage`),
-ADD CONSTRAINT `fk_convetionEnseignant` FOREIGN KEY (`numEnseignant`) REFERENCES `Enseignant` (`numEnseignant`);
+ADD CONSTRAINT `fk_convetionEnseignant` FOREIGN KEY (`loginEnseignant`) REFERENCES `Enseignant` (`loginEnseignant`);
 
 --
 -- Contraintes pour la table `Entreprise`
