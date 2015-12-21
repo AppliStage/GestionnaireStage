@@ -15,7 +15,6 @@ $p->appendToHead(<<<head
 head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
-$p->appendCssUrl("style/style.css");
 
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
@@ -42,42 +41,35 @@ $p->appendContent(<<<HTML
         <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>To see the difference between static and fixed top navbars, just scroll.</p>
 
-
-        <div>
-
-          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Stage</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Espace Entrepreneur</a></li>
+          <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#stages">Stages</a></li>
+            <li><a data-toggle="tab" href="#recruteur">Espace Recruteur</a></li>
           </ul>
 
-          <!-- Tab panes -->
-          <div class="tab-content">
+          <div class="tab-content" style="margin-top:15px;">
 
-            <div role="tabpanel" class="tab-pane active" id="stage">
-              <form class="form-inline">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Quelle poste ?">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Ville, département, région ...">
-                </div>
-                <button type="submit" class="btn btn-default">Rechercher</button>
-              </form>
+            <div id="stages" class="tab-pane fade in active">
+              <div role="tabpanel" class="tab-pane active" id="stage">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Quelle poste ?">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Ville, département, région ...">
+                  </div>
+                  <button type="submit" class="btn btn-default">Rechercher</button>
+                </form>
+              </div>
             </div>
 
-            <div role="tabpanel" class="tab-pane" id="espaceEntrepreneur">
-              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum</p>
+            <div id="recruteur" class="tab-pane fade">
+              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
+
           </div>
 
         </div>
 
-
-
-
-
-      </div>
 HTML
 );
 
@@ -136,7 +128,12 @@ Footer
 if(isset($_GET['err']) && $_GET['err'] == "log"){
   $p->appendToFooter(<<<Footer
     <script>
-      $('#myModal').modal('toggle') 
+      $(document).ready(function(){
+          $('#myModal').modal('toggle') 
+          $(".nav-tabs a").click(function(){
+              $(this).tab('show');
+          });
+      });
     </script>
 Footer
 );
