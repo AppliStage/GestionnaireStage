@@ -29,7 +29,7 @@ class Entrepreneur extends Utilisateur {
 
 		$pdo = myPDO::getInstance();
 		$rq1 = $pdo->prepare(<<<SQL
-		SELECT numEntrepreneur AS 'id', prenom, nom, adresse, mail, fonction, tel
+		SELECT numEntrepreneur AS 'id', prenom, nom, mail, fonction, tel
 		FROM Entrepreneur
 		WHERE SHA1(concat(pass, :challenge, SHA1(mail) )  ) = :code
 SQL
@@ -74,7 +74,7 @@ SQL
 
 		$req1 = $pdo->prepare(<<<SQL
 			INSERT INTO Entrepreneur (numEntrepreneur,prenom,nom,mail,fonction,pass,tel)
-			VALUES('',?,?,?,?,?,?,?)
+			VALUES('',?,?,?,?,?,?)
 SQL
 		);
 						

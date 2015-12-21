@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS `Administrateur` (
   `nom` varchar(64) NOT NULL,
   `prenom` varchar(64) NOT NULL,
   `mail` varchar(256) NOT NULL,
-  `tel` varchar(256) NOT NULL,
-  `adresse` varchar(256) NOT NULL
+  `tel` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -75,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `Enseignant` (
   `prenom` varchar(64) NOT NULL,
   `nom` varchar(64) NOT NULL,
   `mail` varchar(256) NOT NULL,
-  `adresse` varchar(256) NOT NULL,
   `tel` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -89,7 +87,6 @@ CREATE TABLE IF NOT EXISTS `Entrepreneur` (
 `numEntrepreneur` int(11) NOT NULL,
   `prenom` varchar(64) NOT NULL,
   `nom` varchar(64) NOT NULL,
-  `adresse` varchar(256) NOT NULL,
   `mail` varchar(256) NOT NULL,
   `fonction` varchar(256) NOT NULL,
   `pass` varchar(40) NOT NULL,
@@ -100,12 +97,12 @@ CREATE TABLE IF NOT EXISTS `Entrepreneur` (
 -- Contenu de la table `Entrepreneur`
 --
 
-INSERT INTO `Entrepreneur` (`numEntrepreneur`, `prenom`, `nom`, `adresse`, `mail`, `fonction`, `pass`, `tel`) VALUES
-(1, '', '', '', '', '', '', ''),
-(2, 'Valentin', 'Collet', '', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
-(3, 'Valentin', 'Collet', '', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
-(4, 'Rémi', 'PECCARD', 'dezkiofgzhzfieo', 'test@gmail.com', 'directeur', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '314159265358'),
-(5, 'Valentin', 'Collet', '', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578');
+INSERT INTO `Entrepreneur` (`numEntrepreneur`, `prenom`, `nom`, `mail`, `fonction`, `pass`, `tel`) VALUES
+(1, '', '', '', '', '', ''),
+(2, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
+(3, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
+(4, 'Rémi', 'PECCARD', 'test@gmail.com', 'directeur', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '314159265358'),
+(5, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578');
 
 -- --------------------------------------------------------
 
@@ -141,7 +138,6 @@ CREATE TABLE IF NOT EXISTS `Etudiant` (
   `nom` varchar(64) NOT NULL,
   `prenom` varchar(64) NOT NULL,
   `mail` varchar(256) NOT NULL,
-  `adresse` varchar(256) NOT NULL,
   `tel` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

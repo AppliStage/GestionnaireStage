@@ -15,6 +15,7 @@ if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['mail']) && i
 		try{
 			Entrepreneur::inscription($nom, $prenom, $mail, $_POST['pass'],$tel);
 		}catch(Exception $e){
+			//echo $e->getMessage();
 			header("Location: inscription.php?ins=false");
 			exit;
 		}
