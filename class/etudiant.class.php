@@ -1,5 +1,10 @@
 <?php
 
+include_once "utilisateur.class.php";
+include_once "myPDO.include.php";
+
+class loginUtiliser extends Exception { }
+
 Class Etudiant extends Utilisateur{
 
    // Curriculum vitae
@@ -24,10 +29,10 @@ Class Etudiant extends Utilisateur{
 			$rq1 = $pdo->prepare(<<<SQL
 				SELECT loginEtudiant AS 'id', prenom, nom, mail, tel
 				FROM Etudiant
-				WHERE login = :login
+				WHERE loginEtudiant = ?
 SQL
 			);
-			$rq1->execute(array(':login' => $login)) ;
+			$rq1->execute(array($login)) ;
 
 			$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		    if (($etudiant = $rq1->fetch()) !== false) {
@@ -64,21 +69,21 @@ SQL
 	*/
 	public static function inscription( $login, $nom="", $prenom="", $mail="", $tel=""){
 	    $pdo = myPDO::getInstance();
-
+	    
 	    $req = $pdo->prepare(<<<SQL
 	    	SELECT 'a'
 	    	FROM Etudiant
-	    	WHERE login = ?
+	    	WHERE loginEtudiant = ?
 SQL
 		);
 	    $req->execute(array($login));
 
 	    if($req->fetch() != false)
-	    	throw new MailUtiliser("Ce compte exite déjà.") ;
+	    	throw new loginUtiliser("Ce compte exite déjà dans la base de donnée.") ;
 
 		$req1 = $pdo->prepare(<<<SQL
-			INSERT INTO Etudiant (login,prenom,nom,mail,tel)
-			VALUES(?,?,?,?,?,?,?)
+			INSERT INTO Etudiant (loginEtudiant,prenom,nom,mail,tel)
+			VALUES(?,?,?,?,?)
 SQL
 		);
 						

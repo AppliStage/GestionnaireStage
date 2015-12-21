@@ -3,6 +3,11 @@
 require_once "CAS-1.3.4/CAS.php";
 require_once "config.php";
 
+/* TO-DO : 
+ * - Crée une gateway pour que les enseignant et les etudiants puissent ce log depuis le formulaure de l'application.
+ * - Rediriger les utilisateurs sur une page de l'application à la deconnection.
+ */
+
 // Enable debugging
 phpCAS::setDebug();
 // Initialize phpCAS
@@ -13,6 +18,7 @@ phpCAS::setNoCasServerValidation();
 
 // force CAS authentication
 if(phpCAS::forceAuthentication()) {
+
 	/* On cherche à savoir si l'utilisateur est un etudiant, puis si c'est un enseignant. 
 	 * Si le login est introuvable c'est un etudiant qui se connect pour la première fois
 	 * puisque les enseignants garant sont enregistrés par l'administrateur.
@@ -24,8 +30,16 @@ if(phpCAS::forceAuthentication()) {
 
 	}*/
 	else{
-		Etudiant::inscription($login);
+		try{
+			Etudiant::inscription(phpCAS::getUser());
+			$etudiant = Etudiant::createFromLogin(phpCAS::getUser());
+			$etudiant->saveIntoSession();	
+		}
+		catch(Exception $e){
+			echo $e->getMessage();
+		}
 	}
+
 }
 
 if (isset($_REQUEST['logout'])) {	

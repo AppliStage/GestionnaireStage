@@ -17,26 +17,6 @@ head
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("style/style.css");
 
-/*
-  <div class="modal "id"myModal">
-    <p>...</p>
-  </div>
-
-<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <h4>Oh ooups! </h4> 
-      <p>Le login et le mot de passe ne correspond à aucun compte connue.</p> 
-      <p>
-        <button type="button" class="btn btn-danger">J'ai oublié mon mot de passe</button>
-      </p>
-    </div>
-  </div> 
-</div>
-
-*/
-
-
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
 
