@@ -66,7 +66,10 @@ abstract class Utilisateur{
        	throw new NotInSessionException() ;
    }
 
-
+   	/**
+   	 * Vérifie si l'utilisateur est connecté.
+   	 * @return true si il est connecté false sinon.
+   	 */
 	public static function isConnected() {
 		$rep=false;
 		self::startSession();
@@ -86,8 +89,7 @@ abstract class Utilisateur{
     public static function logoutIfRequested() {
         if (isset($_REQUEST['logout']) && self::isConnected()) {
             self::startSession() ;
-            //unset($_SESSION[self::session_key]) ;
-            session_destroy();
+            unset($_SESSION[self::session_key]) ;
         }
     }
 
@@ -209,3 +211,4 @@ HTML;
 	}
 	
 } 
+

@@ -80,6 +80,25 @@ SQL
 						
 		$ins = $req1->execute(array($prenom,$nom,$mail,$fonction,sha1($pass),$tel));
 	}
+
+
+	/**
+	 * Ajoute une entreprise 
+	 * @throws si le paramétre n'est pas une entreprise
+	 */
+	public function addEntreprise($entreprise){
+		if (is_object($entreprise) && ($entreprise instanceof File)){
+			$this->entreprise = $entreprise;
+
+			$req1 = $pdo->prepare(); //TO-DO : Il manque une table entre les entpreprises et les entrepreneurs
+			$ins = $req1->execute(array($prenom,$nom,$mail,$fonction,sha1($pass),$tel));
+
+		}
+		else
+			throw new wrongTypeFile("Le parametre n'est pas une entreprise");
+	}
 	
 
 }
+
+

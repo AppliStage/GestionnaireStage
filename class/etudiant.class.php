@@ -5,16 +5,18 @@ include_once "myPDO.include.php";
 
 class loginUtiliser extends Exception { }
 
+class wrongTypeFile extends Exception { }
+
 Class Etudiant extends Utilisateur{
 
    // Curriculum vitae
-	private $_cv;
+	private $cv;
 
    // Lettre de motivation
-	private $_lettre;
+	private $lettre;
 
    // Listes des offres de stage auquel l'étudiant à postuler.
-	private $_offres;
+	private $offres;
 
      /**
      * Constructeur d'un etudiant en fonction de son login
@@ -38,9 +40,9 @@ SQL
 		    if (($etudiant = $rq1->fetch()) !== false) {
 		    	$_SESSION[self::session_key]['connected'] = true;
 
-		    	$etudiant->_cv = null;
-		    	$etudiant->_lettre = null;
-		    	$etudiant->_offres = array(); //TO-DO :  Liste de stages
+		    	$etudiant->cv = null;
+		    	$etudiant->lettre = null;
+		    	$etudiant->offres = array(); //TO-DO :  Liste de stages
 		        return $etudiant ;
 		    }
 		}
@@ -51,15 +53,18 @@ SQL
 	* Ajoute un stage à la listes des candidatures de l'étudiant.
 	* La BD est aussi mise à jour.
 	* @param s stage à rajouter.
+	* @throws si le parametre n'est pas un stage
 	 */
-	public function postulerStage($s){
-		$pdo = myPDO::getInstance();
-		$pdo->prepare(<<<SQL
-
-SQL
-	);
-		$pdo->execute(array());
-		return false;
+	public function postulerStage($stage){
+		if( is_object($stage) && $stage instanceof Stage){
+			$this->offres[] = $stage;
+			$pdo = myPDO::getInstance();
+			//TO-DO : Erreur dans la base de donnée. Il manque une association dans la BD entre les stages et les etudiants
+			$pdo->prepare();
+			$pdo->execute(array());		
+		}
+		else 
+			throw new wrongTypeFile("Le paramentre n'est pas une stage.");
 	}
 
 
@@ -86,8 +91,36 @@ SQL
 			VALUES(?,?,?,?,?)
 SQL
 		);
-						
+		
 		$ins = $req1->execute(array($login,$prenom,$nom,$mail,$tel));
 	}
 
+
+	/**
+	 * Setter sur le CV
+	 * @throws si le fichier n'est pas une fichier pdf
+	 */
+	public function setCV($cv){
+		if (is_object($cv) && ($cv instanceof File)){
+			$this->cv = $cv;
+		}
+		else
+			throw new wrongTypeFile("Le fichier n'est pas un PDF.");
+	}
+
+
+	/**
+	 * Setter sur la lettre de motivation
+	 * @throws si le fichier n'est pas une fichier pdf
+	 */
+	public function setLetter($lettre){
+		if (is_object($lettre) && $lettre instanceof File){
+			$this->lettre = $lettre;
+		}
+		else
+			throw new wrongTypeFile("Le fichier n'est pas un PDF.");
+	}
+
+
 }
+
