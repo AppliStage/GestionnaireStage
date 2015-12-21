@@ -6,8 +6,7 @@ include "class/entrepreneur.class.php";
 try{
 	$entrepreneur = Entrepreneur::createFromAuthSHA1($_REQUEST);
 	$entrepreneur->saveIntoSession();
-	var_dump($entrepreneur);
-	//header("Location: index.php");
+	header("Location: index.php");
 	exit;
 }catch(Exception $e){
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
