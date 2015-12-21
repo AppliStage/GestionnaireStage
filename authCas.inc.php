@@ -5,7 +5,6 @@ require_once "config.php";
 
 /* TO-DO : 
  * - Crée une gateway pour que les enseignant et les etudiants puissent ce log depuis le formulaure de l'application.
- * - Rediriger les utilisateurs sur une page de l'application à la deconnection.
  */
 
 // Enable debugging
@@ -13,8 +12,13 @@ phpCAS::setDebug();
 // Initialize phpCAS
 phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context, false);
 
-
+// no SSL validation for the CAS server
 phpCAS::setNoCasServerValidation();
+
+if (isset($_REQUEST['logout'])) {
+	phpCAS::logoutWithRedirectService("http://localhost/www/GestionnaireStage/index.php");
+	exit;
+}
 
 // force CAS authentication
 if(phpCAS::forceAuthentication()) {
@@ -42,10 +46,6 @@ if(phpCAS::forceAuthentication()) {
 
 }
 
-if (isset($_REQUEST['logout'])) {	
-	phpCAS::logout();
-	Utilisateur::logoutIfRequested();
-}
 
 
 
