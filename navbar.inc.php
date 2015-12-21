@@ -28,7 +28,7 @@ HTML
 				$p->appendContent(<<<HTML
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-				  <form method="POST" action="{$pageCourrante}?logout=" name="connexion" class="form-inline" style="padding-top:8px">
+				  <form method="POST" action="{$pageCourrante}?logout=true" name="connexion" class="form-inline" style="padding-top:8px">
 					 <button type="submit" class="btn btn-default" name="logout">Déconnexion</button>
 				  </form>
 				</li>
@@ -45,4 +45,6 @@ HTML
 
 if (isset($_REQUEST['logout'])) { 
   Utilisateur::logoutIfRequested();
+  header("Location: index.php");
+  exit;
 }

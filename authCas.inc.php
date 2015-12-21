@@ -16,7 +16,7 @@ phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context, false);
 phpCAS::setNoCasServerValidation();
 
 if (isset($_REQUEST['logout'])) {
-	phpCAS::logoutWithRedirectService("http://localhost/www/GestionnaireStage/index.php");
+	phpCAS::logoutWithRedirectService("http://localhost/GestionnaireStage/index.php");
 	exit;
 }
 

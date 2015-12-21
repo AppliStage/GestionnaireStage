@@ -1,0 +1,28 @@
+64FA .START (2015-12-21 19:01:04) phpCAS-1.3.4 ****************** [CAS.php:469]
+64FA .=> phpCAS::client('2.0', 'iut-info.univ-reims.fr', 443, 'cas/', false) [authCas.inc.php:13]
+64FA .|    => CAS_Client::__construct('2.0', false, 'iut-info.univ-reims.fr', 443, 'cas/', false) [CAS.php:361]
+64FA .|    |    Starting a new session sel46f46uuardb6d5ilpiniuv4 [Client.php:906]
+64FA .|    <= ''
+64FA .<= ''
+64FA .=> phpCAS::setNoCasServerValidation() [authCas.inc.php:16]
+64FA .|    You have configured no validation of the legitimacy of the cas server. This is not recommended for production use. [CAS.php:1618]
+64FA .<= ''
+64FA .=> phpCAS::forceAuthentication() [authCas.inc.php:24]
+64FA .|    => CAS_Client::forceAuthentication() [CAS.php:1080]
+64FA .|    |    => CAS_Client::isAuthenticated() [Client.php:1249]
+64FA .|    |    |    => CAS_Client::_wasPreviouslyAuthenticated() [Client.php:1362]
+64FA .|    |    |    |    no user found [Client.php:1604]
+64FA .|    |    |    <= false
+64FA .|    |    |    no ticket found [Client.php:1463]
+64FA .|    |    <= false
+64FA .|    |    => CAS_Client::redirectToCas(false) [Client.php:1258]
+64FA .|    |    |    => CAS_Client::getServerLoginURL(false, false) [Client.php:1625]
+64FA .|    |    |    |    => CAS_Client::getURL() [Client.php:342]
+64FA .|    |    |    |    |    Final URI: http://localhost/GestionnaireStage/profile.php [Client.php:3497]
+64FA .|    |    |    |    <= 'http://localhost/GestionnaireStage/profile.php'
+64FA .|    |    |    <= 'https://iut-info.univ-reims.fr/cas/login?service=http%3A%2F%2Flocalhost%2FGestionnaireStage%2Fprofile.php'
+64FA .|    |    |    Redirect to : https://iut-info.univ-reims.fr/cas/login?service=http%3A%2F%2Flocalhost%2FGestionnaireStage%2Fprofile.php [Client.php:1632]
+64FA .|    |    |    exit()
+64FA .|    |    |    -
+64FA .|    |    -
+64FA .|    -
