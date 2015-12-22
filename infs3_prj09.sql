@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 21 Décembre 2015 à 21:57
+-- Généré le :  Mar 22 Décembre 2015 à 14:26
 -- Version du serveur :  10.1.9-MariaDB
 -- Version de PHP :  5.6.15
 
@@ -45,7 +45,7 @@ CREATE TABLE `Commentaire` (
   `loginEnseignant` varchar(8) NOT NULL,
   `contenu` text NOT NULL,
   `dateEnvoi` date NOT NULL,
-  `SIRET` int(14) NOT NULL
+  `numEntreprise` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -112,20 +112,19 @@ INSERT INTO `Entrepreneur` (`numEntrepreneur`, `prenom`, `nom`, `mail`, `fonctio
 --
 
 CREATE TABLE `Entreprise` (
-  `SIRET` varchar(14) NOT NULL,
+  `numEntreprise` int(11) NOT NULL,
   `nom` varchar(64) NOT NULL,
-  `prenom` varchar(64) NOT NULL,
   `tel` varchar(14) NOT NULL,
   `adresse` varchar(256) NOT NULL,
   `typeJuridique` varchar(256) NOT NULL,
   `site` varchar(256) NOT NULL,
   `ville` varchar(256) NOT NULL,
   `pays` varchar(256) NOT NULL,
+  `SIRET` varchar(256) NOT NULL,
   `SIREN` varchar(256) NOT NULL,
   `codeAPE` varchar(256) NOT NULL,
   `logo` varchar(256) DEFAULT NULL,
-  `numEntrepreneur` int(11) NOT NULL,
-  `codePostal` int(5) NOT NULL
+  `numEntrepreneur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -175,7 +174,7 @@ CREATE TABLE `Stage` (
   `domaine` varchar(256) NOT NULL,
   `nbPoste` int(11) NOT NULL,
   `gratification` int(11) NOT NULL,
-  `SIRET` int(14) NOT NULL
+  `numEntreprise` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -194,7 +193,7 @@ ALTER TABLE `Administrateur`
 ALTER TABLE `Commentaire`
   ADD PRIMARY KEY (`numCommentaire`),
   ADD UNIQUE KEY `loginEnseignant` (`loginEnseignant`),
-  ADD UNIQUE KEY `SIRET` (`SIRET`);
+  ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
 
 --
 -- Index pour la table `Convention`
@@ -222,7 +221,7 @@ ALTER TABLE `Entrepreneur`
 -- Index pour la table `Entreprise`
 --
 ALTER TABLE `Entreprise`
-  ADD PRIMARY KEY (`numEtreprise`),
+  ADD PRIMARY KEY (`numEntreprise`),
   ADD UNIQUE KEY `numEntrepreneur` (`numEntrepreneur`);
 
 --
@@ -244,7 +243,7 @@ ALTER TABLE `postuler`
 --
 ALTER TABLE `Stage`
   ADD PRIMARY KEY (`numStage`),
-  ADD UNIQUE KEY `SIRET` (`SIRET`);
+  ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -274,7 +273,7 @@ ALTER TABLE `Entrepreneur`
 -- AUTO_INCREMENT pour la table `Entreprise`
 --
 ALTER TABLE `Entreprise`
-  MODIFY `numEtreprise` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `numEntreprise` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `Stage`
 --
@@ -289,7 +288,7 @@ ALTER TABLE `Stage`
 --
 ALTER TABLE `Commentaire`
   ADD CONSTRAINT `fk_commentaireEnseignant` FOREIGN KEY (`loginEnseignant`) REFERENCES `Enseignant` (`loginEnseignant`),
-  ADD CONSTRAINT `fk_commentaireEntreprise` FOREIGN KEY (`SIRET`) REFERENCES `Entreprise` (`numEtreprise`);
+  ADD CONSTRAINT `fk_commentaireEntreprise` FOREIGN KEY (`numEntreprise`) REFERENCES `Entreprise` (`numEntreprise`);
 
 --
 -- Contraintes pour la table `Convention`
@@ -310,7 +309,7 @@ ALTER TABLE `Entreprise`
 -- Contraintes pour la table `Stage`
 --
 ALTER TABLE `Stage`
-  ADD CONSTRAINT `fk_stageEntreprise` FOREIGN KEY (`SIRET`) REFERENCES `Entreprise` (`numEtreprise`);
+  ADD CONSTRAINT `fk_stageEntreprise` FOREIGN KEY (`numEntreprise`) REFERENCES `Entreprise` (`numEntreprise`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -1,8 +1,8 @@
 <?php
 
-include_once "commentaire.class.php";
-include_once "stage.class.php";
 include_once "myPDO.include.php";
+
+Class saveException extends Exception {}
 
 class Entreprise {
    
@@ -17,7 +17,7 @@ class Entreprise {
    private $SIREN;
    private $codeAPE;
    private $logo;
-   private $avis =  array(); // Liste des commentaire laissé par les enseignants
+   private $avis = array(); // Liste des commentaire laissé par les enseignants
    private $stages =  array(); //Liste des offre de l'entreprise.
    private $entrepreneur;
    private $codePostal;
@@ -39,8 +39,6 @@ class Entreprise {
         $this->codeAPE = $codeAPE;
         $this->logo = $logo;
         $this->numEntreneur = $entrepreneur;
-        $this->avis[] = Comentaire::getAll($this->SIRET);
-        $this->stages[] = Stage::getAll($this->SIRET);
         $this->codePostal = $codePostal;
 
         return $this;
@@ -61,23 +59,28 @@ class Entreprise {
     public function save(){
         $pdo = myPDO::getInstance();
         $req1 = $pdo->prepare(<<<SQL
-            INSERT INTO Entrepreprise (SIRET, nom, tel, adresse, typeJuridique,site, ville, pays, SIREN, codeAPE, logo, numEntreneur,codePostal)
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)
+            INSERT INTO Entrepreprise (numEntreprise, nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntreneur,codePostal)
+            VALUES('',?,?,?,?,?,?,?,?,?,?,?,?,?)
 SQL
         );
-        $ins = $req1->execute(array( $this->SIRET, $this->nom, $this->tel, $this->adresse, $this->typeJuridique, 
-          $this->site, $this->ville, $this->pays, $this->SIREN, $this->codeAPE, $this->logo, $this->numEntreneur, $this->codePostal));
+        $ins = $req1->execute(array($this->nom, $this->tel, $this->adresse, $this->typeJuridique, 
+          $this->site, $this->ville, $this->pays, $this->SIRET, $this->SIREN, $this->codeAPE, $this->logo, $this->numEntreneur, $this->codePostal));
 
         return $ins;
     }
    
    /** 
-    * Supprime l'offre de stage passer en parametre 
+    * Supprime l'offre de stage passer en parametre dans l'instance 
     * @param s id du stage à supprimer
     * @return True si l'offre à été supprimer, false sinon.
     */
 	public function supprOffre($s) {      
         unset($this->_stages[$s]);
 	}
+
+  //SETTER TO DO: .... 
+  // modifie la base de donnée Ou fais appel à save(). On fera appel au moins couteux
+
+  //GETTER TO DO: ....
 
 }
