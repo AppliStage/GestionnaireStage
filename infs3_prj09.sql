@@ -124,7 +124,8 @@ CREATE TABLE `Entreprise` (
   `SIREN` varchar(256) NOT NULL,
   `codeAPE` varchar(256) NOT NULL,
   `logo` varchar(256) DEFAULT NULL,
-  `numEntrepreneur` int(11) NOT NULL
+  `numEntrepreneur` int(11) NOT NULL,
+  `codePostal` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

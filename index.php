@@ -15,6 +15,7 @@ $p->appendToHead(<<<head
 head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
+$p->appendCssUrl("style/searchEngine.css");
 
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
@@ -50,7 +51,8 @@ $p->appendContent(<<<HTML
 
             <div id="stages" class="tab-pane fade in active">
               <div role="tabpanel" class="tab-pane active" id="stage">
-                <form class="form-inline">
+
+                <form class="form-inline searchEngine">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Quelle poste ?">
                   </div>
@@ -58,7 +60,128 @@ $p->appendContent(<<<HTML
                     <input type="text" class="form-control" placeholder="Ville, département, région ...">
                   </div>
                   <button type="submit" class="btn btn-default">Rechercher</button>
+
+                  <!--Recherche Avancée -->
+                  <a href="#" data-toggle="collapse" data-target="#demo" style="text-decoration:none;">Recherche avancée >></a>
+                  <div id="demo" class="collapse">
+
+                    <p class="bg-primary" style="margin-top:8px;"><strong><em>Formation: </em></strong></p>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Assurance, Banque, Immobilier
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Commerve, vente, distribution
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+
+                      <div class="col-md-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Droit, Sc Politique, Economie
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value=""> Informatique, Télécom
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+
+                      <div class="col-md-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Sciences, technologies
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value=""> Gestion, management, RH
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+                    </div> <!--end row 1-->
+
+                    <p class="bg-primary" style="margin-top:8px;"><strong><em>En France: </em></strong></p>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Alsace
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Aquitaine
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Auvergne
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Basse-Normandie
+                          </label>
+                        </div>
+                      </div> <!--end Colone -->
+
+                      <div class="col-md-4">
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Bourgogne
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Bretagne
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Champagne-Ardenne
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Corse
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+
+                      <div class="col-md-4">
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value=""> Haute-Normandie
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > île-de-France
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Limousin
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Lorraine
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+                    </div> <!--end row 2-->
+
+                  </div>
                 </form>
+
               </div>
             </div>
 
