@@ -29,7 +29,7 @@ class Stage {
     * Enregistre le stage dans la base de donnée.
     * Vérifi si la description et le titre ne contiennent pas de caractéres spéciaux.
     */
-   public function enregistrer(){
+   public function save(){
       // TODO: implement
       return false;
    }

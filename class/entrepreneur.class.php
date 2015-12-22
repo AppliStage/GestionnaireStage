@@ -2,6 +2,7 @@
 
 include_once "utilisateur.class.php";
 include_once "myPDO.include.php";
+include_once "entreprise.class.php";
 
 class AuthenticationException extends Exception { }
 
@@ -10,7 +11,7 @@ class MailUtiliser extends Exception { }
 class Entrepreneur extends Utilisateur {
    
    // Liste des entreprises géré par l'entrepreneur
-   private $entreprises;
+   private $entreprises = array();
    private $fonction;
    const session_key = "__user__";
 
@@ -45,7 +46,7 @@ SQL
 	    if (($entrepreneur = $rq1->fetch()) !== false) {
 	    	$_SESSION[self::session_key]['connected'] = true;
 
-	    	$entrepreneur->entreprises = array(); //TO-DO :  Liste d'entreprises
+	    	$entrepreneur->getEntreprises(); //TO-DO :  Liste d'entreprises
 	        return $entrepreneur ;
 	    }
 	    else {
@@ -53,6 +54,23 @@ SQL
 	    }	
 	}
 
+	/**
+	 * Met à jour la listes d'entreprises de l'instance.
+	 */
+	public function getEntreprises(){
+	    $pdo = myPDO::getInstance();
+
+	    $req = $pdo->prepare(<<<SQL
+	    	SELECT *
+	    	FROM Entrepreprise
+	    	WHERE numEntrepreneur = ?
+SQL
+		);
+	    $req->execute(array($this->id));
+	    $req->setFetchMode(PDO::FETCH_CLASS, 'Entreprise');
+
+	    $this->entreprises[] = $req->fetchAll();
+	}
 
 	/**
 	* Permet à un entrepreneur de s'inscrire dans la base de donnée
@@ -80,24 +98,6 @@ SQL
 						
 		$ins = $req1->execute(array($prenom,$nom,$mail,$fonction,sha1($pass),$tel));
 	}
-
-
-	/**
-	 * Ajoute une entreprise 
-	 * @throws si le paramétre n'est pas une entreprise
-	 */
-	public function addEntreprise($entreprise){
-		if (is_object($entreprise) && ($entreprise instanceof File)){
-			$this->entreprise = $entreprise;
-
-			$req1 = $pdo->prepare(); //TO-DO : Il manque une table entre les entpreprises et les entrepreneurs
-			$ins = $req1->execute(array($prenom,$nom,$mail,$fonction,sha1($pass),$tel));
-
-		}
-		else
-			throw new wrongTypeFile("Le parametre n'est pas une entreprise");
-	}
-	
 
 }
 

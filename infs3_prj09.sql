@@ -45,7 +45,7 @@ CREATE TABLE `Commentaire` (
   `loginEnseignant` varchar(8) NOT NULL,
   `contenu` text NOT NULL,
   `dateEnvoi` date NOT NULL,
-  `numEntreprise` int(11) NOT NULL
+  `SIRET` int(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -112,7 +112,7 @@ INSERT INTO `Entrepreneur` (`numEntrepreneur`, `prenom`, `nom`, `mail`, `fonctio
 --
 
 CREATE TABLE `Entreprise` (
-  `numEtreprise` int(11) NOT NULL,
+  `SIRET` varchar(14) NOT NULL,
   `nom` varchar(64) NOT NULL,
   `prenom` varchar(64) NOT NULL,
   `tel` varchar(14) NOT NULL,
@@ -121,7 +121,6 @@ CREATE TABLE `Entreprise` (
   `site` varchar(256) NOT NULL,
   `ville` varchar(256) NOT NULL,
   `pays` varchar(256) NOT NULL,
-  `SIRET` varchar(256) NOT NULL,
   `SIREN` varchar(256) NOT NULL,
   `codeAPE` varchar(256) NOT NULL,
   `logo` varchar(256) DEFAULT NULL,
@@ -175,7 +174,7 @@ CREATE TABLE `Stage` (
   `domaine` varchar(256) NOT NULL,
   `nbPoste` int(11) NOT NULL,
   `gratification` int(11) NOT NULL,
-  `numEntreprise` int(11) NOT NULL
+  `SIRET` int(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -194,7 +193,7 @@ ALTER TABLE `Administrateur`
 ALTER TABLE `Commentaire`
   ADD PRIMARY KEY (`numCommentaire`),
   ADD UNIQUE KEY `loginEnseignant` (`loginEnseignant`),
-  ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
+  ADD UNIQUE KEY `SIRET` (`SIRET`);
 
 --
 -- Index pour la table `Convention`
@@ -244,7 +243,7 @@ ALTER TABLE `postuler`
 --
 ALTER TABLE `Stage`
   ADD PRIMARY KEY (`numStage`),
-  ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
+  ADD UNIQUE KEY `SIRET` (`SIRET`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -289,7 +288,7 @@ ALTER TABLE `Stage`
 --
 ALTER TABLE `Commentaire`
   ADD CONSTRAINT `fk_commentaireEnseignant` FOREIGN KEY (`loginEnseignant`) REFERENCES `Enseignant` (`loginEnseignant`),
-  ADD CONSTRAINT `fk_commentaireEntreprise` FOREIGN KEY (`numEntreprise`) REFERENCES `Entreprise` (`numEtreprise`);
+  ADD CONSTRAINT `fk_commentaireEntreprise` FOREIGN KEY (`SIRET`) REFERENCES `Entreprise` (`numEtreprise`);
 
 --
 -- Contraintes pour la table `Convention`
@@ -310,7 +309,7 @@ ALTER TABLE `Entreprise`
 -- Contraintes pour la table `Stage`
 --
 ALTER TABLE `Stage`
-  ADD CONSTRAINT `fk_stageEntreprise` FOREIGN KEY (`numEntreprise`) REFERENCES `Entreprise` (`numEtreprise`);
+  ADD CONSTRAINT `fk_stageEntreprise` FOREIGN KEY (`SIRET`) REFERENCES `Entreprise` (`numEtreprise`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
