@@ -60,7 +60,7 @@ $p->appendContent(<<<HTML
                   <div id="demo" class="collapse">
 
                     <p class="bg-primary" style="margin-top:8px;"><strong><em>Formation: </em></strong></p>
-                    <div class="row">
+                    <div class="row"> <!-- ROW 1 -->
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
@@ -102,7 +102,7 @@ $p->appendContent(<<<HTML
                     </div> <!--end row 1-->
 
                     <p class="bg-primary" style="margin-top:8px;"><strong><em>En France: </em></strong></p>
-                    <div class="row">
+                    <div class="row"> <!-- ROW 2 -->
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>

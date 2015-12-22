@@ -147,7 +147,7 @@ abstract class Utilisateur{
 			function crypter(f, challenge) {
 			    if (f.mail.value.length && f.pass.value.length) {
 			    	if(f.mail.value.indexOf("@") == -1) 
-			    		window.location.href = "profile.php";
+			    		window.location.href = "profileURCA.php";
 			    	else{
 				    	f.code.value = SHA1(SHA1(f.pass.value)+challenge+SHA1(f.mail.value)) ;
 				        f.mail.value = f.pass.value = '' ;

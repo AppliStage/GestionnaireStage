@@ -46,30 +46,20 @@ SQL
 	    if (($entrepreneur = $rq1->fetch()) !== false) {
 	    	$_SESSION[self::session_key]['connected'] = true;
 
-	    	$entrepreneur->getEntreprises(); //TO-DO :  Liste d'entreprises
+		    $req = $pdo->prepare(<<<SQL
+		    	SELECT *
+		    	FROM Entreprise
+		    	WHERE numEntrepreneur = ?
+SQL
+			);
+		    $req->execute(array($entrepreneur->id));
+		    $entrepreneur->entreprises[] = $req->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+
 	        return $entrepreneur ;
 	    }
 	    else {
 	        throw new AuthenticationException("Login/pass incorrect") ;
 	    }	
-	}
-
-	/**
-	 * Met à jour la listes d'entreprises de l'instance.
-	 */
-	public function getEntreprises(){
-	    $pdo = myPDO::getInstance();
-
-	    $req = $pdo->prepare(<<<SQL
-	    	SELECT *
-	    	FROM Entrepreprise
-	    	WHERE numEntrepreneur = ?
-SQL
-		);
-	    $req->execute(array($this->id));
-	    $req->setFetchMode(PDO::FETCH_CLASS, 'Entreprise');
-
-	    $this->entreprises[] = $req->fetchAll();
 	}
 
 	/**
@@ -99,6 +89,16 @@ SQL
 		$ins = $req1->execute(array($prenom,$nom,$mail,$fonction,sha1($pass),$tel));
 	}
 
+
+
+	//Getter sur la fonction
+	public function getFonction(){
+		return $this->fonction;
+	}
+
+	public function getEntreprises(){
+		return $this->entreprises;
+	}
 }
 
 
