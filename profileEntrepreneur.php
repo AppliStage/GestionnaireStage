@@ -13,9 +13,11 @@ $p->appendToHead(<<<head
 head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
+$p->appendCssUrl("style/profileStyle.css");
 
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
+
 
 if($user instanceof Entrepreneur){
     //Desactive certaines fonctions sur la page si l'entrepreneur n'a pas d'entreprise
@@ -100,7 +102,7 @@ if($user instanceof Entrepreneur){
 
                         </div><!-- end Profile-->
 
-                        <div class="tab-pane fade in active" id="entreprises">
+                        <div class="tab-pane fade in " id="entreprises">
 
                           <div class="panel panel-default " >
                             <div class="panel-heading">
@@ -113,7 +115,7 @@ if($user instanceof Entrepreneur){
 
                         </div> <!-- end tab Content -->
 
-                        <div class="tab-pane fade in active" id="ajout">
+                        <div class="tab-pane fade in " id="ajout">
 
                           <div class="panel panel-default " >
                             <div class="panel-heading">

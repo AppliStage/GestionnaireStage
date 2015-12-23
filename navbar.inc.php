@@ -1,8 +1,9 @@
 <?php
-
 /********************************************
  * BAR DE NAVIGATION                        *
  ********************************************/
+require_once "class/entrepreneur.class.php";
+
 
 $pageCourrante =  $_SERVER['REQUEST_URI']; 
 
@@ -11,6 +12,13 @@ if (!Utilisateur::isConnected()){
   $profile = "";
 }
 else{
+
+  try{
+    $user = Utilisateur::createFromSession();
+  }catch(Exception $e){
+    $user = null;
+  }
+  ($user instanceof Entrepreneur) ? $profilePage = "profileEntrepreneur.php" : $profilePage = "profileURCA.php";
   $form = <<<HTML
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -20,7 +28,7 @@ else{
         </li>
       </ul>
 HTML;
-  $profile = "<li><a href='profile.php'>Profile</a></li>";
+  $profile = "<li><a href='{$profilePage}'>Profile</a></li>";
 }
 
 $p->appendContent(<<<HTML
