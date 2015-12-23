@@ -21,7 +21,14 @@ include_once "navbar.inc.php";
 
 if($user instanceof Entrepreneur){
     //Desactive certaines fonctions sur la page si l'entrepreneur n'a pas d'entreprise
-    (sizeof($user->getEntreprises())== 0)? $etat="" : $etat="disabled";
+    (sizeof($user->getEntreprises())!= 0)? $etat="" : $etat="disabled";
+
+
+    $nom= htmlspecialchars( $user->getNom() );
+    $prenom = htmlspecialchars( $user->getPrenom() );
+    $mail = htmlspecialchars( $user->getMail() );
+    $fonction = htmlspecialchars( $user->getFonction() );
+    $tel = htmlspecialchars( $user->getTel() );
 
     $p->appendContent(<<<HTML
         <div class="container">
@@ -44,24 +51,24 @@ if($user instanceof Entrepreneur){
                               <div class="panel-body">
                                 <form>
                                   <div class="form-group">
-                                    <label for="exampleInputEmail1">Nom</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="{$user->getNom()}">
+                                    <label for="nomEntrepreneur">Nom</label>
+                                    <input type="text" class="form-control" name="nomEntrepreneur" pattern="[a-zA-Z].+" placeholder="{$nom}">
                                   </div>
                                   <div class="form-group">
-                                    <label for="exampleInputEmail1">Prenom</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="{$user->getPrenom()}">
+                                    <label for="prenomEntrepreneur">Prenom</label>
+                                    <input type="text" class="form-control" name="prenomEntrepreneur" pattern="[a-zA-Z].+" placeholder="{$prenom}">
                                   </div>
                                   <div class="form-group">
-                                    <label for="exampleInputPassword1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputPassword1" placeholder="{$user->getMail()}">
+                                    <label for="mailEntrepreneur">Email</label>
+                                    <input type="email" class="form-control" name="mailEntrepreneur" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}">
                                   </div>
                                   <div class="form-group">
-                                    <label for="exampleInputPassword1">Fonction</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="{$user->getFonction()}">
+                                    <label for="fontionEntrepreneur">Fonction</label>
+                                    <input type="text" class="form-control" name="fontionEntrepreneur" placeholder="{$fonction}">
                                   </div>
                                   <div class="form-group">
-                                    <label for="exampleInputPassword1">Telephone</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="{$user->getTel()}">
+                                    <label for="telEntrepreneur">Telephone</label>
+                                    <input type="text" class="form-control" name="telEntrepreneur" placeholder="{$tel}">
                                   </div>
                                   <button type="submit" class="btn btn-success "><strong>Mise à jour</strong></button>
                                 </form>
@@ -76,15 +83,15 @@ if($user instanceof Entrepreneur){
                                 <form>
                                   <div class="form-group">
                                     <label for="exampleInputEmail1">Ancien mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleInputEmail1" >
+                                    <input type="password" class="form-control" name="exampleInputEmail1" >
                                   </div>
                                   <div class="form-group">
                                     <label for="exampleInputEmail1">Nouveau mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleInputEmail1" >
+                                    <input type="password" class="form-control" name="exampleInputEmail1" >
                                   </div>
                                   <div class="form-group">
                                     <label for="exampleInputPassword1">Confirmer le mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" >
+                                    <input type="password" class="form-control" name="exampleInputPassword1" >
                                   </div>
                                   <button type="submit" class="btn btn-success "><strong>Mettre à jour le mot de passe</strong></button>
                                 </form>
@@ -123,61 +130,70 @@ if($user instanceof Entrepreneur){
                             </div>
                             <div class="panel-body">                       
                               <div class="jumbotron"> <!-- Ajout d'une entreprise -->
-                                  <div class="row">
+                                  <!--<div class="row">
                                     <div class="col-xs-6 ">
+
                                       <a href="#" class="thumbnail">
                                         <img src="style/images/thumbnail.png" alt="image par default">
                                       </a>
-                                          <label for="mon_fichier">Upload un logo: </label>
+                                          <label for="logo">Upload un logo: </label>
                                           <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-                                          <input type="file" name="mon_fichier" id="mon_fichier" />
+                                          <input type="file" name="logo" id="mon_fichier" />
                                     </div>
-                                  </div>
+                                  </div>-->
                                   <div class="row">
-                                    <form >
+                                    <form methode="GET" action="ajout-Entreprise.php">
                                       <div class="col-xs-6 ">
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">Nom</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                                            <label for="nom">Nom</label>
+                                            <input type="text" class="form-control" name="nom" placeholder="Nom" pattern="[a-zA-Z].+" required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputPassword1">Site internet</label>
-                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="ex: exemple.site.fr">
+                                            <label for="site">Site internet</label>
+                                            <input type="text" class="form-control" name="site" placeholder="ex: exemple.site.fr" required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputPassword1">Telephone</label>
-                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder=" 06 00 00 00 00 ">
+                                            <label for="tel">Telephone</label>
+                                            <input type="text" class="form-control" name="tel" placeholder=" 06 00 00 00 00 " required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputPassword1">Pays</label>
-                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="">
+                                            <label for="pays">Pays</label>
+                                            <input type="text" class="form-control" name="pays" placeholder="ex: France" required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">codePostale</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="ex: 51100">
+                                            <label for="codePostale">codePostale</label>
+                                            <input type="text" class="form-control" name="codePostal" placeholder="ex: 51100" pattern="[0-9]{5}" required>
                                           </div>
                                           <button type="submit" class="btn btn-success "><strong>Ajouter l'entreprise</strong></button>
                                       </div>
                                       <div class="col-xs-6 ">
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">Ville</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Reims">
+                                            <label for="ville">Ville</label>
+                                            <input type="text" class="form-control" name="ville" placeholder="Reims" required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">SIREN</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                                            <label for="ville">Adresse</label>
+                                            <input type="text" class="form-control" name="adresse" placeholder="ex: 4 chemin des roulier" required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">SIRET</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                                            <label for="<SIREN">SIREN</label>
+                                            <input type="text" class="form-control" name="SIREN" placeholder="" pattern="[0-9]{9}" required>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">typeJurydique</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                                            <label for="SIRET">SIRET</label>
+                                            <input type="text" class="form-control" name="SIRET" placeholder="" pattern="[0-9]{14}" required>
+                                          </div>
+ 
+                                          <div class="form-group" >
+                                            <label for="typeJurydique">typeJurydique</label>
+                                            <select name="typeJurydique" required>
+                                              <option value="SA">SA</option>
+                                              <option value="SARL">SARL</option>
+                                            </select>
                                           </div>
                                           <div class="form-group">
-                                            <label for="exampleInputEmail1">codeAPE</label>
-                                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="">
+                                            <label for="codeAPE">codeAPE</label>
+                                            <input type="text" class="form-control" name="codeAPE" placeholder="" required>
                                           </div>
                                       </div>
                                     </form>

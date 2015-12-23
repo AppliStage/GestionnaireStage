@@ -117,14 +117,15 @@ CREATE TABLE `Entreprise` (
   `tel` varchar(14) NOT NULL,
   `adresse` varchar(256) NOT NULL,
   `typeJuridique` varchar(256) NOT NULL,
-  `site` varchar(256) NOT NULL,
+  `site` varchar(256) DEFAULT NULL,
   `ville` varchar(256) NOT NULL,
   `pays` varchar(256) NOT NULL,
-  `SIRET` varchar(256) NOT NULL,
-  `SIREN` varchar(256) NOT NULL,
+  `SIRET` int(14) NOT NULL,
+  `SIREN` int(9) NOT NULL,
   `codeAPE` varchar(256) NOT NULL,
   `logo` varchar(256) DEFAULT NULL,
-  `numEntrepreneur` int(11) NOT NULL
+  `numEntrepreneur` int(11) NOT NULL,
+  `numEntreprise` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

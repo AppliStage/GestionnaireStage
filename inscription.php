@@ -31,6 +31,10 @@ if(isset($_GET['ins'])){
 		$contenu = "Nous ne pouvons pas vous enregistrer. Cette adresse mail a déjà été utilsé.";
 	}
 }
+else{
+	$action ="";
+	$contenu ="";
+}
 
 $p->appendContent(<<<HTML
 
@@ -53,53 +57,6 @@ $p->appendContent(<<<HTML
         <button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
       </form>
 
-				<!--<form class="form-horizontal" name="inscription" method="POST" action="enregistrement.php">
-					<h2 class="form-signup-heading">Inscrivez vous</h2>
-					  <div class="form-group">
-					    <label for="inputNom" class="col-sm-2 control-label">Nom: </label>
-					    <div class="col-sm-10">
-					      <input type="text" id="inputNom" name = "nom" class="form-control" pattern="[a-zA-Z].+" required>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="inputPrenom" class="col-sm-2 control-label">Prenom: </label>
-					    <div class="col-sm-10">
-					      <input type="text" id="inputPrenom" name="prenom" class="form-control" pattern="[a-zA-Z].+"required>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="inputEmail3" class="col-sm-2 control-label">Email: </label>
-					    <div class="col-sm-10">
-					      <input type="email" class="form-control" name="mail" id="inputEmail3" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-					    <div class="col-sm-10">
-					      <input type="password" class="form-control"  name ="pass" id="inputPassword3" pattern="[0-9A-Za-z]{8,64}" required>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="inputEmail3" class="col-sm-2 control-label">Tel: </label>
-					    <div class="col-sm-10">
-					      <input type="tel" class="form-control" id="inputTel" name="tel" >
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-10">
-					      <div class="checkbox">
-						<label>
-						  <input type="checkbox"> Remember me
-						</label>
-					      </div>
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-10">
-					    	<button class="btn btn-lg btn-primary btn-block" type="submit">S'inscrire</button>
-					    </div>
-					  </div>
-				</form>-->
 	    <div id="alert" class="alert alert-{$action} collapse" role="alert">
 	        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 	        <strong>{$contenu}</strong>

@@ -6,6 +6,8 @@ include_once "entreprise.class.php";
 
 class AuthenticationException extends Exception { }
 
+class wrongEntryException extends Exception { }
+
 class MailUtiliser extends Exception { }
 
 class Entrepreneur extends Utilisateur {
@@ -46,15 +48,8 @@ SQL
 	    if (($entrepreneur = $rq1->fetch()) !== false) {
 	    	$_SESSION[self::session_key]['connected'] = true;
 
-		    $req = $pdo->prepare(<<<SQL
-		    	SELECT *
-		    	FROM Entreprise
-		    	WHERE numEntrepreneur = ?
-SQL
-			);
-		    $req->execute(array($entrepreneur->id));
-		    $entrepreneur->entreprises[] = $req->fetchAll(PDO::FETCH_CLASS, "Entreprise");
-
+		    $entrepreneur->entreprises[] = Entreprise::creatFromId($entrepreneur);
+		    
 	        return $entrepreneur ;
 	    }
 	    else {
@@ -89,7 +84,39 @@ SQL
 		$ins = $req1->execute(array($prenom,$nom,$mail,$fonction,sha1($pass),$tel));
 	}
 
+	/**
+	 * Mes à jour une entrepreprise observé par l'entrepreneur
+	 * @param L'entreprise modifié
+	 * @throws si le parametre n'est pas une entreprise
+	 */
+	public function notifyUpdate( $entreprise){
+		if(is_object($entreprise) && $entreprise instanceof Entreprise){
 
+			for($i =0; $i < sizeof($this->entreprises);$i++) {
+				if($entreprise->getId() == $this->entreprises[$i]->getId()){
+					$this->entreprises[$i] = $entreprise; 
+				}
+			}
+		}
+		else
+			throw new wrongEntryException("Le paramentre n'est pas une instance 'Entreprise'. ");
+
+	}
+
+
+	/**
+	 * Ajoute une entreprise observé par l'utilisateur
+	 * @param L'entreprise rajouté
+	 * @throws si le parametre n'est pas une entreprise
+	 */
+	public function notifyAjout( $entreprise){
+		if(is_object($entreprise) && $entreprise instanceof Entreprise){
+		    $this->entreprises[] = $entreprise;
+		}
+		else
+			throw new wrongEntryException("Le paramentre n'est pas une instance 'Entreprise'. ");
+
+	}
 
 	//Getter sur la fonction
 	public function getFonction(){
@@ -98,6 +125,10 @@ SQL
 
 	public function getEntreprises(){
 		return $this->entreprises;
+	}
+
+	public function addEntreprise($entreprise){
+		$this->entreprises[] = $entreprise;
 	}
 }
 
