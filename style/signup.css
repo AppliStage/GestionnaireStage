@@ -1,15 +1,43 @@
-.form-horizontal {
-  margin: auto auto auto 55px;
-  display:inline-block;
-  width:420px;
-  vertical-align:top;
+body {
+	background-image:url("images/the-background-968350.jpg");
 }
-.inlineP {
-  width:45%;
-  display:inline-block;
+
+.form-signin-heading{
+	color:#FFF;
+	text-align: center;
 }
-.form-signup .form-signup-heading,
-.form-signup .checkbox {
-  margin-top:0px;
-  margin-bottom: 20px;
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: auto auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

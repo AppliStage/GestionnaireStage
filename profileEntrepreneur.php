@@ -76,15 +76,15 @@ if($user instanceof Entrepreneur){
                                 <form>
                                   <div class="form-group">
                                     <label for="exampleInputEmail1">Ancien mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleInputEmail1" placeholder="{$user->getNom()}">
+                                    <input type="password" class="form-control" id="exampleInputEmail1" >
                                   </div>
                                   <div class="form-group">
                                     <label for="exampleInputEmail1">Nouveau mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleInputEmail1" placeholder="{$user->getPrenom()}">
+                                    <input type="password" class="form-control" id="exampleInputEmail1" >
                                   </div>
                                   <div class="form-group">
                                     <label for="exampleInputPassword1">Confirmer le mot de passe</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="{$user->getMail()}">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" >
                                   </div>
                                   <button type="submit" class="btn btn-success "><strong>Mettre à jour le mot de passe</strong></button>
                                 </form>
@@ -126,7 +126,7 @@ if($user instanceof Entrepreneur){
                                   <div class="row">
                                     <div class="col-xs-6 ">
                                       <a href="#" class="thumbnail">
-                                        <img src="style/glyphicons_free/thumbnail.png" alt="image par default">
+                                        <img src="style/images/thumbnail.png" alt="image par default">
                                       </a>
                                           <label for="mon_fichier">Upload un logo: </label>
                                           <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
