@@ -26,7 +26,8 @@ if($user instanceof Entrepreneur){
     if($entreprises[0] != null){
       $etat="" ;
       
-      foreach ($entreprises as $key => $value) {
+      foreach ($entreprises[0] as $key => $value) {
+        //var_dump($value);
         $id= htmlspecialchars( $value->getId() );
         $nom = htmlspecialchars( $value->getNom() );
         $listEntreprises .= "<a href='entreprise.php?id={$id}' class='list-group-item'>{$nom}</a>";

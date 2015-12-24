@@ -7,6 +7,9 @@ require_once "class/entrepreneur.class.php";
 
 $pageCourrante =  $_SERVER['REQUEST_URI']; 
 
+//Varibale commune
+$user = null;
+
 if (!Utilisateur::isConnected()){
   $form = Utilisateur::loginFormSHA1("cible.php");
   $profile = "";
@@ -16,7 +19,6 @@ else{
   try{
     $user = Utilisateur::createFromSession();
   }catch(Exception $e){
-    $user = null;
   }
   ($user instanceof Entrepreneur) ? $profilePage = "profileEntrepreneur.php" : $profilePage = "profileURCA.php";
   $form = <<<HTML
