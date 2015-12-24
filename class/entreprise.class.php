@@ -4,7 +4,7 @@ include_once "myPDO.include.php";
 
 class Entreprise {
    
-   private $numEntreprise ="";
+   private $numEntreprise ;
    private $nom;
    private $tel;
    private $adresse;
@@ -20,7 +20,7 @@ class Entreprise {
    private $stages =  array(); //Liste des offre de l'entreprise.
    private $codePostal;
 
-   private $entrepreneur; //Observeur de l'objet
+   private $entrepreneur = null; //Observeur de l'objet
 
 
     public function __construct(){ }
@@ -30,36 +30,29 @@ class Entreprise {
      * @return un tableau d'entreprise.
      */
     public static function creatFromId($entrepreneur){
-      $pdo = myPDO::getInstance();
+        $pdo = myPDO::getInstance();
 
         $req = $pdo->prepare(<<<SQL
           SELECT numEntreprise, nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntrepreneur,codePostal
           FROM Entreprise
           WHERE numEntrepreneur = ?
 SQL
-      );
+        );
         $req->execute(array( $entrepreneur->getId() ));
-	$listEntreprise = $req->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+      	$listEntreprise = $req->fetchAll(PDO::FETCH_CLASS, "Entreprise");
 
-	//Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
-	foreach($listEntreprise as $entreprise){
-		$entreprise->entrepreneur = $entrepreneur;
-	}
+      	//Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
+      	foreach($listEntreprise as $entreprise){
+      		$entreprise->entrepreneur = $entrepreneur;
+      	}
         return $listEntreprise;
     }
 
     /**
      * Alerte l'observeur qu'une entreprise lui à été attribué
      */
-    private function notifyAjoutObs(){
-	$this->entrepreneur->notifyAjout($this);
-    }
-
-    /**
-     * Alerte l'observeur qu'une entreprise à été modifié
-     */
-    private function notifyUpdateObs(){
-	$this->entrepreneur->notifyUpdate($this);
+    private function notifyObs(){
+      $this->entrepreneur->notify();
     }
 
    /** 
@@ -89,38 +82,39 @@ SQL
         if($req->fetch() != false){
 
             $req = $pdo->prepare(<<<SQL
-	        UPDATE Entreprise
-	        SET nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntrepreneur,codePostal
-	        WHERE nom = ? 
-	        AND tel= ? 
-	        AND  adresse= ? 
-	        AND  typeJuridique= ? 
-	        AND site= ? AND  ville= ? 
-	        AND  pays= ? AND  SIRET= ? 
-	        AND  SIREN= ? AND  codeAPE= ? 
-	        AND  logo= ? AND  numEntrepreneur= ? 
-	        AND codePostal= ?
+    	        UPDATE Entreprise
+    	        SET nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntrepreneur,codePostal
+    	        WHERE nom = ? 
+    	        AND tel= ? 
+    	        AND  adresse= ? 
+    	        AND  typeJuridique= ? 
+    	        AND site= ? AND  ville= ? 
+    	        AND  pays= ? AND  SIRET= ? 
+    	        AND  SIREN= ? AND  codeAPE= ? 
+    	        AND  logo= ? AND  numEntrepreneur= ? 
+    	        AND codePostal= ?
 SQL
             );
             $update = $req->execute(array($this->nom, $this->tel, $this->adresse, $this->typeJuridique, 
           $this->site, $this->ville, $this->pays, $this->SIRET, $this->SIREN, $this->codeAPE, $this->logo, $this->entrepreneur->getId(), $this->codePostal));
 	
-	    if($update)
-		$this->notifyUpdateObs();
-	}else{
+      	    if($update)
+      		    $this->notifyObs();
 
-        $req1 = $pdo->prepare(<<<SQL
-            INSERT INTO Entreprise (numEntreprise, nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntrepreneur,codePostal)
-            VALUES('',?,?,?,?,?,?,?,?,?,?,?,?,?)
+	      }else{
+
+          $req1 = $pdo->prepare(<<<SQL
+              INSERT INTO Entreprise (numEntreprise, nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntrepreneur,codePostal)
+              VALUES('',?,?,?,?,?,?,?,?,?,?,?,?,?)
 SQL
-        );
-        $ins = $req1->execute(array($this->nom, $this->tel, $this->adresse, $this->typeJuridique, 
-          $this->site, $this->ville, $this->pays, $this->SIRET, $this->SIREN, $this->codeAPE, $this->logo, $this->entrepreneur->getId(), $this->codePostal));
-	
-	// Si la BD a été modidé, on prévient l'entrepreneur
-	if ($ins)
-	    $this->notifyAjoutObs();
-	}
+          );
+          $ins = $req1->execute(array($this->nom, $this->tel, $this->adresse, $this->typeJuridique, 
+            $this->site, $this->ville, $this->pays, $this->SIRET, $this->SIREN, $this->codeAPE, $this->logo, (int)$this->entrepreneur->getId(), $this->codePostal));
+  	
+          	// Si la BD a été modidé, on prévient l'entrepreneur
+          	if ($ins)
+          	    $this->notifyObs();
+      	}
     }
 
    
@@ -136,6 +130,60 @@ SQL
   //SETTER TO DO: .... 
   // modifie la base de donnée Ou fais appel à save(). On fera appel au moins couteux
 
+  public function setNom($nom){
+    $this->nom = $nom;
+	}
+
+  public function setTel($tel){
+    $this->tel = $tel;
+  }
+
+  public function setAdresse($adresse){
+    $this->adresse = $adresse;
+  }
+
+  public function setTypeJuridique($type){
+    $this->typeJuridique = $type;
+  }
+
+  public function setSite($site){
+    $this->site = $site;
+  }
+
+  public function setPays($pays){
+    $this->pays = $pays;
+  }
+
+  public function setSIRET($s){
+    $this->SIRET = $s;
+  }
+
+  public function setSIREN($s){
+    $this->SIREN = $s;
+  }
+
+  public function setCodeAPE($c){
+    $this->codeAPE = $c;
+  }
+
+  public function setLogo($logo){
+    $this->logo = $logo;
+  }
+
+  public function setVille($ville){
+    $this->ville = $ville;
+  }
+
+  public function setCodePostal($c){
+    $this->codePostal = $c;
+  }
+
+  public function setEntrepreneur($c){
+    $this->entrepreneur = $c;
+  }
+
+
+
   //GETTER TO DO: ....
 
     public function getNom(){
@@ -143,7 +191,7 @@ SQL
     }
 
     public function getId(){
-	return $this->numEntreprise;
+	   return $this->numEntreprise;
     }
 
 }

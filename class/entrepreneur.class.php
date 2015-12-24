@@ -85,37 +85,13 @@ SQL
 	}
 
 	/**
-	 * Mes à jour une entrepreprise observé par l'entrepreneur
-	 * @param L'entreprise modifié
-	 * @throws si le parametre n'est pas une entreprise
-	 */
-	public function notifyUpdate( $entreprise){
-		if(is_object($entreprise) && $entreprise instanceof Entreprise){
-
-			for($i =0; $i < sizeof($this->entreprises);$i++) {
-				if($entreprise->getId() == $this->entreprises[$i]->getId()){
-					$this->entreprises[$i] = $entreprise; 
-				}
-			}
-		}
-		else
-			throw new wrongEntryException("Le paramentre n'est pas une instance 'Entreprise'. ");
-
-	}
-
-
-	/**
-	 * Ajoute une entreprise observé par l'utilisateur
+	 * Réinitialise la lites d'entreprse de l'objet courrant
 	 * @param L'entreprise rajouté
-	 * @throws si le parametre n'est pas une entreprise
 	 */
-	public function notifyAjout( $entreprise){
-		if(is_object($entreprise) && $entreprise instanceof Entreprise){
-		    $this->entreprises[] = $entreprise;
-		}
-		else
-			throw new wrongEntryException("Le paramentre n'est pas une instance 'Entreprise'. ");
-
+	public function notify(){
+		$this->entreprises = Entreprise::creatFromId($this);
+		self::startSession();
+		$this->saveIntoSession();
 	}
 
 	//Getter sur la fonction

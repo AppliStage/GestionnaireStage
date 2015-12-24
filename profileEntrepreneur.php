@@ -20,10 +20,22 @@ include_once "navbar.inc.php";
 
 
 if($user instanceof Entrepreneur){
-    //Desactive certaines fonctions sur la page si l'entrepreneur n'a pas d'entreprise
-    (sizeof($user->getEntreprises())!= 0)? $etat="" : $etat="disabled";
+    //Desactive certaines fonctions sur la page si l'entrepreneur n'a pas d'entrepris
+    $entreprises=  $user->getEntreprises();
+    $listEntreprises ="";
+    if($entreprises[0] != null){
+      $etat="" ;
+      
+      foreach ($entreprises as $key => $value) {
+        $id= htmlspecialchars( $value->getId() );
+        $nom = htmlspecialchars( $value->getNom() );
+        $listEntreprises .= "<a href='entreprise.php?id={$id}' class='list-group-item'>{$nom}</a>";
+      }
+    }else{
+      $etat="disabled";
+    }
 
-
+    
     $nom= htmlspecialchars( $user->getNom() );
     $prenom = htmlspecialchars( $user->getPrenom() );
     $mail = htmlspecialchars( $user->getMail() );
@@ -111,14 +123,22 @@ if($user instanceof Entrepreneur){
 
                         <div class="tab-pane fade in " id="entreprises">
 
-                          <div class="panel panel-default " >
+
+                          <div class="list-group">
+                            <a href="#" class="list-group-item disabled">
+                             <h3 class="panel-title"><strong>Entreprises</strong></h3>
+                            </a>
+                            {$listEntreprises}
+                          </div>
+
+                          <!--<div class="panel panel-default " >
                             <div class="panel-heading">
                               <h3 class="panel-title"><strong>Entreprises</strong></h3>
                             </div>
                             <div class="panel-body">                       
                               ...
                             </div>
-                          </div>
+                          </div> -->
 
                         </div> <!-- end tab Content -->
 
