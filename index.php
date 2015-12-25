@@ -1,7 +1,6 @@
 <?php
 include_once 'autoload.inc.php';
-include "class/utilisateur.class.php";
-include "class/entrepreneur.class.php";
+include_once 'init.inc.php';
 
 
 $p = new webpage("Iut Stage");
@@ -23,12 +22,6 @@ include_once "navbar.inc.php";
 $p->appendContent(<<<HTML
 
     <div class="container">
-
-      <div id="alert" class="alert alert-danger collapse" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Hmm... Le login et le mot de passe ne correspond à aucun compte connue.</strong>
-        <button type="button" class="btn btn-danger">J'ai oublié mon mot de passe</button>
-      </div>
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
@@ -242,21 +235,5 @@ $p->appendToFooter(<<<Footer
 Footer
 );
 
-if(isset($_GET['err']) && $_GET['err'] == "log"){
-  $p->appendToFooter(<<<Footer
-    <script>
-      $(document).ready(function(){
-          $('#alert').show();
-          /*
-          $(".nav-tabs a").click(function(){
-              $(this).tab('show');
-          });
-          */
-      });
-    </script>
-Footer
-);
-
-}
 
 echo $p->toHTML();

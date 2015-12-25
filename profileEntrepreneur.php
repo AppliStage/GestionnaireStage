@@ -1,6 +1,8 @@
 <?php
-
+include_once 'class/entrepreneur.class.php';
+include_once 'init.inc.php';
 require_once "autoload.inc.php";
+
 
 $p = new webpage("Iut Stage");
 $p->appendToHead(<<<head

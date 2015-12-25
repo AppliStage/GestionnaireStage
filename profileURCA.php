@@ -1,6 +1,6 @@
 <?php
-
 require_once "autoload.inc.php";
+include_once "init.inc.php";
 
 $p = new webpage("Iut Stage");
 $p->appendToHead(<<<head
@@ -14,11 +14,6 @@ head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("style/profileStyle.css");
-
-//Connexion au cas
-include_once "authCas.inc.php";
-
-$user = Utilisateur::createFromSession();
 
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";

@@ -133,7 +133,7 @@ abstract class Utilisateur{
      *
      * @return string code HTML du formulaire
      */
-    static public function loginFormSHA1($action, $submitText = 'Sign in') {
+    static public function loginFormSHA1($action, $submitText = 'Connexion') {
         $texte_par_defaut = 'login' ;
         // Mise en place de la session
         self::startSession() ;
@@ -158,23 +158,18 @@ abstract class Utilisateur{
 			}
 			</script>
 
-			<ul class="nav navbar-nav navbar-right">
-				<li>
-				  <form method="POST" action="{$action}" name="connexion" class="navbar-form navbar-left" onSubmit="return crypter(this, '{$_SESSION[self::session_key]['challenge']}')">
-					<div class="form-group">
-					  <label class="sr-only" for="mail">Email address</label>
-					  <input type="text" class="form-control" name="mail" placeholder="Email ou login">
-					</div>
-					<div class="form-group">
-					  <label class="sr-only" for="pass">Password</label>
-					  <input type="password" class="form-control" name="pass" placeholder="Password">
-					  <input type='hidden' name='code'>
-					</div>
-					<button type="submit" class="btn btn-default">{$submitText}</button>
-					<a class="btn btn-primary" href="inscription.php" role="button">Sign up</a>
-				  </form>
-				</li>
-	        </ul>
+	      <form class="form-signin" method="POST" action="{$action}" name="connexion" onSubmit="return crypter(this, '{$_SESSION[self::session_key]['challenge']}')">
+	        <h2 class="form-signin-heading">IUTStage R.C.C</h2>
+
+	        <label class="sr-only" for="mail">Email address</label>
+	        <input type="text" class="form-control" name="mail" placeholder="Email ou login" required>
+	        <label class="sr-only" for="pass">Password</label>
+	        <input type="password" class="form-control" name="pass" placeholder="Password" required>
+	        <input type='hidden' name='code'>
+	        
+	        <button class="btn btn-lg btn-primary btn-block" type="submit">{$submitText}</button>
+	        <a href="inscription.php" class="btn btn-lg btn-success btn-block" role="button">S'inscrire</a>
+	      </form>
 HTML;
     }
 

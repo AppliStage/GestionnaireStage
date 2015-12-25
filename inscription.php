@@ -1,6 +1,7 @@
 <?php
 include 'autoload.inc.php';
 
+
 $p = new webpage("Iut Stage");
 $p->appendToHead(<<<head
     <meta charset="utf-8">
@@ -14,12 +15,6 @@ head
 
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("style/signup.css");
-
-//$p->appendJsUrl('js/request.js') ;
-$p->appendJsUrl("js/sha1.js");
-
-//inclusion de la barre de navigation
-include_once "navbar.inc.php";
 
 //Gestion des réponse de l'enregistrement d'un entrepreneur
 if(isset($_GET['ins'])){

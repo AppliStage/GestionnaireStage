@@ -1,5 +1,5 @@
 <?php
-
+include_once "class/etudiant.class.php";
 require_once "CAS-1.3.4/CAS.php";
 require_once "config.php";
 
@@ -14,11 +14,6 @@ phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context, false);
 
 // no SSL validation for the CAS server
 phpCAS::setNoCasServerValidation();
-
-if (isset($_REQUEST['logout'])) {
-	phpCAS::logoutWithRedirectService("http://localhost/www/GestionnaireStage/index.php");
-	exit;
-}
 
 // force CAS authentication
 if(phpCAS::forceAuthentication()) {
@@ -43,9 +38,5 @@ if(phpCAS::forceAuthentication()) {
 			echo $e->getMessage();
 		}
 	}
-
 }
-
-
-
 

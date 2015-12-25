@@ -10,5 +10,5 @@ try{
 	exit;
 }catch(Exception $e){
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
-	header("Location: index.php?err=log");
+	header("Location: authentification-cas.php?err=log");
 }

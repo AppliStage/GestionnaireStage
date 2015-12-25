@@ -7,32 +7,8 @@ require_once "class/entrepreneur.class.php";
 
 $pageCourrante =  $_SERVER['REQUEST_URI']; 
 
-//Varibale commune
-$user = null;
 
-if (!Utilisateur::isConnected()){
-  $form = Utilisateur::loginFormSHA1("cible.php");
-  $profile = "";
-}
-else{
-
-  try{
-    $user = Utilisateur::createFromSession();
-  }catch(Exception $e){
-  }
-  ($user instanceof Entrepreneur) ? $profilePage = "profileEntrepreneur.php" : $profilePage = "profileURCA.php";
-  $form = <<<HTML
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <form method="POST" action="{$pageCourrante}?logout=true" name="connexion" class="form-inline" style="padding-top:8px">
-           <button type="submit" class="btn btn-default" name="logout">Déconnexion</button>
-          </form>
-        </li>
-      </ul>
-HTML;
-  $profile = "<li><a href='{$profilePage}'>Profile</a></li>";
-}
-
+($user instanceof Entrepreneur) ? $profilePage = "profileEntrepreneur.php" : $profilePage = "profileURCA.php";
 $p->appendContent(<<<HTML
     <!-- Static navbar -->
     <nav class="navbar navbar-default navbar-static-top">
@@ -51,17 +27,19 @@ $p->appendContent(<<<HTML
             <li class="active"><a href="index.php">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            {$profile}
+            <li><a href='{$profilePage}'>Profile</a></li>
           </ul>
-          {$form}
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <form method="POST" action="{$pageCourrante}?logout=true" name="connexion" class="form-inline" style="padding-top:8px">
+               <button type="submit" class="btn btn-default" name="logout">Déconnexion</button>
+              </form>
+            </li>
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 HTML
 );
 
-if (isset($_REQUEST['logout'])) { 
-  Utilisateur::logoutIfRequested();
-  header("Location: index.php");
-  exit;
-}
+
