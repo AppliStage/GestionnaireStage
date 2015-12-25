@@ -24,7 +24,7 @@ if($user instanceof Entrepreneur ) {
 
 	$entrepreneurValide = false;
 	$entreprises = $user->getEntreprises();
-	foreach ($entreprises[0] as $key => $entreprise) {
+	foreach ($entreprises as $key => $entreprise) {
 		if($entreprise->getId() == $_REQUEST['id'])
 			$entrepreneurValide = true;
 	}

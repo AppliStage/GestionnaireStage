@@ -13,7 +13,7 @@ class MailUtiliser extends Exception { }
 class Entrepreneur extends Utilisateur {
    
    // Liste des entreprises géré par l'entrepreneur
-   private $entreprises = array();
+   private $entreprises;
    private $fonction;
    const session_key = "__user__";
 
@@ -48,7 +48,7 @@ SQL
 	    if (($entrepreneur = $rq1->fetch()) !== false) {
 	    	$_SESSION[self::session_key]['connected'] = true;
 
-		    $entrepreneur->entreprises[] = Entreprise::creatFromId($entrepreneur);
+		    $entrepreneur->entreprises = Entreprise::creatFromId($entrepreneur);
 		    
 	        return $entrepreneur ;
 	    }
