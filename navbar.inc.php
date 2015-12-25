@@ -20,11 +20,11 @@ $p->appendContent(<<<HTML
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">GestionnaireStage</a>
+          <a class="navbar-brand" href="home.php">GestionnaireStage</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.php">Home</a></li>
+            <li class="active"><a href="home.php">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li><a href='{$profilePage}'>Profile</a></li>

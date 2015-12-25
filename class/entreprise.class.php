@@ -1,5 +1,4 @@
 <?php
-
 include_once "myPDO.include.php";
 
 class Entreprise {

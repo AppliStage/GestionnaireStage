@@ -11,7 +11,7 @@ if(!Utilisateur::isConnected()){
 try{
   $user = Utilisateur::createFromSession();
 }catch(Exception $e){
-	header("Location: authCas.inc.php");
+	header("Location: index.php");
 	exit;
 }
 
@@ -22,10 +22,6 @@ if (isset($_REQUEST['logout'])) {
   if (isset($_SESSION['phpCAS'])){
     require_once "CAS-1.3.4/CAS.php";
     require_once "config.php";
-
-    /* TO-DO : 
-     * - Crée une gateway pour que les enseignant et les etudiants puissent ce log depuis le formulaure de l'application.
-     */
 
     // Enable debugging
     phpCAS::setDebug();
@@ -38,7 +34,7 @@ if (isset($_REQUEST['logout'])) {
   }
   else{
     Utilisateur::logoutIfRequested();
-    header("Location: authentification-cas.php");
+    header("Location: index.php");
     exit;
   }
 

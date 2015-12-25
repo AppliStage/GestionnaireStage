@@ -1,37 +1,61 @@
 <?php
+include_once "entreprise.class.php";
 
 class Stage {
-   // Debut d'un stage
-   private $_dateDebut =null;
-   // Fin d'un stage
-   private $_dateFin = null;
    // Titre d'un stage
-   private $_titre = null;
+   private $titre;
+   // Debut d'un stage
+   private $dateDebut;
+   // Fin d'un stage
+   private $dateFin;
    // Description d'un stage
-   private $_description = null;
+   private $description;
    // Identifiant d'un stage, si il est enregistrer
-   private $_id = null;
-   
+   private $id;
+   //Domaine du stage
+   private $domaine;
    // L'entreprise qui accueil
-   private $_entreprise = null;
+   private $entreprise;
    // Enseignant garant du stage
-   private $_garantStage = null;
+   private $gratification;
    
    /**
     * Constructeur d'un Stage, 
-    * L'id et le garant sont defnit si le stage à déjà été enregistrer.
     */
-   public function __construct(){
-      
-   }
+   public function __construct(){ }
 
+
+   /**
+    * Construit tous les stages d'une entreprise
+    * @param un objet entreprise
+    * @return un Array()
+    */
    public static getAll($entreprise){
+      if (is_object($entreprise) && $entreprise instanceof Entreprise){
+        $pdo = myPDO::getInstance();
 
+        $req = $pdo->prepare(<<<SQL
+          SELECT numStage AS 'id', titre, dateFin, dateDebut, description, domain, nbPoste, gratification, numEntreprise
+          FROM Stage
+          WHERE numEntreprise = ?
+SQL
+        );
+        $req->execute(array( $this->entreprise->getId() ));
+        $listEntreprise = $req->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+
+        //Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
+        foreach($listEntreprise as $entreprise){
+          $entreprise->entrepreneur = $entrepreneur;
+        }
+        return $listEntreprise;
+      }
+      else 
+        throw wrongEntryException();
    }
 
    /**
     * Enregistre le stage dans la base de donnée.
-    * Vérifi si la description et le titre ne contiennent pas de caractéres spéciaux.
+    * 
     */
    public function save(){
         $pdo = myPDO::getInstance();

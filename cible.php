@@ -6,9 +6,9 @@ include "class/entrepreneur.class.php";
 try{
 	$entrepreneur = Entrepreneur::createFromAuthSHA1($_REQUEST);
 	$entrepreneur->saveIntoSession();
-	header("Location: index.php");
+	header("Location: home.php");
 	exit;
 }catch(Exception $e){
 	echo 'Caught exception: ',  $e->getMessage(), "\n";
-	header("Location: authentification-cas.php?err=log");
+	header("Location: index.php?err=log");
 }
