@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 24 Décembre 2015 à 11:17
+-- Généré le :  Ven 25 Décembre 2015 à 16:09
 -- Version du serveur :  10.1.9-MariaDB
 -- Version de PHP :  5.6.15
 
@@ -103,7 +103,8 @@ INSERT INTO `Entrepreneur` (`numEntrepreneur`, `prenom`, `nom`, `mail`, `fonctio
 (3, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
 (4, 'Rémi', 'PECCARD', 'test@gmail.com', 'directeur', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '314159265358'),
 (5, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
-(7, 'antony', 'gandonou', 'gmigan.a@gmail.com', '', 'ab387fc0471a7b6c895fef89e194296477402e26', '0645547614');
+(7, 'antony', 'gandonou', 'gmigan.a@gmail.com', '', 'ab387fc0471a7b6c895fef89e194296477402e26', '0645547614'),
+(8, 'Ive', 'Jean', 'test2@gmail.com', '', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '0645547614');
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,8 @@ CREATE TABLE `Entreprise` (
 
 INSERT INTO `Entreprise` (`numEntreprise`, `nom`, `tel`, `adresse`, `typeJuridique`, `site`, `ville`, `pays`, `SIRET`, `SIREN`, `codeAPE`, `logo`, `numEntrepreneur`, `codePostal`) VALUES
 (29, 'Lego', '0645547614', '10 chemin des rouliers', 'SARL', 'Array', 'Reims', 'France', '58761532451254', '123456788', '00258', NULL, 4, 51100),
-(30, 'HSBC', '0519892564', '15 boulevard de la marsange', 'SARL', 'Array', 'Reims', 'France', '58761532441254', '123456788', '00258', NULL, 4, 51100);
+(30, 'HSBC', '0519892564', '15 boulevard de la marsange', 'SARL', 'Array', 'Reims', 'France', '58761532441254', '123456788', '00258', NULL, 4, 51100),
+(31, 'BimEntreprise', '0645547615', '52 rue noel', 'SARL', 'Array', 'Bailly', 'France', '58761558441254', '123456788', '02585', NULL, 8, 77700);
 
 -- --------------------------------------------------------
 
@@ -183,7 +185,8 @@ CREATE TABLE `Stage` (
   `domaine` varchar(256) NOT NULL,
   `nbPoste` int(11) NOT NULL,
   `gratification` int(11) NOT NULL,
-  `numEntreprise` int(11) NOT NULL
+  `numEntreprise` int(11) NOT NULL,
+  `dateCreation` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -276,12 +279,12 @@ ALTER TABLE `Convention`
 -- AUTO_INCREMENT pour la table `Entrepreneur`
 --
 ALTER TABLE `Entrepreneur`
-  MODIFY `numEntrepreneur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `numEntrepreneur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT pour la table `Entreprise`
 --
 ALTER TABLE `Entreprise`
-  MODIFY `numEntreprise` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `numEntreprise` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT pour la table `Stage`
 --

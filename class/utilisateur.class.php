@@ -1,5 +1,5 @@
 <?php
-
+Class SessionException extends Exception { }
 Class NotInSessionException extends Exception{ }
 
 abstract class Utilisateur{

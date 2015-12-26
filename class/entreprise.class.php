@@ -43,6 +43,7 @@ SQL
       	//Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
       	foreach($listEntreprise as $entreprise){
       		$entreprise->entrepreneur = $entrepreneur;
+          $entreprise->stage = Stage::creatFromId($entreprise);
       	}
         return $listEntreprise;
     }
@@ -52,14 +53,6 @@ SQL
      */
     private function notifyObs(){
       $this->entrepreneur->notify();
-    }
-
-   /** 
-    * Ajoute un stage à la liste des offres de l'entreprise
-    * @param s
-    */
-    public function ajouterOffre( $s) {
-        $this->stages[] = $s;
     }
 
     /**
@@ -116,7 +109,23 @@ SQL
       	}
     }
 
-   
+
+
+
+  /**
+   * Réinitialise la lites de stage de l'objet courrant
+   * @param L'entreprise rajouté
+   */
+  public function notify(){
+    //$this->notifyObs();
+    $this->stage = Stage::creatFromId($this);
+  }
+
+
+
+
+
+
    /** 
     * Supprime l'offre de stage passer en parametre dans l'instance 
     * @param s id du stage à supprimer

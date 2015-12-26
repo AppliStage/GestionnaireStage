@@ -11,7 +11,7 @@ if(!Utilisateur::isConnected()){
 try{
   $user = Utilisateur::createFromSession();
 }catch(Exception $e){
-	header("Location: index.php");
+	echo $e->getMessage();
 	exit;
 }
 

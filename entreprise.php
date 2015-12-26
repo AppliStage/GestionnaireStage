@@ -20,7 +20,7 @@ $p->appendCssUrl("style/profileStyle.css");
 include_once "navbar.inc.php";
 
 
-if($user instanceof Entrepreneur ) {
+if(($user instanceof Entrepreneur ) && isset($_REQUEST['id'])){
 
 	$entrepreneurValide = false;
 	$entreprises = $user->getEntreprises();
@@ -41,15 +41,27 @@ if($user instanceof Entrepreneur ) {
 			<div class="panel panel-default"> <!-- Création Stage -->
 			  <div class="panel-heading"><strong>Crée un Stages</strong></div>
 			  <div class="panel-body">
-				  <form>
+				  <form method="POST" action="creeStage.php">
 				  	<label for="titre">Intitulé du poste</label>
 				  	<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" required>
 
 				  	<label for="description">Description du stage</label>
 				  	<textarea name="description" class="form-control" rows="15" placeholder="Description du stage ..."></textarea>
 
-				  	<label for="titre">Gratification</label>
-				  	<input name="gratification" type="text" class="form-control" >
+				  	<div class="row" > <!--row -->
+				  		<div class="col-lg-6">
+						  	<label for="titre">Gratification</label>
+						  	<input name="gratification" type="text" class="form-control" >
+				  		</div>
+				  		<div class="col-lg-6">
+						  	<label for="domaine">Domaine</label>
+			                <select name="domaine" class="form-control" aria-label="..." required>
+			                    <option value="informatique">informatique</option>
+			                    <option value="gestion">Gestion</option>
+			                    <option value="Droit">Droit</option>
+			                </select>
+				  		</div>
+				  	</div><!-- end row -->
 
 				  	<div class="row" > <!--row -->
 				  		<div class="col-lg-4">
@@ -66,6 +78,7 @@ if($user instanceof Entrepreneur ) {
 				  		</div>
 				  	</div>
 				  	<div class="row" style="text-align:center;margin-top:8px"> <!--row -->
+				  		<input type='hidden' name='id' value={$_GET['id']}>
 				  		<button type="submit" class="btn btn-success btn-lg"><strong>Crée le stage</strong></button>
 				  	</div>
 				  </form>
@@ -82,7 +95,7 @@ if($user instanceof Entrepreneur ) {
 					  <div class="col-lg-6">
 					  	<div class="form-group">
 					  		<label for="stage" style="color:#000">Selectionnez un stage: </label>
-			                <select name="stage"type="text" class="form-control" aria-label="..." required>
+			                <select name="stage" class="form-control" aria-label="..." required>
 			                    <option value="#">Selectionnez un stage</option>
 			                </select>
 			            </div>
