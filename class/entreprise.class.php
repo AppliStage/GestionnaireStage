@@ -28,7 +28,7 @@ class Entreprise {
      * Construit toutes les entreprise d'un entrepreneur
      * @return un tableau d'entreprise.
      */
-    public static function creatFromId($entrepreneur){
+    public static function creatFromEntrepreneur($entrepreneur){
         $pdo = myPDO::getInstance();
 
         $req = $pdo->prepare(<<<SQL
@@ -43,10 +43,36 @@ SQL
       	//Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
       	foreach($listEntreprise as $entreprise){
       		$entreprise->entrepreneur = $entrepreneur;
-          $entreprise->stage = Stage::creatFromId($entreprise);
+          $entreprise->stage = Stage::creatFromEntreprise($entreprise);
       	}
         return $listEntreprise;
     }
+
+
+
+
+   /**
+    * Construi un stage en fonction de son identifiant
+    * @param le numero de stage 
+    * @return une instance de stage
+    */
+   public static function creatFromId($id){
+        $pdo = myPDO::getInstance();
+
+        $req = $pdo->prepare(<<<SQL
+          SELECT numEntreprise, nom, tel, adresse, typeJuridique,site, ville, pays, SIRET, SIREN, codeAPE, logo, numEntrepreneur,codePostal
+          FROM Entreprise
+          WHERE numEntreprise= ?
+SQL
+        );
+        $req->execute(array($id));
+        $req->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+        return $req->fetch();
+  }
+
+
+
+
 
     /**
      * Alerte l'observeur qu'une entreprise lui à été attribué
@@ -118,7 +144,7 @@ SQL
    */
   public function notify(){
     //$this->notifyObs();
-    $this->stage = Stage::creatFromId($this);
+    $this->stage = Stage::creatFromEntreprise($this);
   }
 
 
@@ -132,7 +158,7 @@ SQL
     * @return True si l'offre à été supprimer, false sinon.
     */
 	public function supprOffre($s) {      
-	    unset($this->_stages[$s]);
+	    unset($this->stages[$s]);
 	}
 
   //SETTER TO DO: .... 
@@ -192,7 +218,7 @@ SQL
 
 
 
-  //GETTER TO DO: ....
+  //GETTER TO DO: ....  /////////////////////////////////////////////////////
 
     public function getNom(){
       return $this->nom;
@@ -201,5 +227,53 @@ SQL
     public function getId(){
 	   return $this->numEntreprise;
     }
+
+  public function getTel(){
+    return $this->tel ;
+  }
+
+  public function getAdresse(){
+    return $this->adresse;
+  }
+
+  public function getTypeJuridique(){
+    return $this->typeJuridique ;
+  }
+
+  public function getSite(){
+    return $this->site ;
+  }
+
+  public function getPays(){
+    return $this->pays ;
+  }
+
+  public function getSIRET(){
+    return $this->SIRET ;
+  }
+
+  public function getSIREN(){
+    return $this->SIREN;
+  }
+
+  public function getCodeAPE(){
+    return $this->codeAPE ;
+  }
+
+  public function getLogo(){
+    return $this->logo;
+  }
+
+  public function getVille(){
+    return $this->ville ;
+  }
+
+  public function getCodePostal(){
+    return $this->codePostal;
+  }
+
+  public function getEntrepreneur(){
+    return $this->entrepreneur ;
+  }
 
 }

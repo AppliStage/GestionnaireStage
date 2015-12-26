@@ -1,5 +1,6 @@
 <?php
 include_once "entreprise.class.php";
+include_once "myPDO.include.php";
 
 class Stage {
    // Titre d'un stage
@@ -18,6 +19,8 @@ class Stage {
    private $gratification;
    //Nombre de postes
    private $nbPoste;
+
+   private $dateCreation;
 
    //Observeur sur l'objet
    private $entreprise = null;
@@ -39,18 +42,18 @@ class Stage {
     * @param un objet entreprise
     * @return un Array()
     */
-   public static function creatFromId($entreprise){
+   public static function creatFromEntreprise($entreprise){
       if (is_object($entreprise) && $entreprise instanceof Entreprise){
         $pdo = myPDO::getInstance();
 
         $req = $pdo->prepare(<<<SQL
-          SELECT numStage AS 'id', titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, numEntreprise
+          SELECT numStage AS 'id', titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, numEntreprise, dateCreation
           FROM Stage
           WHERE numEntreprise = ?
 SQL
         );
         $req->execute(array($entreprise->getId() ));
-        $listStage = $req->fetchAll(PDO::FETCH_CLASS, "Entreprise");
+        $listStage = $req->fetchAll(PDO::FETCH_CLASS, "Stage");
 
         //Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
         foreach($listStage as $stage){
@@ -59,8 +62,32 @@ SQL
         return $listStage;
       }
       else 
-        throw wrongEntryException("Le parametre n'est pas une instance d'Entreprise");
+        throw wrongEntryException("Le parametre n'est pas une instance de la class Stage");
    }
+
+
+
+
+   /**
+    * Construi un stage en fonction de son identifiant
+    * @param le numero de stage 
+    * @return une instance de stage
+    */
+   public static function creatFromId($id){
+        $pdo = myPDO::getInstance();
+
+        $req = $pdo->prepare(<<<SQL
+          SELECT numStage AS 'id', titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, numEntreprise AS 'entreprise', dateCreation
+          FROM Stage
+          WHERE numStage = ?
+SQL
+        );
+        $req->execute(array($id));
+        $req->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+        return $req->fetch();
+  }
+
+
 
 
 
@@ -84,11 +111,11 @@ SQL
               AND  description= ? 
               AND domaine= ? AND  nbPoste = ? 
               AND gratification= ?
-              AND dateCreation =  ?
+              AND dateCreation = now()
 SQL
             );
             $update = $req->execute(array($this->entreprise->getId(), $this->titre, $this->dateFin, $this->dateDebut, 
-            $this->description, $this->domaine, $this->nbPoste, $this->gratification , time()) );
+            $this->description, $this->domaine, $this->nbPoste, $this->gratification) );
   
             if($update)
               $this->notifyObs();
@@ -125,7 +152,7 @@ SQL
     }
 
     public function setDateFin($f){
-      $this->dateFin = $f;
+      $this->dateFin= $f;
     }
 
     public function setDateDebut($d){
@@ -152,6 +179,47 @@ SQL
       $this->entreprise = $d;
     }
 
-    //Getter
+    //Getter//////////////////////////////////////////////////////////////////////
+
+
+    public function getId(){
+      return $this->id ;
+    }
+
+    public function getTitre(){
+      return $this->titre ;
+    }
+
+    public function getDateFin(){
+      return $this->dateFin ;
+    }
+
+    public function getDateDebut(){
+      return $this->dateDebut ;
+    }
+
+    public function getDateCreation(){
+      return $this->dateCreation ;
+    }
+
+    public function getDescription(){
+      return $this->description ;
+    }
+
+    public function getDomaine(){
+      return $this->domaine ;
+    }
+
+    public function getNbPoste(){
+      return $this->nbPoste ;
+    }
+
+    public function getGratification(){
+      return $this->gratification;
+    }
+
+    public function getEntreprise(){
+      return $this->entreprise ;
+    }
 
 }

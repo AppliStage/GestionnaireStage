@@ -85,47 +85,4 @@ Footer
 
 
 
-/*
-$p->appendJS(<<<JS
-window.onload = function () {
-    // Désactivation de l'envoi du formulaire
-    //document.forms['inscription'].onsubmit = function () { return false ; }
-
-	document.forms['inscription'].elements['submit'].onclick = function(){
-		var form = document.forms['inscription'];
-
-		var varnom = form.elements['nom'].value;
-	  	form.elements['nom'].value = "";
-	  	var varprenom = form.elements['prenom'].value; 
-	  	form.elements['prenom'].value=""; 
-	  	var varmail = form.elements['mail'].value;
-	  	form.elements['mail'].value=""; 
-	  	var varpass = SHA1(form.elements['pass'].value); 
-	  	form.elements['pass'].value=""; 
-	  	var vartel = form.elements['tel'].value;
-	  	form.elements['tel'].value=""; 
-
-        new Request(
-            {
-                url        : "enregistrement.php",
-                method     : 'get',
-                handleAs   : 'text',
-                parameters : { nom : varnom , prenom : varprenom , mail : varmail , pass : varpass, tel : vartel },
-                onSuccess  : function(res) {
-                		alert(res);
-                		document.getElementsByClassName('bg-danger hidden')[0].className = "bg-danger hidden";
-                        document.getElementsByClassName('bg-sucess hidden')[0].className = "bg-success show";
-                    },
-                onError    : function(status, message) {
-                		document.getElementsByClassName('bg-sucess hidden')[0].className = "bg-success hidden";
-                        document.getElementsByClassName('bg-danger hidden')[0].className = "bg-danger show";
-                    }
-        }) ;
-		
-	}
-
-}
-JS
-);*/
-
 echo $p->toHTML();

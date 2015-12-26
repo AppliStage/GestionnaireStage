@@ -15,6 +15,7 @@ head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("style/searchEngine.css");
+$p->appendJsUrl("js/request.js");
 
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
@@ -39,7 +40,7 @@ $p->appendContent(<<<HTML
             <div id="stages" class="tab-pane fade in active">
               <div role="tabpanel" class="tab-pane active" id="stage">
 
-                <form class="form-inline searchEngine">
+                <form name="searchEngine" class="form-inline searchEngine">
                   <div class="form-group">
                     <input type="text" class="form-control" placeholder="Quelle poste ?">
                   </div>
@@ -195,10 +196,8 @@ $p->appendContent(<<<HTML
     		<thead> 
     		  <tr> <th>#</th> <th>Entreprise</th> <th>Intitulé du poste</th> <th>Lieu</th> </tr> 
     		</thead> 
-    		<tbody> 
-    		  <tr> <th scope="row">1</th> <td>HSBC</td> <td>Servir le café</td> <td>France, Paris</td> </tr> 
-    		  <tr> <th scope="row">2</th> <td>Lego</td> <td>Servir le café</td> <td>France, Toulouse</td> </tr>
-    		  <tr> <th scope="row">3</th> <td>HBO</td> <td>Servir le café</td> <td>Chine, Chongqing </td> </tr>
+    		<tbody id="liste_ajax"> 
+
     		</tbody>
       </table>
 
@@ -235,5 +234,63 @@ $p->appendToFooter(<<<Footer
 Footer
 );
 
+$p->appendJs(<<<JS
+      // Fonction appelée au chargement complet de la page
+    window.onload = function () {
+              new Request(
+                {
+                    url        : "searchEngine.php",
+                    method     : 'get',
+                    handleAs   : 'text',
+                    parameters : { recherche : '%' },
+                    onSuccess  : function(res) {
+                            document.getElementById("liste_ajax").innerHTML = res ;
+                        },
+                    onError    : function(status, message) {
+                            window.alert('Error ' + status + ': ' + message) ;
+                        }
+                }) ;
+
+    }
+JS
+);
 
 echo $p->toHTML();
+
+
+  /*
+
+      // Désactivation de l'envoi du formulaire
+    //document.forms['searchEngine'].onsubmit = function () { return false ; }
+  document.forms['searchEngine'].elements['submit'].onclick = function(){
+    var form = document.forms['searchEngine'];
+
+    var varnom = form.elements['nom'].value;
+      form.elements['nom'].value = "";
+      var varprenom = form.elements['prenom'].value; 
+      form.elements['prenom'].value=""; 
+      var varmail = form.elements['mail'].value;
+      form.elements['mail'].value=""; 
+      var varpass = SHA1(form.elements['pass'].value); 
+      form.elements['pass'].value=""; 
+      var vartel = form.elements['tel'].value;
+      form.elements['tel'].value=""; 
+
+      function crypter(){
+        new Request(
+            {
+                url        : "searchEngine.php",
+                method     : 'get',
+                handleAs   : 'text',
+                parameters : { nom : varnom , prenom : varprenom , mail : varmail , pass : varpass, tel : vartel },
+                onSuccess  : function(res) {
+                    document.getElementsByClassName('resRecherche').innerHTML = res;
+                    },
+                onError    : function(status, message) {
+                    // ...
+                    }
+        }) ;
+      }
+  }*/
+
+

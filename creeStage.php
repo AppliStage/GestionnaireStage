@@ -47,7 +47,7 @@ if (isset($_REQUEST['titre']) && isset($_REQUEST['description']) && isset($_REQU
 SQL
 		);
 	    $req->execute();
-		header("Location: stage.php?id={$req->fetch()['numStage']}&stage=true");
+		header("Location: viewStage.php?id={$req->fetch()['numStage']}&stage=true");
 		exit;
 	}
 	header("Location: entreprise.php?id={$_REQUEST['id']}&err=stage");

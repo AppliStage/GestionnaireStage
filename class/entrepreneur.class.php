@@ -48,7 +48,7 @@ SQL
 	    if (($entrepreneur = $rq1->fetch()) !== false) {
 	    	$_SESSION[self::session_key]['connected'] = true;
 
-		    $entrepreneur->entreprises = Entreprise::creatFromId($entrepreneur);
+		    $entrepreneur->entreprises = Entreprise::creatFromEntrepreneur($entrepreneur);
 		    
 	        return $entrepreneur ;
 	    }
@@ -89,7 +89,7 @@ SQL
 	 * @param L'entreprise rajouté
 	 */
 	public function notify(){
-		$this->entreprises = Entreprise::creatFromId($this);
+		$this->entreprises = Entreprise::creatFromEntrepreneur($this);
 		self::startSession();
 		$this->saveIntoSession();
 	}
