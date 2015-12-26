@@ -174,7 +174,10 @@ $p->appendContent(<<<HTML
             </div>
 
             <div id="recruteur" class="tab-pane fade">
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              <p>TO DO :</br>
+                    - Select (entreprise) si l'user en a.<br/>
+                    - formulaire pour crée un stage
+              </p>
             </div>
 
           </div>

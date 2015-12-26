@@ -49,9 +49,9 @@ if($user instanceof Entrepreneur){
             <div class="row"> <!-- ROW  -->
                 <div class="col-md-3">
                     <div class="list-group">
-                      <button type="button" data-toggle="tab" data-target="#profile" data-target="#1profile" class="list-group-item">Profile</button>
-                      <button type="button" data-toggle="tab" data-target="#ajout" class="list-group-item">Ajouter une entreprise</button>
-                      <button type="button" data-toggle="tab" data-target="#entreprises{$etat}" class="list-group-item {$etat}">Mes entreprises</button>
+                      <button type="button" data-toggle="tab" data-target="#profile" data-target="#1profile" class="list-group-item"><strong>Profile</strong></button>
+                      <button type="button" data-toggle="tab" data-target="#ajout" class="list-group-item"><strong>Ajouter une entreprise</strong></button>
+                      <button type="button" data-toggle="tab" data-target="#entreprises{$etat}" class="list-group-item {$etat}"><strong>Mes entreprises</strong></button>
                     </div>
                 </div>
 
@@ -168,11 +168,11 @@ if($user instanceof Entrepreneur){
                                       <div class="col-xs-6 ">
                                           <div class="form-group">
                                             <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="nom" placeholder="Nom" pattern="[a-zA-Z].+" required>
+                                            <input type="text" class="form-control" name="Nom de l'entreprise" placeholder="Nom" pattern="[a-zA-Z].+" required>
                                           </div>
                                           <div class="form-group">
                                             <label for="site">Site internet</label>
-                                            <input type="text" class="form-control" name="site" placeholder="ex: exemple.site.fr" required>
+                                            <input type="text" class="form-control" name="Site de l'entreprise" placeholder="ex: exemple.site.fr" >
                                           </div>
                                           <div class="form-group">
                                             <label for="tel">Telephone</label>
