@@ -7,7 +7,7 @@ include_once "class/stage.class.php";
         $pdo = myPDO::getInstance();
 
         $req = $pdo->prepare(<<<SQL
-          SELECT numStage AS 'id', titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, numEntreprise as 'entreprise', dateCreation
+          SELECT numStage AS "id", titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, numEntreprise as 'entreprise', dateCreation
           FROM Stage
           WHERE titre LIKE ?
 SQL
@@ -24,7 +24,8 @@ SQL
         	$nom = htmlspecialchars ($entreprise->getNom());
         	$ville = htmlspecialchars ($entreprise->getVille());
         	$pays = htmlspecialchars ($entreprise->getPays());
-          	$html .="<a href='viewStage.php?id={$stage->getId()}'> <tr><th scope='row'>{$key}</th> <td>{$nom}</td> <td>{$titre}</td> <td>{$pays}, {$ville}</td> </tr> </a>";
+			$id = $stage->getId();
+          	$html .="<tr><th scope='row'>{$key}</th> <td>{$nom}</td> <td><a href=\"viewStage.php?id={$id}\">{$titre}</a></td> <td>{$pays}, {$ville}</td> </tr> </a>";
         }
 
         echo $html;
