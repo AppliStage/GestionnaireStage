@@ -71,6 +71,11 @@ head
 				{$gratification}
 			</p>
 		</div>
+		<div name="divPostulation" class="container">
+			<form name="formPostulation" action="postuler.php" method="POST"> 
+				<button class="btn btn-lg btn-primary" type="submit">Postuler</button>
+			</form>
+		</div>
 HTML
 );
 
