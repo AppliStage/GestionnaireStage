@@ -72,12 +72,87 @@ head
 			</p>
 		</div>
 		<div name="divPostulation" class="container">
-			<form name="formPostulation" action="postuler.php" method="POST"> 
-				<button class="btn btn-lg btn-primary" type="submit">Postuler</button>
+			<form class="form-horizontal" name="formPostulation" action="postuler.php" method="POST"> 
+				<fieldset>
+					<legend>Postulation</legend>
+					<textarea class="form-control" style="height: 200px; width: 300px;" name="email"> </textarea>
+HTML
+	);
+	
+	// Module d'upload -----------------------------------------------------------------------------------------------------------------------------------
+	
+	require('class/upload/Classe_Upload.php');
+	require('class/upload/adresses_dossiers.php');
+	
+	// Déclaration de la classe avec envoi des paramètres (cf doc)
+	$form = new Telechargement ($dossier_photo,'envoi_file','photo','get_form');
+	 
+	// option : contrôle que le fichier est une image de type gif, jpg, jpeg ou png (et retourne ses dimensions dans le tableau des résultats - tableau non exploité dans l'exemple ci-dessous)
+	$form->Set_Controle_dimImg ();
+	 
+	//option pour renommer le fichier en mode incrémentiel si un fichier de même nom existe déjà sur le serveur
+	$form->Set_Renomme_fichier ('incr');
+	 
+	 
+	//Téléchargement sans traitement php supplémentaire -> on spécifie un rechargement de la page suite au téléchargement en indiquant un argument non nul ex 'reload' dans la fonction d'Upload.
+	$form->Upload ('reload');
+	 
+	 
+	// Enregistrement des messages de contrôle
+	$messages_form = $form->Get_Tab_message ();
+	 
+	 
+	$config_serveur = $form->Return_Config_serveur('tableau');
+	$max_fichier_serveur = $config_serveur['upload_max_filesize'];
+	$max_post_serveur = $config_serveur['post_max_size'];
+	
+	$p->appendJS(<<<JS
+	function Attente_Load(id_attente)// écrit patientez durant le téléchargement
+	{              
+		var id_attente = document.getElementById(id_attente);
+
+		if (id_attente)
+		{
+			id_attente.innerHTML = 'Patientez...';  
+
+			id_attente.style.fontWeight="bold";
+			id_attente.style.fontSize="1.5em";         
+		}
+	}
+	 
+	 
+	 
+	function Add_Load_File(id_content_file) // Ajoute un champ de téléchargement
+	{
+		var content_file = document.getElementById(id_content_file);
+
+		var tab = content_file ? content_file.getElementsByTagName('input') : new Array();
+
+		if(tab.length > 0) 
+		{
+			var input = tab[0].cloneNode(true);
+			input.value = '';
+			content_file.appendChild(input);
+		}	
+	}
+JS
+	);
+	
+	$p->appendContent(<<<HTML
+	<p id = "champ_file"><input type = "file" name = "photo[]"  multiple = "multiple" /></p>
+	<button type="button" id = "add_load_file" onclick = "Add_Load_File('champ_file')">ajouter</button>
+HTML
+	);
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+	$p->appendContent(<<<HTML
+					<button class="btn btn-lg btn-primary" type="submit">Postuler</button>
+				</fieldset>
 			</form>
 		</div>
 HTML
-);
+	);
 
 	$p->appendToFooter(<<<Footer
 		<!-- Bootstrap core JavaScript
