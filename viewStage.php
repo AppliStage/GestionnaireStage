@@ -36,63 +36,99 @@ head
 	$dateDebut = htmlspecialchars ($stage->getDateDebut());
 	$gratification = htmlspecialchars ($stage->getGratification());
 
+	//Gestion des réponse de l'enregistrement d'un entrepreneur
+	if(isset($_GET['postuler'])){
+		$toggleScript="$('#alert').show();";
+		if($_GET['postuler']=="true") {
+			$action="success";
+			$contenu = "Votre candidature à été envoyé à {$entreprise->getNom()}.";
+		}else{
+			$action="danger";
+			$contenu = "Vous ne pouvez pas postuler pour cette offre.";
+		}
+	}
+	else{
+		$toggleScript="";
+		$action ="";
+		$contenu ="";
+	}
+
 
 	//var_dump($stage->getEntreprise());
 	$p->appendContent(<<<HTML
-		<div class="container">
+		<div class="container" style="margin-bottom:10%">
 
-	    	<div id="alert" class="alert alert-success collapse" role="alert">
-	    		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	    		<strong>Votre candidature à été envoyé à {$entreprise->getNom()}.</strong>
-	    		<button type="button" class="btn btn-danger">J'ai oublié mon mot de passe</button>
-	    	</div>
+			<div class="row"> 
+			    <div id="alert" class="alert alert-{$action} collapse" role="alert">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        <strong>{$contenu}</strong>
+			    </div>
 
-
-			<div class="jumbotron">
-				<div class="page-header">
-				  <h1>Stage <small>{$stage->getDomaine()} </small></h1>
+				<div class="jumbotron">
+					<div class="page-header">
+					  <h1>Stage <small>{$stage->getDomaine()} </small></h1>
+					</div>
 				</div>
+
+				<h3><strong style="color:#d9534f">{$titre} ({$nbPoste} poste(s))</strong></h3>
+				<p>
+					<stong>Employeur : {$nom} (<a href="{$entreprise->getSite()}">Site de l'entreprise</a>)</stong><br/>
+					<strong>{$nbPoste} poste(s) | {$dateCreation} | Réf.{$ref}</strong>
+				</p>
+				<address>
+				  <strong>Info général</strong><br>
+				  {$adresse}<br>
+				  {$ville}, {$codePostal}<br>
+				  <abbr title="Téléphone">P:</abbr> {$tel}
+				</address>
+
+				<p>
+					<strong>Description</strong><br/>
+					{$description}
+				</p>
+				<p>
+					<strong>Période</strong><br/>
+					De {$dateDebut} à {$dateFin}.
+				</p>
+				<p>
+					<strong>Rémunération</strong><br/>
+					{$gratification}
+				</p>
+			</div>
+			<div class="page-header" style="text-align:center;margin-top:70px">
 			</div>
 
-			<h3><strong>{$titre} ({$nbPoste} poste(s))</strong></h3>
-			<p>
-				<stong>Employeur : {$nom} (<a href="{$entreprise->getSite()}">Site de l'entreprise</a>)</stong><br/>
-				<strong>{$nbPoste} poste(s) | {$dateCreation} | Réf.{$ref}</strong>
-			</p>
-			<address>
-			  <strong>Info général</strong><br>
-			  {$adresse}<br>
-			  {$ville}, {$codePostal}<br>
-			  <abbr title="Téléphone">P:</abbr> {$tel}
-			</address>
+			<form id = "form_file" enctype = "multipart/form-data" action = "postuler.php?id={$_REQUEST['id']}" method = "post" onsubmit = "Attente_Load('message_tele')">
+				<div class="row">  <!-- Il ne peut y avoir qu'une seul class container par page -->
+					<label for="titre">Sujet: </label>
+					<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" required>
 
-			<p>
-				<strong>Description</strong><br/>
-				{$description}
-			</p>
-			<p>
-				<strong>Période</strong><br/>
-				{$dateDebut} à {$dateFin} 
-			</p>
-			<p>
-				<strong>Rémunération</strong><br/>
-				{$gratification}
-			</p>
-			<div name="divPostulation" > <!-- Il ne peut y avoir qu'une seul class container par page -->
-				<form class="form-horizontal" name="formPostulation" action="postuler.php" method="POST"> 
-					<div class="row" > 
-					  	<label for="titre">Sujet: </label>
-					  	<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" required>
+					<label for="contenu">Contenu du mail: </label>
+					<textarea name="contenu" class="form-control" rows="10" placeholder=""></textarea>
 
-					  	<label for="contenu">Contenu du mail: </label>
-					  	<textarea name="contenu" class="form-control" rows="10" placeholder=""></textarea>
-					</div>
+					<label for="photo[]">Ajouter des piéces jointes: </label>
+					<input type = "file" name = "photo[]"  multiple = "multiple" />
+					<div id = "champ_file"><input type = "file" name = "photo[]"  multiple = "multiple" /></div>
+					<div id = "add_load_file" onclick = "Add_Load_File('champ_file')">Ajouter un champ de téléchargement</div>
+				</div>
+				<div class="row" style="text-align:center;margin-top:8px"> 
+					<button class="btn btn-lg btn-primary" id = "envoyer" name = "envoi_file" type="submit">Postuler au stage</button>
+				</div>
+			</form>
+
+		</div>
 HTML
 	);
-	
 
-	
-	$p->appendJS(<<<JS
+/*
+
+				<div id = "message_tele" class = "info">
+					{$message}
+				</div>
+*/
+
+
+$p->appendJS(<<<JS
 	function Attente_Load(id_attente)// écrit patientez durant le téléchargement
 	{              
 		var id_attente = document.getElementById(id_attente);
@@ -123,32 +159,6 @@ HTML
 	}
 JS
 	);
-	
-	$p->appendContent(<<<HTML
-	<div class="row" id = "champ_file"> 
-		<input type = "file" name = "photo[]"  multiple = "multiple" />
-	</div>
-	<div class="row" style="text-align:center;margin-top:8px"> <!--row -->
-		<button type="button" id = "add_load_file" onclick = "Add_Load_File('champ_file')">ajouter</button>
-	</div>
-HTML
-	);
-	
-	//----------------------------------------------------------------------------------------------------------------------------------------------------
-
-	$p->appendContent(<<<HTML
-						<button class="btn btn-lg btn-primary" type="submit">Postuler</button>
-					</fieldset>
-				</form>
-			</div>
-		</div>
-HTML
-	);
-
-
-	//Si tous c'est bien passer on affiche l'alerte
-	(isset($_GET['postuler']) && $_GET['postuler'] == "true")? $postuler="$('#alert').show();" : $postuler="";
-
 
 	$p->appendToFooter(<<<Footer
 		<!-- Bootstrap core JavaScript
@@ -159,10 +169,8 @@ HTML
 
 		<script>
 		$(document).ready(function(){
-			{$postuler}
-		    $(".nav-tabs a").click(function(){
-		        $(this).tab('show');
-		    });
+			//affiche le message d'alerte
+			{$toggleScript}
 		});
 		</script>
 Footer

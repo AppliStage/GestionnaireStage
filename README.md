@@ -8,9 +8,9 @@ SRINT n°1 [TERMINER]
 
 SRINT n°2 
 -----------------
-	- Crée une entreprise et faire des offres
-	- Upload sécurisé des CV/Lettres, postuler
-	- Rechercher/Affichier par domaine, ville, etc.
+	- Crée une entreprise et faire des offres (terminer)
+	- Upload sécurisé des CV/Lettres, postuler (terminer)
+	- Rechercher/Affichier par domaine, ville, etc. 
 
 Toolbox
 

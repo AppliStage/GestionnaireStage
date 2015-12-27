@@ -15,7 +15,7 @@ $adresse_racine = rtrim($_SERVER['DOCUMENT_ROOT'],'/').'/';
 $adresse_dossier_test = substr(dirname(__FILE__),strlen($adresse_racine));
 
 // pour compatibilité window
-$adresse_dossier_test = str_replace('\\','/',$adresse_dossier_test);
+//$adresse_dossier_test = str_replace('\\','/',$adresse_dossier_test);
 
 //echo $adresse_dossier_test;
 
@@ -23,4 +23,4 @@ $dossier_photo = $adresse_dossier_test.'/PHOTO';
 $dossier_photo_GF = $adresse_dossier_test.'/PHOTO_GF';
 $dossier_photo_PF = $adresse_dossier_test.'/PHOTO_PF';
 $dossier_pdf = $adresse_dossier_test.'/PDF';
-?>
+
