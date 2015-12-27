@@ -1,22 +1,38 @@
 <?php
 
-include_once 'autoload.inc.php';
-include_once 'init.inc.php';
+/* **************************************
+ * Cette page n'affiche rien, elle fait que vérifer que tous les parametres sont réuni pour que le mail de l'étudiant soit 
+ * envoyé. Les fichiers envoyé par le client sont dans $_FILE, la class upload nous permet de controler leur contenu.
+ * 
+ */
 
-$p = new webpage("postuler");
-$p->appendToHead(<<<head
-	    <meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	    <meta name="description" content="">
-	    <meta name="author" content="">
-head
-	);
-$p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
+// initialise la variable $user 
+require_once "init.inc.php";
 
-include_once 'navbar.inc.php';
 
-$p->appendContent("<p>Page vide MDRRRRR</p>");
-
-echo $p->toHTML();
+	// Module d'upload -----------------------------------------------------------------------------------------------------------------------------------
+	
+	require('class/upload/Classe_Upload.php');
+	require('class/upload/adresses_dossiers.php');
+	
+	// Déclaration de la classe avec envoi des paramètres (cf doc)
+	$form = new Telechargement ($dossier_photo,'envoi_file','photo','get_form');
+	 
+	// option : contrôle que le fichier est une image de type gif, jpg, jpeg ou png (et retourne ses dimensions dans le tableau des résultats - tableau non exploité dans l'exemple ci-dessous)
+	$form->Set_Controle_dimImg ();
+	 
+	//option pour renommer le fichier en mode incrémentiel si un fichier de même nom existe déjà sur le serveur
+	$form->Set_Renomme_fichier ('incr');
+	 
+	 
+	//Téléchargement sans traitement php supplémentaire -> on spécifie un rechargement de la page suite au téléchargement en indiquant un argument non nul ex 'reload' dans la fonction d'Upload.
+	$form->Upload ('reload');
+	 
+	 
+	// Enregistrement des messages de contrôle
+	$messages_form = $form->Get_Tab_message ();
+	 
+	 
+	$config_serveur = $form->Return_Config_serveur('tableau');
+	$max_fichier_serveur = $config_serveur['upload_max_filesize'];
+	$max_post_serveur = $config_serveur['post_max_size'];
