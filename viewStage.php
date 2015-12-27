@@ -40,6 +40,14 @@ head
 	//var_dump($stage->getEntreprise());
 	$p->appendContent(<<<HTML
 		<div class="container">
+
+	    	<div id="alert" class="alert alert-success collapse" role="alert">
+	    		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	    		<strong>Votre candidature à été envoyé à {$entreprise->getNom()}.</strong>
+	    		<button type="button" class="btn btn-danger">J'ai oublié mon mot de passe</button>
+	    	</div>
+
+
 			<div class="jumbotron">
 				<div class="page-header">
 				  <h1>Stage <small>{$stage->getDomaine()} </small></h1>
@@ -70,12 +78,15 @@ head
 				<strong>Rémunération</strong><br/>
 				{$gratification}
 			</p>
-		</div>
-		<div name="divPostulation" > <!-- Il ne peut y avoir qu'une seul class container par page -->
-			<form class="form-horizontal" name="formPostulation" action="postuler.php" method="POST"> 
-				<fieldset>
-					<legend>Postulation</legend>
-					<textarea class="form-control" style="height: 200px; width: 300px;" name="email"> </textarea>
+			<div name="divPostulation" > <!-- Il ne peut y avoir qu'une seul class container par page -->
+				<form class="form-horizontal" name="formPostulation" action="postuler.php" method="POST"> 
+					<div class="row" > 
+					  	<label for="titre">Sujet: </label>
+					  	<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" required>
+
+					  	<label for="contenu">Contenu du mail: </label>
+					  	<textarea name="contenu" class="form-control" rows="10" placeholder=""></textarea>
+					</div>
 HTML
 	);
 	
@@ -114,20 +125,30 @@ JS
 	);
 	
 	$p->appendContent(<<<HTML
-	<p id = "champ_file"><input type = "file" name = "photo[]"  multiple = "multiple" /></p>
-	<button type="button" id = "add_load_file" onclick = "Add_Load_File('champ_file')">ajouter</button>
+	<div class="row" id = "champ_file"> 
+		<input type = "file" name = "photo[]"  multiple = "multiple" />
+	</div>
+	<div class="row" style="text-align:center;margin-top:8px"> <!--row -->
+		<button type="button" id = "add_load_file" onclick = "Add_Load_File('champ_file')">ajouter</button>
+	</div>
 HTML
 	);
 	
 	//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	$p->appendContent(<<<HTML
-					<button class="btn btn-lg btn-primary" type="submit">Postuler</button>
-				</fieldset>
-			</form>
+						<button class="btn btn-lg btn-primary" type="submit">Postuler</button>
+					</fieldset>
+				</form>
+			</div>
 		</div>
 HTML
 	);
+
+
+	//Si tous c'est bien passer on affiche l'alerte
+	(isset($_GET['postuler']) && $_GET['postuler'] == "true")? $postuler="$('#alert').show();" : $postuler="";
+
 
 	$p->appendToFooter(<<<Footer
 		<!-- Bootstrap core JavaScript
@@ -138,6 +159,7 @@ HTML
 
 		<script>
 		$(document).ready(function(){
+			{$postuler}
 		    $(".nav-tabs a").click(function(){
 		        $(this).tab('show');
 		    });
@@ -145,6 +167,7 @@ HTML
 		</script>
 Footer
 	);
+
 	echo $p->toHTML();
 }
 
