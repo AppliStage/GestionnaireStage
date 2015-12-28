@@ -2,17 +2,32 @@
 include_once "myPDO.include.php";
 include_once "class/stage.class.php";
 
- if(isset($_REQUEST['recherche'])){
-
+ if(isset($_REQUEST['poste']) && isset($_REQUEST['ville']) && isset($_REQUEST['domaines'])){
+        
+        $domaines = split(",", $_REQUEST['domaines']);
+        if ($domaines[0]=="") $domaines=array();
         $pdo = myPDO::getInstance();
 
-        $req = $pdo->prepare(<<<SQL
-          SELECT numStage AS "id", titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, numEntreprise as 'entreprise', dateCreation
-          FROM Stage
-          WHERE titre LIKE ?
-SQL
-        );
-        $req->execute(array($_REQUEST['recherche']));
+        $addedSQL="  
+        SELECT numStage AS 'id', titre, dateFin, dateDebut, description, domaine, nbPoste, gratification, s.numEntreprise as 'entreprise', dateCreation
+          FROM Stage s, Entreprise e
+          WHERE s.numEntreprise = e.numEntreprise
+          AND upper(s.titre) LIKE concat('%', upper(?) , '%')
+          AND (upper(e.ville) LIKE concat('%', upper(?) , '%')
+          OR upper(e.pays) = upper(?))";
+        
+        $tab=array($_REQUEST['poste'], $_REQUEST['ville'], $_REQUEST['ville']);
+        for($i=0; $i < sizeof($domaines); $i++) {
+            $addedSQL .= " AND upper(s.domaine) LIKE concat('%', upper('{?}') , '%')";
+            $tab[] = $domaines[$i];
+        }
+
+        $req = $pdo->prepare($addedSQL);
+        //var_dump($req);
+        //var_dump($tab);
+        $req->execute($tab);
+        /*$req->execute(array(':poste' => $_REQUEST['poste'], 
+                            ':ville' => $_REQUEST['ville']));*/
         $listStage = $req->fetchAll(PDO::FETCH_CLASS, "Stage");
 
         $html="";

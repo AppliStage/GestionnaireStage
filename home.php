@@ -40,14 +40,14 @@ $p->appendContent(<<<HTML
             <div id="stages" class="tab-pane fade in active">
               <div role="tabpanel" class="tab-pane active" id="stage">
 
-                <form name="searchEngine" class="form-inline searchEngine">
+                <form name="searchEngine" class="form-inline searchEngine" onSubmit="return false;">
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Quelle poste ?">
+                    <input name ="poste" type="text" class="form-control" placeholder="Quelle poste ?">
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Ville, département, région ...">
+                    <input name="ville" type="text" class="form-control" placeholder="Ville, Pays ...">
                   </div>
-                  <button type="submit" class="btn btn-default">Rechercher</button>
+                  <button name="submit" type="submit" class="btn btn-default">Rechercher</button>
 
                   <!--Recherche Avancée -->
                   <a href="#" data-toggle="collapse" data-target="#demo" style="text-decoration:none;">Recherche avancée >></a>
@@ -58,12 +58,12 @@ $p->appendContent(<<<HTML
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" value=""> Assurance, Banque, Immobilier
+                            <input name="liste_select" type="checkbox" value="Assurance"> Assurance, Banque, Immobilier
                           </label>
                         </div>
                         <div class="checkbox ">
                           <label>
-                            <input type="checkbox" value="" > Commerve, vente, distribution
+                            <input name="liste_select" type="checkbox" value="Commerce" > Commerce, vente, distribution
                           </label>
                         </div>
                       </div><!--end Colone -->
@@ -71,12 +71,12 @@ $p->appendContent(<<<HTML
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" value=""> Droit, Sc Politique, Economie
+                            <input name="liste_select" type="checkbox" value="Droit"> Droit, Sc Politique, Economie
                           </label>
                         </div>
                         <div class="checkbox ">
                           <label>
-                            <input type="checkbox" value=""> Informatique, Télécom
+                            <input name="liste_select" type="checkbox" value="Informatique"> Informatique, Télécom
                           </label>
                         </div>
                       </div><!--end Colone -->
@@ -84,12 +84,12 @@ $p->appendContent(<<<HTML
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" value=""> Sciences, technologies
+                            <input name="liste_select" type="checkbox" value="Sciences"> Sciences, technologies
                           </label>
                         </div>
                         <div class="checkbox ">
                           <label>
-                            <input type="checkbox" value=""> Gestion, management, RH
+                            <input name="liste_select" type="checkbox" value="Gestion"> Gestion, management, RH
                           </label>
                         </div>
                       </div><!--end Colone -->
@@ -237,15 +237,17 @@ $p->appendToFooter(<<<Footer
 Footer
 );
 
-$p->appendJs(<<<JS
+$p->appendToFooter(<<<JS
+<script>
       // Fonction appelée au chargement complet de la page
     window.onload = function () {
+              var valeurs = [];
               new Request(
                 {
                     url        : "searchEngine.php",
                     method     : 'get',
                     handleAs   : 'text',
-                    parameters : { recherche : '%' },
+                    parameters : { poste: '%' , ville: '%', domaines: valeurs},
                     onSuccess  : function(res) {
                             document.getElementById("liste_ajax").innerHTML = res ;
                         },
@@ -254,7 +256,39 @@ $p->appendJs(<<<JS
                         }
                 }) ;
 
+        document.forms['searchEngine'].onsubmit = function () {return false ; }
+
+          document.forms['searchEngine'].elements['submit'].onclick = function(){
+            var form = document.forms['searchEngine'];
+            var varPoste = form.elements['poste'].value;
+            var varVille = form.elements['ville'].value;
+
+            var valeurs = [];
+            $('input:checked[name=liste_select]').each(function() {
+              valeurs.push($(this).val());
+            });
+            console.log(valeurs);
+
+
+            new Request(
+              {
+                  url        : "searchEngine.php",
+                  method     : 'get',
+                  handleAs   : 'text',
+                  parameters : { poste: varPoste , ville: varVille, domaines: valeurs},
+                  onSuccess  : function(res) {
+                           document.getElementById("liste_ajax").innerHTML = res ;
+                      },
+                  onError    : function(status, message) {
+                          window.alert('Error ' + status + ': ' + message) ;
+                      }
+              }) ;
+
+          }
+
+
     }
+</script>
 JS
 );
 
