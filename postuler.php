@@ -6,6 +6,7 @@
  * 
  */
 include_once "class/etudiant.class.php";
+include_once "myPDO.include.php";
 
 // initialise la variable $user 
 require_once "init.inc.php";
@@ -40,13 +41,27 @@ if($user instanceof Etudiant){
 	//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-	/*TO DO :
-	 * - Recuperer l'adresse mail de l'employeur grace a l'id du stage $_REQUEST['id']
-	 * - Crée un mail en rajoutant les fichiers téléchargés au centent-type (piece jointe)
-	 * - envoyer le mail  mail($destinataire, $titreDuMail, $message, $entete);
-	 * - Ajouter le stage à la listes de stage de l'etudiant (Ajoute ue ligne sur la table postuler en meme temps)
-	 * - Supprimer le fichier grace à la class File
-	 */
+	/*
+	* TO DO :
+	* - (* potentiellement terminé *) Recuperer l'adresse mail de l'employeur grace a l'id du stage $_REQUEST['id']
+	* - Crée un mail en rajoutant les fichiers téléchargés au centent-type (piece jointe)
+	* - envoyer le mail  mail($destinataire, $titreDuMail, $message, $entete);
+	* - Ajouter le stage à la listes de stage de l'etudiant (Ajoute ue ligne sur la table postuler en meme temps)
+	* - Supprimer le fichier grace à la class File
+	*/
+	
+	$id = $_REQUEST['id'];
+	$pdo = myPDO::getInstance();
+	$rq1 = $pdo->prepare(<<<SQL
+	SELECT eeur.mail
+	FROM stage s, entreprise eise, entrepreneur eeur
+	WHERE s.numEntreprise = eise.numEntreprise
+	  AND eise.numEntrepreneur = eeur.numEntrepreneur
+	  AND s.numStage = ?
+SQL
+	);
+	$rq1->execute(array($id));
+	$res = $rq1->fetch(); // résultat ici mais encore pas exploité
 
 	header("Location: viewStage.php?id={$_GET['id']}&postuler=true");
 }

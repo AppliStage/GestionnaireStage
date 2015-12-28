@@ -109,7 +109,7 @@ head
 					<label for="photo[]">Ajouter des piéces jointes: </label>
 					<input type = "file" name = "photo[]"  multiple = "multiple" />
 					<div id = "champ_file"><input type = "file" name = "photo[]"  multiple = "multiple" /></div>
-					<div id = "add_load_file" onclick = "Add_Load_File('champ_file')">Ajouter un champ de téléchargement</div>
+					<button type="button" id = "add_load_file" onclick = "Add_Load_File('champ_file')">+</button>
 				</div>
 				<div class="row" style="text-align:center;margin-top:8px"> 
 					<button class="btn btn-lg btn-primary" id = "envoyer" name = "envoi_file" type="submit">Postuler au stage</button>
