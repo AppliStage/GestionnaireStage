@@ -67,13 +67,33 @@ SQL
 	
 	// création mail
 	
-	$to = $adresseMail;
-	$subject = $_REQUEST['titre'];
-	$message = $_REQUEST['contenu'];
+	require_once('class/mail/class.phpmailer.php');
+	
+	$email = new PHPMailer();
+	$email->From = 'aucuneidee@onverraplustard.fr';
+	$email->FronName = 'Jeconnaispas Monnom';
+	$email->Subject = $_REQUEST['titre'];
+	$email->Body = $_REQUEST['contenu'];
+	$email->AddAddress($adresseMail);
+	
+	foreach ($_REQUEST['photo'] as $key => $photo) {
+	
+		$email->AddAttachment($photo);
+	
+	}
 	
 	// envoi mail 
 	
-	$mailReussi = mail($to, $subject, $message);
+	$email->Send();
+	
+	// mise à jour de la base de données
+	
+	$rq2->prepare(<<<SQL
+	INSERT INTO postuler(numStage, loginEtudiant)
+		values(?, ?)
+SQL
+	);
+	$rq2->execute(array($id, $user->getId()));
 
 	header("Location: viewStage.php?id={$_GET['id']}&postuler=true");
 }
