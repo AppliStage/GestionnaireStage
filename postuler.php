@@ -70,8 +70,8 @@ SQL
 	require_once('class/mail/class.phpmailer.php');
 	
 	$email = new PHPMailer();
-	$email->From = 'aucuneidee@onverraplustard.fr';
-	$email->FronName = 'Jeconnaispas Monnom';
+	$email->From = $user->getMail();
+	$email->FronName = $user->getNom() . " " . $user->getPrenom();
 	$email->Subject = $_REQUEST['titre'];
 	$email->Body = $_REQUEST['contenu'];
 	$email->AddAddress($adresseMail);
