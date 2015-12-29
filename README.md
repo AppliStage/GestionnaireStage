@@ -15,7 +15,7 @@ SRINT n°2 [TERMINER]
 SRINT n°3 
 -----------------
 	- Les enseignants doivent pouvoir commenter les entreprises.
-	- Restraindre la fonction postuler et commenter aux utilisateurs qui ont complété leur profil
+	- Postuler et commenter doit être restreind aux profils complétés
 	- L'administrateur a une interface pour attribuer des enseignants aux stages et
 	  valider les conventions complétes
 	- Les conventions peuvent être imprimer.

@@ -53,12 +53,17 @@ $p->appendContent(<<<HTML
                   <a href="#" data-toggle="collapse" data-target="#demo" style="text-decoration:none;">Recherche avancée >></a>
                   <div id="demo" class="collapse">
 
-                    <p class="bg-primary" style="margin-top:8px;"><strong><em>Formation: </em></strong></p>
+                    <p class="bg-primary" style="margin-top:8px;"><strong><em>Formations: </em></strong></p>
                     <div class="row"> <!-- ROW 1 -->
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Assurance"> Assurance, Banque, Immobilier
+                            <input name="liste_select" type="checkbox" value="Assurance"> Assurance, Banque
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input name="liste_select" type="checkbox" value="Immobilier"> Immobilier
                           </label>
                         </div>
                         <div class="checkbox ">
@@ -71,7 +76,11 @@ $p->appendContent(<<<HTML
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Droit"> Droit, Sc Politique, Economie
+                            <input name="liste_select" type="checkbox" value="Droit"> Droit, Sc Politique
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input name="liste_select" type="checkbox" value="Economie"> Economie
                           </label>
                         </div>
                         <div class="checkbox ">
@@ -89,83 +98,17 @@ $p->appendContent(<<<HTML
                         </div>
                         <div class="checkbox ">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Gestion"> Gestion, management, RH
+                            <input name="liste_select" type="checkbox" value="Gestion"> Gestion, management
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input name="liste_select" type="checkbox" value="Ressource humaine"> Ressource humaine
                           </label>
                         </div>
                       </div><!--end Colone -->
                     </div> <!--end row 1-->
 
-                    <p class="bg-primary" style="margin-top:8px;"><strong><em>En France: </em></strong></p>
-                    <div class="row"> <!-- ROW 2 -->
-                      <div class="col-md-4">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" value=""> Alsace
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Aquitaine
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Auvergne
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Basse-Normandie
-                          </label>
-                        </div>
-                      </div> <!--end Colone -->
-
-                      <div class="col-md-4">
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Bourgogne
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Bretagne
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Champagne-Ardenne
-                          </label>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" value=""> Corse
-                          </label>
-                        </div>
-                      </div><!--end Colone -->
-
-                      <div class="col-md-4">
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value=""> Haute-Normandie
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > île-de-France
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Limousin
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Lorraine
-                          </label>
-                        </div>
-                      </div><!--end Colone -->
-                    </div> <!--end row 2-->
 
                   </div>
                 </form>
@@ -331,3 +274,76 @@ echo $p->toHTML();
   }*/
 
 
+/*
+                    <p class="bg-primary" style="margin-top:8px;"><strong><em>En France: </em></strong></p>
+                    <div class="row"> <!-- ROW 2 -->
+                      <div class="col-md-4">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Alsace
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Aquitaine
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Auvergne
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Basse-Normandie
+                          </label>
+                        </div>
+                      </div> <!--end Colone -->
+
+                      <div class="col-md-4">
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Bourgogne
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Bretagne
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Champagne-Ardenne
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value=""> Corse
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+
+                      <div class="col-md-4">
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value=""> Haute-Normandie
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > île-de-France
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Limousin
+                          </label>
+                        </div>
+                        <div class="checkbox ">
+                          <label>
+                            <input type="checkbox" value="" > Lorraine
+                          </label>
+                        </div>
+                      </div><!--end Colone -->
+                    </div> <!--end row 2-->
+                    */
