@@ -6,14 +6,22 @@ SRINT n°1 [TERMINER]
 	- Implémenter l'inscription des utilisateurs
 	- Restriction et espace membre (phpCAS)
 
-SRINT n°2 
+SRINT n°2 [TERMINER]
 -----------------
-	- Crée une entreprise et faire des offres (terminer)
-	- Upload sécurisé des CV/Lettres, postuler (terminer)
-	- Rechercher/Affichier par domaine, ville, etc. 
+	- Crée une entreprise et faire des offres
+	- Upload sécurisé des CV/Lettres, postuler 
+	- Rechercher/Affichier par domaine, ville, etc.
+
+SRINT n°3 
+-----------------
+	- Les enseignants doivent pouvoir commenter les entreprises.
+	- Restraindre la fonction postuler et commenter aux utilisateurs qui ont complété leur profil
+	- L'administrateur a une interface pour attribuer des enseignants aux stages et
+	  valider les conventions complétes
+	- Les conventions peuvent être imprimer.
 
 Toolbox
-
+-----------------
 	-Crée un server web local :
 		https://www.apachefriends.org/download.html
 	-Comprendre le CAS :

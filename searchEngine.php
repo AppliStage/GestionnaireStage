@@ -18,7 +18,7 @@ include_once "class/stage.class.php";
         
         $tab=array($_REQUEST['poste'], $_REQUEST['ville'], $_REQUEST['ville']);
         for($i=0; $i < sizeof($domaines); $i++) {
-            $addedSQL .= " AND upper(s.domaine) LIKE concat('%', upper('{?}') , '%')";
+            $addedSQL .= " AND upper(s.domaine) LIKE concat('%', upper(?) , '%')";
             $tab[] = $domaines[$i];
         }
 
