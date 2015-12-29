@@ -50,6 +50,8 @@ if($user instanceof Etudiant){
 	* - Supprimer le fichier grace à la class File
 	*/
 	
+	// récupérer mail
+	
 	$id = $_REQUEST['id'];
 	$pdo = myPDO::getInstance();
 	$rq1 = $pdo->prepare(<<<SQL
@@ -61,7 +63,17 @@ if($user instanceof Etudiant){
 SQL
 	);
 	$rq1->execute(array($id));
-	$res = $rq1->fetch(); // résultat ici mais encore pas exploité
+	$adresseMail = $rq1->fetch();
+	
+	// création mail
+	
+	$to = $adresseMail;
+	$subject = $_REQUEST['titre'];
+	$message = $_REQUEST['contenu'];
+	
+	// envoi mail 
+	
+	$mailReussi = mail($to, $subject, $message);
 
 	header("Location: viewStage.php?id={$_GET['id']}&postuler=true");
 }
