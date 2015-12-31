@@ -54,6 +54,8 @@ if($user instanceof Etudiant){
 	
 	$id = $_REQUEST['id'];
 	$pdo = myPDO::getInstance();
+
+	
 	$rq1 = $pdo->prepare(<<<SQL
 	SELECT eeur.mail
 	FROM stage s, entreprise eise, entrepreneur eeur
@@ -87,8 +89,7 @@ SQL
 	$email->Send();
 	
 	// mise à jour de la base de données
-	
-	$user->postulerStage($_REQUEST['stage_postuler']);
+	$user->postulerStage(Stage::creatFromId($_REQUEST['id']));
 
 	header("Location: viewStage.php?id={$_GET['id']}&postuler=true");
 }

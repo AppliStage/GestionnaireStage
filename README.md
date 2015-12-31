@@ -1,4 +1,4 @@
-# GestionnaireStage
+git # GestionnaireStage
 
 SRINT n°1 [TERMINER]
 -----------------

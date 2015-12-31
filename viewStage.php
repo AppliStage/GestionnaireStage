@@ -19,7 +19,6 @@ head
 	include_once "navbar.inc.php";
 
 	$stage = Stage::creatFromId($_REQUEST['id']);
-	$_REQUEST['stage_postuler'];
 	$entreprise = Entreprise::creatFromId($stage->getEntreprise());
 
 	$titre = htmlspecialchars ($stage->getTitre());
