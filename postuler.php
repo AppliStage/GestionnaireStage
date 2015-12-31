@@ -88,12 +88,7 @@ SQL
 	
 	// mise à jour de la base de données
 	
-	$rq2->prepare(<<<SQL
-	INSERT INTO postuler(numStage, loginEtudiant)
-		values(?, ?)
-SQL
-	);
-	$rq2->execute(array($id, $user->getId()));
+	$user->postulerStage($_REQUEST['stage_postuler']);
 
 	header("Location: viewStage.php?id={$_GET['id']}&postuler=true");
 }

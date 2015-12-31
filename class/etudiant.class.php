@@ -50,7 +50,7 @@ SQL
 	}
 
 	/** 
-	* Ajoute un stage à la listes des candidatures de l'étudiant.
+	* Ajoute un stage à la listes des candidatures de l'étudiant et envoie le mail.
 	* La BD est aussi mise à jour.
 	* @param s stage à rajouter.
 	* @throws si le parametre n'est pas un stage
@@ -60,8 +60,12 @@ SQL
 			$this->offres[] = $stage;
 			$pdo = myPDO::getInstance();
 			//TO-DO : Erreur dans la base de donnée. Il manque une association dans la BD entre les stages et les etudiants
-			$pdo->prepare();
-			$pdo->execute(array());		
+			$pdo->prepare(<<<SQL
+			INSERT INTO postuler(numStage, loginEtudiant)
+				values(?, ?)
+SQL
+			);
+			$pdo->execute(array($stage->getId(), $this->id));		
 		}
 		else 
 			throw new wrongTypeFile("Le paramentre n'est pas une stage.");
