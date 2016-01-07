@@ -6,6 +6,9 @@
  * 
  */
 include_once "class/etudiant.class.php";
+include_once "class/entrepreneur.class.php";
+include_once "class/stage.class.php";
+//include_once "class/enseignant.class.php";
 include_once "myPDO.include.php";
 
 // initialise la variable $user 
@@ -14,7 +17,6 @@ require_once "init.inc.php";
 require('class/upload/Classe_Upload.php');
 require('class/upload/adresses_dossiers.php');
 
-var_dump($user);
 if($user instanceof Etudiant){
 
 	/*TO DO :
@@ -24,17 +26,31 @@ if($user instanceof Etudiant){
 	// Module d'upload -----------------------------------------------------------------------------------------------------------------------------------
 
 	// Déclaration de la classe avec envoi des paramètres (cf doc)
-	$form = new Telechargement ($dossier_photo,'envoi_file','photo','get_form');
+	$form = new Telechargement ($dossier_pdf,'envoi_file','photo','get_form');
+
 	// option : contrôle que le fichier est une image de type gif, jpg, jpeg ou png (et retourne ses dimensions dans le tableau des résultats - tableau non exploité dans l'exemple ci-dessous)
-	$form->Set_Controle_dimImg ();
+	//$form->Set_Controle_dimImg ();
+
+	// option : contrôle que le fichier est un pdf
+	$extensions = array('pdf');
+	$form->Set_Extensions_accepte ($extensions);
+
+	//Controle la taille du fichier uploader
+	$form->Set_Max_poidsFicher('1 Mo');
+
+	//Defini le nom des fichier téléchargé 
+	$nomFichier = time().'';
+	$form->Set_Nomme_fichier($nomFichier, 'pdf');
+
 	//option pour renommer le fichier en mode incrémentiel si un fichier de même nom existe déjà sur le serveur
-	$form->Set_Renomme_fichier ('incr');
+	$form->Set_Renomme_fichier('incr');
+
 	//Téléchargement sans traitement php supplémentaire -> on spécifie un rechargement de la page suite au téléchargement en indiquant un argument non nul ex 'reload' dans la fonction d'Upload.
 	$form->Upload ();
 	
 	// Enregistrement des messages de contrôle
 	$messages_form = $form->Get_Tab_message ();
-	 	 
+	 
 	$config_serveur = $form->Return_Config_serveur('tableau');
 	$max_fichier_serveur = $config_serveur['upload_max_filesize'];
 	$max_post_serveur = $config_serveur['post_max_size'];
@@ -58,7 +74,7 @@ if($user instanceof Etudiant){
 	
 	$rq1 = $pdo->prepare(<<<SQL
 	SELECT eeur.mail
-	FROM stage s, entreprise eise, entrepreneur eeur
+	FROM Stage s, Entreprise eise, Entrepreneur eeur
 	WHERE s.numEntreprise = eise.numEntreprise
 	  AND eise.numEntrepreneur = eeur.numEntrepreneur
 	  AND s.numStage = ?
@@ -70,24 +86,31 @@ SQL
 	// création mail
 	
 	require_once('class/mail/class.phpmailer.php');
-	
+
 	$email = new PHPMailer();
-	$email->From = $user->getMail();
-	$email->FronName = $user->getNom() . " " . $user->getPrenom();
+
+	//Set who the message is to be sent from
+	$email->setFrom($user->getMail(), $user->getNom() . " " . $user->getPrenom());
+	//Set an alternative reply-to address
+	$email->addReplyTo($user->getMail(), $user->getNom() . " " . $user->getPrenom());	
+	$email->addAddress($adresseMail);
+	$email->isHTML(true); 
 	$email->Subject = $_REQUEST['titre'];
 	$email->Body = $_REQUEST['contenu'];
-	$email->AddAddress($adresseMail);
-	
-	foreach ($_REQUEST['photo'] as $key => $photo) {
-	
-		$email->AddAttachment($photo);
-	
-	}
-	
+
+
+/*
+	$listFichiers = scandir ($dossier_pdf);
+	while (false !== ($entry = readdir($dossier_pdf))) {
+			if(fnmatch ($nomFichier."*", $entry)){
+				$email->AddAttachment( $dossier_pdf.$entry );
+				unlink ($dossier_pdf.$entry ); //Supprime le fichier
+			}
+    }
+	*/
 	// envoi mail 
-	
 	$email->Send();
-	
+
 	// mise à jour de la base de données
 	$user->postulerStage(Stage::creatFromId($_REQUEST['id']));
 

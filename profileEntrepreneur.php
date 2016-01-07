@@ -168,11 +168,11 @@ if($user instanceof Entrepreneur){
                                       <div class="col-xs-6 ">
                                           <div class="form-group">
                                             <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="Nom de l'entreprise" placeholder="Nom" pattern="[a-zA-Z].+" required>
+                                            <input type="text" class="form-control" name="nomEntreprise" placeholder="Nom" pattern="[a-zA-Z].+" required>
                                           </div>
                                           <div class="form-group">
                                             <label for="site">Site internet</label>
-                                            <input type="text" class="form-control" name="Site de l'entreprise" placeholder="ex: exemple.site.fr" >
+                                            <input type="text" class="form-control" name="siteEntreprise" placeholder="ex: exemple.site.fr" >
                                           </div>
                                           <div class="form-group">
                                             <label for="tel">Telephone</label>

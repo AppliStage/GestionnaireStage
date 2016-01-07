@@ -1,4 +1,4 @@
-git # GestionnaireStage
+# GestionnaireStage
 
 SRINT n°1 [TERMINER]
 -----------------
@@ -34,3 +34,4 @@ Toolbox
 		http://getbootstrap.com/
 		http://jobs-stages.letudiant.fr/stages-etudiants.html
 		http://alumni-iutrcc.univ-reims.fr/arexis_ied/srv_stage_consult?view=accueil&idstage=0
+		

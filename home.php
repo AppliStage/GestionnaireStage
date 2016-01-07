@@ -42,7 +42,7 @@ $p->appendContent(<<<HTML
 
                 <form name="searchEngine" class="form-inline searchEngine" onSubmit="return false;">
                   <div class="form-group">
-                    <input name ="poste" type="text" class="form-control" placeholder="Quelle poste ?">
+                    <input name ="poste" type="text" class="form-control" placeholder="Quel poste ?">
                   </div>
                   <div class="form-group">
                     <input name="ville" type="text" class="form-control" placeholder="Ville, Pays ...">

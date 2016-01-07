@@ -60,12 +60,12 @@ SQL
 			$this->offres[] = $stage;
 			$pdo = myPDO::getInstance();
 			//TO-DO : Erreur dans la base de donnée. Il manque une association dans la BD entre les stages et les etudiants
-			$pdo->prepare(<<<SQL
+			$req = $pdo->prepare(<<<SQL
 			INSERT INTO postuler(numStage, loginEtudiant)
 				values(?, ?)
 SQL
 			);
-			$pdo->execute(array($stage->getId(), $this->id));		
+			$req->execute(array($stage->getId(), $this->id));		
 		}
 		else 
 			throw new wrongTypeFile("Le paramentre n'est pas une stage.");

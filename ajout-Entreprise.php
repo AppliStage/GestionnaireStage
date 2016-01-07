@@ -2,49 +2,49 @@
 include_once 'class/utilisateur.class.php';
 include_once 'autoload.inc.php';
 include_once 'class/entrepreneur.class.php';
+include_once 'init.inc.php';
 
-if(isset($_GET['nom']) && isset($_GET['site']) && isset($_GET['tel']) && isset($_GET['pays']) &&isset($_GET['codePostal']) && isset($_GET['SIREN']) &&
- isset($_GET['SIRET']) && isset($_GET['codeAPE']) && isset($_GET['adresse']) && isset($_GET['ville']) && isset($_GET['typeJurydique']) ){
-
+var_dump($_REQUEST);
+if(isset($_REQUEST['nomEntreprise']) && isset($_REQUEST['siteEntreprise']) && isset($_REQUEST['tel']) && isset($_REQUEST['pays']) &&isset($_REQUEST['codePostal']) && isset($_REQUEST['SIREN']) &&
+ isset($_REQUEST['SIRET']) && isset($_REQUEST['codeAPE']) && isset($_REQUEST['adresse']) && isset($_REQUEST['ville']) && isset($_REQUEST['typeJurydique']) ){
+	
 	//transformation de l'url donnée
-	preg_match_all('#[-a-zA-Z0-9@:%_\+.~\#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~\#?&//=]*)?#si', $_GET['site'], $site);
+	preg_match_all('#[-a-zA-Z0-9@:%_\+.~\#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~\#?&//=]*)?#si', $_REQUEST['siteEntreprise'], $site);
 
-	if(preg_match ( "/^[0-9]{5}$/" , $_GET['codePostal'] ) &&
-		preg_match ( "/^[0-9]{9}$/" , $_GET['SIREN'] ) &&
-		preg_match ( "/^[0-9]{14}$/" , $_GET['SIRET'] ) &&
-		$_GET['nom'] != "" &&
-		$_GET['ville'] != "" &&
-		$_GET['adresse'] != "") {
 
-			if(Utilisateur::isConnected()){
-				try{
-					$user = Utilisateur::createFromSession();
-					
-					$entreprise = new Entreprise($_GET['nom'], $_GET['adresse'], $_GET['tel'], $_GET['typeJurydique'], $_GET['ville'],
-					 			$_GET['pays'], $_GET['SIREN'], $_GET['SIRET'], $_GET['codeAPE'], $user, $_GET['codePostal'], $site);
-					
-					
-					$entreprise-> setNom($_GET['nom']);
-					$entreprise-> setTel($_GET['tel']);
-					$entreprise-> setAdresse($_GET['adresse']);
-					$entreprise-> setTypeJuridique($_GET['typeJurydique']);
-					$entreprise-> setSite($site);
-					$entreprise-> setPays($_GET['pays']);
-					$entreprise-> setSIRET($_GET['SIRET']);
-					$entreprise-> setSIREN($_GET['SIREN']);
-					$entreprise-> setCodeAPE($_GET['codeAPE']);
-					$entreprise-> setVille($_GET['ville']);
-					$entreprise-> setCodePostal($_GET['codePostal']);
-					$entreprise-> setEntrepreneur($user);
+	if(preg_match ( "/^[0-9]{5}$/" , $_REQUEST['codePostal'] ) &&
+		preg_match ( "/^[0-9]{9}$/" , $_REQUEST['SIREN'] ) &&
+		preg_match ( "/^[0-9]{14}$/" , $_REQUEST['SIRET'] ) &&
+		$_REQUEST['nomEntreprise'] != "" &&
+		$_REQUEST['ville'] != "" &&
+		$_REQUEST['adresse'] != "") {
 
-					$entreprise->save();
-					header("Location: profileEntrepreneur.php?ins=true");
-					exit;
-				}catch(Exeption $e){
-					echo $e->getMessage();
-				}
 
+			try{					
+				$entreprise = new Entreprise($_REQUEST['nomEntreprise'], $_REQUEST['adresse'], $_REQUEST['tel'], $_REQUEST['typeJurydique'], $_REQUEST['ville'],
+				 			$_REQUEST['pays'], $_REQUEST['SIREN'], $_REQUEST['SIRET'], $_REQUEST['codeAPE'], $user, $_REQUEST['codePostal'], $site);
+						
+						
+				$entreprise-> setNom($_REQUEST['nomEntreprise']);
+				$entreprise-> setTel($_REQUEST['tel']);
+				$entreprise-> setAdresse($_REQUEST['adresse']);
+				$entreprise-> setTypeJuridique($_REQUEST['typeJurydique']);
+				$entreprise-> setSite($site);
+				$entreprise-> setPays($_REQUEST['pays']);
+				$entreprise-> setSIRET($_REQUEST['SIRET']);
+				$entreprise-> setSIREN($_REQUEST['SIREN']);
+				$entreprise-> setCodeAPE($_REQUEST['codeAPE']);
+				$entreprise-> setVille($_REQUEST['ville']);
+				$entreprise-> setCodePostal($_REQUEST['codePostal']);
+				$entreprise-> setEntrepreneur($user);
+
+				$entreprise->save();
+				header("Location: profileEntrepreneur.php?ins=true");
+				exit;
+			}catch(Exeption $e){
+				echo $e->getMessage();
 			}
+
 	}
 }
 header("Location: profileEntrepreneur.php?ins=false");
