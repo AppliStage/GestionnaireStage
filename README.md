@@ -21,44 +21,45 @@ SRINT n°3
 	- Les conventions peuvent être imprimer.
 
 SCRUM du 08/01/2016: 
-Détails des taches:
+-----------------
 Théo
-	Page profileURCA.php
-		- Pour que le site reste responsive tout le contenu de la page sera affiché dans les balises de class ".col-sm-*" et "row"
-			(voir http://getbootstrap.com/css/#grid )
-		- La page comportera une partie affichant les détails de l'utilisateur (dans une pannel http://getbootstrap.com/components/#panels-heading ) .
-			(voir http://getbootstrap.com/css/#type-addresses ,  http://getbootstrap.com/css/#type-alignment )
-		- La seconde partie de la page est un formulaire pour modifier l'utilisateur.
+Page profileURCA.php
+	-Pour que le site reste responsive tout le contenu de la page sera affiché dans les balises de class ".col-sm-*" et "row"
+		(voir http://getbootstrap.com/css/#grid )
+	-La page comportera une partie affichant les détails de l'utilisateur (dans une pannel http://getbootstrap.com/components/#panels-heading.
+		(voir http://getbootstrap.com/css/#type-addresses ,  http://getbootstrap.com/css/#type-alignment )
+	-La seconde partie de la page est un formulaire pour modifier l'utilisateur.
 
 Remi
-	Class Commentaire:
-	Page displayEntreprise.php
-		- Pour que le site reste responsive tout le contenu de la page sera affiché dans les balises de class ".col-sm-*" et "row"
-			(voir http://getbootstrap.com/css/#grid )
-		- La page comportera une partie affichant les détails de l'entreprise  et son logo si elle en posséde un.
-			(voir http://getbootstrap.com/css/#type-addresses ,  http://getbootstrap.com/css/#type-alignment )
-		- La page contiendra un formulaire pour commenter ( un formulaire comme celui de viewStage.php )
-		- La cible du formulaire vérifira que l'utilisateur ai les droits pour commenter
-		- La fin de la page affiche les commentaires des enseignants ( voir http://getbootstrap.com/components/#media-alignment )
+Class Commentaire:
+Page displayEntreprise.php
+	-Pour que le site reste responsive tout le contenu de la page sera affiché dans les balises de class ".col-sm-*" et "row"
+		(voir http://getbootstrap.com/css/#grid )
+	-La page comportera une partie affichant les détails de l'entreprise  et son logo si elle en posséde un.
+		(voir http://getbootstrap.com/css/#type-addresses ,  http://getbootstrap.com/css/#type-alignment )
+	-La page contiendra un formulaire pour commenter ( un formulaire comme celui de viewStage.php )
+	-La cible du formulaire vérifira que l'utilisateur ai les droits pour commenter
+	-La fin de la page affiche les commentaires des enseignants ( voir http://getbootstrap.com/components/#media-alignment )
 
 Quentin
-	Class Administrateur
-		- Le mot de passe et l'adresse mail de l'administrateur est directement rentré dans la base de donnée 
-		- L'administrateur n'est pas un singleton
-		- Le constructeur prend en paramètre une adresse mail, un mot de passe et vérifie qu'ils correspondent avec une ligne dans la base de donnée.
-		- Les attributs de la class Utilisateurs seront remplis avec des valeurs null
-		- Methode valideAffectation
-		- Méthode Imprimer
+Class Administrateur
+	-Le mot de passe et l'adresse mail de l'administrateur est directement rentré dans la base de donnée 
+	-L'administrateur n'est pas un singleton
+	-Le constructeur prend en paramètre une adresse mail, un mot de passe et vérifie qu'ils correspondent avec une ligne dans la base de donné.
+	-Les attributs de la class Utilisateurs seront remplis avec des valeurs null
+	-Methode valideAffectation
+	-Méthode Imprimer
 
 Marvin & Renaud
-	Page administration.php
-		- Pour que le site reste responsive tout le contenu de la page sera afficher dans les balises de class ".col-sm-*" et "row"
-			(voir http://getbootstrap.com/css/#grid )
-		- Cette page affiche toutes les conventions crées et les enseignants qui y sont attibués.
-			(voir http://getbootstrap.com/components/#panels-tables )
-		- Les conventions avec un enseignant auront un bouton pour valider la convention, les autres conventions auront un bouton grisé.
+Page administration.php
+	-Pour que le site reste responsive tout le contenu de la page sera afficher dans les balises de class ".col-sm-*" et "row"
+		(voir http://getbootstrap.com/css/#grid )
+	-Cette page affiche toutes les conventions crées et les enseignants qui y sont attibués.
+		(voir http://getbootstrap.com/components/#panels-tables )
+	-Les conventions avec un enseignant auront un bouton pour valider la convention, les autres conventions auront un bouton grisé.
+		(voir http://getbootstrap.com/css/#buttons-disabled )
+		
 
-			(voir http://getbootstrap.com/css/#buttons-disabled )
 Toolbox
 -----------------
 	-Crée un serveur web local :
