@@ -26,9 +26,7 @@ $p->appendContent(<<<HTML
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-        <h1>Stage</h1>
-        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-        <p>To see the difference between static and fixed top navbars, just scroll.</p>
+        <h1>Recherche de stage</h1>
 
           <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#stages">Stages</a></li>
@@ -130,17 +128,10 @@ $p->appendContent(<<<HTML
 HTML
 );
 
-if (Utilisateur::isConnected()){
-	try{
-		$user = Utilisateur::createFromSession();
-		$p->appendContent("<h1>Bonjour ".$user->getNom()."(test)</h1>");	
-	}catch(Exception $e){}
-}
-
 $p->appendContent(<<<HTML
       <table class="table table-striped">
     		<thead> 
-    		  <tr> <th>#</th> <th>Entreprise</th> <th>Intitulé du poste</th> <th>Lieu</th> </tr> 
+    		  <tr> <th>Ref</th> <th>Entreprise</th> <th>Intitulé du poste</th> <th>Lieu</th> </tr> 
     		</thead> 
     		<tbody id="liste_ajax"> 
 

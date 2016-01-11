@@ -1,5 +1,7 @@
 <?php
-include_once "class/etudiant.class.php";
+require_once "class/etudiant.class.php";
+require_once "class/enseignant.class.php";
+require_once "class/administrateur.class.php";
 require_once "CAS-1.3.4/CAS.php";
 require_once "config.php";
 
@@ -18,25 +20,43 @@ phpCAS::setNoCasServerValidation();
 // force CAS authentication
 if(phpCAS::forceAuthentication()) {
 
-	/* On cherche à savoir si l'utilisateur est un etudiant, puis si c'est un enseignant. 
-	 * Si le login est introuvable c'est un etudiant qui se connect pour la première fois
-	 * puisque les enseignants garant sont enregistrés par l'administrateur.
+	/* Si l'utilsiateur a 3 chiffre dans sont login, c'est un étudiant, sinon c'est un enseignant.
+	 * Si c'est un ensignant on vérifi qu'il soit pas un administrateur.
 	 */
-	if(($etudiant = Etudiant::createFromLogin(phpCAS::getUser())) != null){
-		$etudiant->saveIntoSession();
+	if(preg_match ( "/^[-a-z]{5}[0-9]{3}$/" , phpCAS::getUser() )){
+		if( ($etudiant = Etudiant::createFromLogin(phpCAS::getUser())) != null)
+			$etudiant->saveIntoSession();
+		else {
+			try{
+				Etudiant::inscription(phpCAS::getUser());
+				$etudiant = Etudiant::createFromLogin(phpCAS::getUser());
+				$etudiant->saveIntoSession();	
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+		}
 	}
-	/*if else(($enseignant = Enseignant::createFromLogin(phpCAS::getUser())) != null){
+	else if( ($admin = Administrateur::createFromLogin(phpCAS::getUser())) != null){
+	   	$admin->saveIntoSession();
+	}
+	else {
+		if (($enseignant = Enseignant::createFromLogin(phpCAS::getUser())) != null)
+				$enseignant->saveIntoSession();
+		else{
+			try{
+				Enseignant::inscription(phpCAS::getUser());
+				$enseignant = Enseignant::createFromLogin(phpCAS::getUser());
+				$enseignant->saveIntoSession();	
+			}
+			catch(Exception $e){
+				echo $e->getMessage();
+			}
+		}
 
-	}*/
-	else{
-		try{
-			Etudiant::inscription(phpCAS::getUser());
-			$etudiant = Etudiant::createFromLogin(phpCAS::getUser());
-			$etudiant->saveIntoSession();	
-		}
-		catch(Exception $e){
-			echo $e->getMessage();
-		}
 	}
+
+
+
 }
 

@@ -35,12 +35,13 @@ include_once "class/stage.class.php";
         //Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
         foreach($listStage as $key => $stage){
         	$entreprise = Entreprise::creatFromId($stage->getEntreprise());
+            $numEntreprise = $entreprise->getId();
         	$titre = htmlspecialchars ($stage->getTitre());
         	$nom = htmlspecialchars ($entreprise->getNom());
         	$ville = htmlspecialchars ($entreprise->getVille());
         	$pays = htmlspecialchars ($entreprise->getPays());
 			$id = $stage->getId();
-          	$html .="<tr><th scope='row'>{$key}</th> <td>{$nom}</td> <td><a href=\"viewStage.php?id={$id}\">{$titre}</a></td> <td>{$pays}, {$ville}</td> </tr> </a>";
+          	$html .="<tr><th scope='row'>{$id}</th> <td><a href='displayEntreprise.php?id={$numEntreprise}'>{$nom}</a></td> <td><a href=\"viewStage.php?id={$id}\">{$titre}</a></td> <td>{$pays}, {$ville}</td> </tr> </a>";
         }
 
         echo $html;

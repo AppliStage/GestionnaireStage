@@ -14,10 +14,11 @@ spl_autoload_register(function ($className) {
     if (file_exists($fichier))
         // Oui : l'inclure
         require_once($fichier) ;
-    // Pour être compatible avec le système de gestion des corrections
+    /*//Pour être compatible avec le système de gestion des corrections
     if (file_exists('../' . $fichier))
         // Oui : l'inclure
         require_once($fichier) ;
+    */
 }
 ) ;
 
