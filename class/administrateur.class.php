@@ -42,9 +42,34 @@ SQL
 	}
 	
   
-	public function valideAffectation( $stage) {
+	public function valideAffectation( $num) {
 		  
-		$this->_stage[] = $stage;
+		$pdo = myPDO::getInstance();
+			$rq1 = $pdo->prepare(<<<SQL
+				SELECT loginEnseignant AS 'enseignant', 
+				FROM Convention
+				WHERE numConvention = ?
+SQL
+			);
+			$rq1->execute(array($num)) ;
+			
+		$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+		    if (($$rq1 = $rq1->fetch()) !== false) {
+		    	
+			$rq2 = $pdo->prepare(<<<SQL	
+				UPDATE Convention SET valide=1 WHERE id=?
+			SQL
+			);
+			
+			$rq2->execute(array($rq1));
+			
+			}
+		  
+	}
+	
+	public function imprimer( $stage) {
+		  
+		
 		  
 	}
 }
