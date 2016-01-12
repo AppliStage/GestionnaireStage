@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 11 Janvier 2016 à 23:42
+-- Généré le :  Mar 12 Janvier 2016 à 09:50
 -- Version du serveur :  10.1.9-MariaDB
 -- Version de PHP :  5.6.15
 
