@@ -96,8 +96,8 @@ abstract class Utilisateur{
     /**
      * Sauvegarde l'instance courrante de l'utilisateur dans les données de session.
      */
-	public function saveIntoSession() {
-		
+	protected function saveIntoSession() {
+		self::startSession() ;
 		$_SESSION[self::session_key]['user'] = $this;
 		
 	}
@@ -138,7 +138,7 @@ abstract class Utilisateur{
         // Mise en place de la session
         self::startSession() ;
         // Mémorisation d'un challenge dans la session
-        $_SESSION[self::session_key]['challenge'] = self::randomString(16) ;
+	$_SESSION[self::session_key]['challenge'] = self::randomString(16) ;
         // Le formulaire avec le code JavaScript permettant le hachage SHA1
         // Le retour attendu par le serveur est SHA1(SHA1(pass)+challenge+SHA1(login))
         return <<<HTML

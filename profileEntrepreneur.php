@@ -74,7 +74,7 @@ if($user instanceof Entrepreneur){
                                   </div>
                                   <div class="form-group">
                                     <label for="mailEntrepreneur">Email</label>
-                                    <input type="email" class="form-control" name="mailEntrepreneur" placeholder="E-mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}">
+                                    <input type="email" class="form-control" name="mailEntrepreneur" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}">
                                   </div>
                                   <div class="form-group">
                                     <label for="fontionEntrepreneur">Fonction</label>

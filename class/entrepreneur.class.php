@@ -49,7 +49,7 @@ SQL
 	    	$_SESSION[self::session_key]['connected'] = true;
 
 		    $entrepreneur->entreprises = Entreprise::creatFromEntrepreneur($entrepreneur);
-		    
+		    $entrepreneur->saveIntoSession();
 	        return $entrepreneur ;
 	    }
 	    else {

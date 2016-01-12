@@ -25,12 +25,12 @@ if(phpCAS::forceAuthentication()) {
 	 */
 	if(preg_match ( "/^[-a-z]{5}[0-9]{3}$/" , phpCAS::getUser() )){
 		if( ($etudiant = Etudiant::createFromLogin(phpCAS::getUser())) != null)
-			$etudiant->saveIntoSession();
+			//$etudiant->saveIntoSession();
 		else {
 			try{
 				Etudiant::inscription(phpCAS::getUser());
 				$etudiant = Etudiant::createFromLogin(phpCAS::getUser());
-				$etudiant->saveIntoSession();	
+				//$etudiant->saveIntoSession();	
 			}
 			catch(Exception $e){
 				echo $e->getMessage();
@@ -47,7 +47,7 @@ if(phpCAS::forceAuthentication()) {
 			try{
 				Enseignant::inscription(phpCAS::getUser());
 				$enseignant = Enseignant::createFromLogin(phpCAS::getUser());
-				$enseignant->saveIntoSession();	
+				//$enseignant->saveIntoSession();	
 			}
 			catch(Exception $e){
 				echo $e->getMessage();

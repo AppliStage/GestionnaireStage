@@ -42,7 +42,8 @@ SQL
 
 		    	$etudiant->cv = null;
 		    	$etudiant->lettre = null;
-		    	$etudiant->offres = array(); //TO-DO :  Liste de stages
+			$etudiant->offres = array(); //TO-DO :  Liste de stages
+			$etudiant->saveIntoSession();
 		        return $etudiant ;
 		    }
 		}
