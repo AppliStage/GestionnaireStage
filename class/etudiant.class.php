@@ -57,19 +57,25 @@ SQL
 	* @throws si le parametre n'est pas un stage
 	 */
 	public function postulerStage($stage){
-		if( is_object($stage) && $stage instanceof Stage){
-			$this->offres[] = $stage;
-			$pdo = myPDO::getInstance();
-			//TO-DO : Erreur dans la base de donnée. Il manque une association dans la BD entre les stages et les etudiants
-			$req = $pdo->prepare(<<<SQL
-			INSERT INTO postuler(numStage, loginEtudiant)
-				values(?, ?)
+		if(strlen($this->nom)>1 and strlen($this->prenom)>1 and strlen($this->mail)>1 and strlen($this->tel)>1){
+			if( is_object($stage) && $stage instanceof Stage){
+				$this->offres[] = $stage;
+				$pdo = myPDO::getInstance();
+				//TO-DO : Erreur dans la base de donnée. Il manque une association dans la BD entre les stages et les etudiants
+				$req = $pdo->prepare(<<<SQL
+				INSERT INTO postuler(numStage, loginEtudiant)
+					values(?, ?)
 SQL
-			);
-			$req->execute(array($stage->getId(), $this->id));		
+				);
+				$req->execute(array($stage->getId(), $this->id));
+						
+			}
+			else{ 
+				throw new wrongTypeFile("Le paramentre n'est pas une stage.");
+			}
+		}else{
+			throw compteIncomplet("Votre profil n'est pas complet");
 		}
-		else 
-			throw new wrongTypeFile("Le paramentre n'est pas une stage.");
 	}
 
 
@@ -88,16 +94,31 @@ SQL
 		);
 	    $req->execute(array($login));
 
-	    if($req->fetch() != false)
-	    	throw new loginUtiliser("Ce compte exite déjà dans la base de donnée.") ;
-
+	    if($req->fetch() != false){
+		    	$req1 = $pdo->prepare(<<<SQL
+			UPDATE Etudiant
+			SET prenom = ?,nom = ?,mail= ?,tel= ?
+			WHERE loginEtudiant = ?
+SQL
+		);
+				$req1->execute(array($prenom,$nom,$mail,$tel,$login));
+	    }else{
 		$req1 = $pdo->prepare(<<<SQL
 			INSERT INTO Etudiant (loginEtudiant,prenom,nom,mail,tel)
 			VALUES(?,?,?,?,?)
 SQL
-		);
-		
-		$ins = $req1->execute(array($login,$prenom,$nom,$mail,$tel));
+				);
+			$ins = $req1->execute(array($login,$prenom,$nom,$mail,$tel));
+	    }	
+	
+	}
+
+	public function update($login, $nom="", $prenom="", $mail="", $tel=""){
+		self::inscription($login, $nom, $prenom, $mail, $tel);
+		$this->nom = $nom;
+		$this->prenom = $prenom;
+		$this->mail = $mail;
+		$this->tel = $tel;
 	}
 
 
@@ -124,58 +145,6 @@ SQL
 		}
 		else
 			throw new wrongTypeFile("Le fichier n'est pas un PDF.");
-	}
-
-	public function setNom($nom){
-		$pdo = myPDO::getInstance();
-	   	$req = $pdo->prepare(<<<SQL
-	    				UPDATE Etudiant
-					SET nom = ?
-					WHERE loginEtudiant = ?
-SQL
-			);
-		if($req->execute(array($nom,$this->id))){
-			$this->nom = $nom;
-		}
-	}
-
-	public function setPrenom($prenom){
-		$pdo = myPDO::getInstance();
-	   	$req = $pdo->prepare(<<<SQL
-	    				UPDATE Etudiant
-					SET prenom = ?
-					WHERE loginEtudiant = ?
-SQL
-			);
-		if($req->execute(array($prenom,$this->id))){
-			$this->prenom = $prenom;
-		}
-	}
-
-	public function setTel($tel){
-		$pdo = myPDO::getInstance();
-	   	$req = $pdo->prepare(<<<SQL
-	    				UPDATE Etudiant
-					SET tel = ?
-					WHERE loginEtudiant = ?
-SQL
-			);
-		if($req->execute(array($tel,$this->id))){
-			$this->tel = $tel;
-		}
-	}
-
-	public function setMail($mail){
-		$pdo = myPDO::getInstance();
-	   	$req = $pdo->prepare(<<<SQL
-	    				UPDATE Etudiant
-					SET mail = ?
-					WHERE loginEtudiant = ?
-SQL
-			);
-		if($req->execute(array($mail,$this->id))){
-			$this->mail = $mail;
-		}
 	}
 
 

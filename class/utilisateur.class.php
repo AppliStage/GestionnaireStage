@@ -2,6 +2,8 @@
 Class SessionException extends Exception { }
 Class NotInSessionException extends Exception{ }
 
+class compteIncomplet extends Exception {}
+
 abstract class Utilisateur{
 	
 	// Nom de l'utilisateur

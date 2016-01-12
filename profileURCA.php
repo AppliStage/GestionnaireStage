@@ -26,23 +26,7 @@ if($user instanceof Etudiant){
     		$prenomM = htmlspecialchars($_POST['prenomEtudiant']);
    		$mailM = htmlspecialchars($_POST['mailEtudiant']);
 		$telM = htmlspecialchars($_POST['telEtudiant']);
-		
-
-		if(strlen($nomM)>1){
-			$user->setNom($nomM);
-		}
-
-		if(strlen($prenomM)>1){
-			$user->setPrenom($prenomM);
-		}
-
-		if(strlen($mailM)>1){
-			$user->setNom($mailM);
-		}
-
-		if(strlen($telM)>1){
-			$user->setNom($telM);
-		}
+		$user->update($user->getId(),$nomM,$prenomM,$mailM,$telM);
 	}
 
  
@@ -59,7 +43,7 @@ if($user instanceof Etudiant){
 			<div class="tab-pane fade in active" id="profile">
  			   <div class="panel panel-default">
                               <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Information Profile</strong></h3>
+                                <h3 class="panel-title"><strong>Information Profile : {$user->getId()}</strong></h3>
                               </div>
                               <div class="panel-body">
 			        <strong>Nom : </strong>{$nom}<br>
@@ -77,19 +61,19 @@ if($user instanceof Etudiant){
                                 <form  method="POST" action="#">
                                   <div class="form-group">
                                     <label for="nomEtudiant">Nom</label>
-                                    <input type="text" class="form-control" name="nomEtudiant" pattern="[a-zA-Z].+" placeholder="{$nom}">
+                                    <input type="text" class="form-control" name="nomEtudiant" pattern="[a-zA-Z].+" placeholder="{$nom}" value="{$nom}">
                                   </div>
                                   <div class="form-group">
                                     <label for="prenomEtudiant">Prenom</label>
-                                    <input type="text" class="form-control" name="prenomEtudiant" pattern="[a-zA-Z].+" placeholder="{$prenom}">
+                                    <input type="text" class="form-control" name="prenomEtudiant" pattern="[a-zA-Z].+" placeholder="{$prenom}" value="{$prenom}">
                                   </div>
                                   <div class="form-group">
                                     <label for="mailEtudiant">Email</label>
-                                    <input type="email" class="form-control" name="mailEtudiant" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}">
+                                    <input type="email" class="form-control" name="mailEtudiant" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}" value="{$mail}">
                                   </div>
                                   <div class="form-group">
                                     <label for="telEtudiant">Telephone</label>
-                                    <input type="text" class="form-control" name="telEtudiant" placeholder="{$tel}">
+                                    <input type="text" class="form-control" name="telEtudiant" placeholder="{$tel}" value="{$tel}">
                                   </div>
                                   <button type="submit" class="btn btn-success " name="maj"><strong>Mise à jour</strong></button>
                                 </form>
@@ -254,3 +238,103 @@ echo $p->toHTML();
 */
 //}
 //>>>>>>> 8f64b8c7094e35538ba8f202e40e4bf67ad2831f
+//
+elseif($user instanceof Enseignant){
+ 
+	if(isset($_POST['maj']) and isset($_POST['nomEnseignant']) and isset($_POST['prenomEnseignant']) and isset($_POST['mailEnseignant']) and isset($_POST['telEnseignant'])){
+		
+		$nomM= htmlspecialchars($_POST['nomEnseignant']);
+    		$prenomM = htmlspecialchars($_POST['prenomEnseignant']);
+   		$mailM = htmlspecialchars($_POST['mailEnseignant']);
+		$telM = htmlspecialchars($_POST['telEnseignant']);
+		$user->update($user->getId(),$nomM,$prenomM,$mailM,$telM);
+	}
+
+ 
+    $nom= htmlspecialchars( $user->getNom() );
+    $prenom = htmlspecialchars( $user->getPrenom() );
+    $mail = htmlspecialchars( $user->getMail() );
+    $tel = htmlspecialchars( $user->getTel() );
+
+    $p->appendContent(<<<HTML
+        <div class="container">
+            <div class="row"> <!-- ROW  -->
+                <div class="col-md-12">
+                    <div class="tab-content">
+			<div class="tab-pane fade in active" id="profile">
+ 			   <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title"><strong>Information Profile : {$user->getId()}</strong></h3>
+                              </div>
+                              <div class="panel-body">
+			        <strong>Nom : </strong>{$nom}<br>
+				<strong>Prénom : </strong>{$prenom}<br>
+				<strong>Adresse mail : </strong>{$mail}<br>
+				<strong>Téléphone : </strong>{$tel}
+                              </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title"><strong>Modification Profile</strong></h3>
+                              </div>
+                              <div class="panel-body">
+                                <form  method="POST" action="#">
+                                  <div class="form-group">
+                                    <label for="nomEnseignant">Nom</label>
+                                    <input type="text" class="form-control" name="nomEnseignant" pattern="[a-zA-Z].+" placeholder="{$nom}" value="{$nom}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="prenomEnseignant">Prenom</label>
+                                    <input type="text" class="form-control" name="prenoEnseignant" pattern="[a-zA-Z].+" placeholder="{$prenom}" value="{$prenom}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="mailEnseignant">Email</label>
+                                    <input type="email" class="form-control" name="mailEnseignant" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}" value="{$mail}">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="telEnseignant">Telephone</label>
+                                    <input type="text" class="form-control" name="telEnseignant" placeholder="{$tel}" value="{$tel}">
+                                  </div>
+                                  <button type="submit" class="btn btn-success " name="maj"><strong>Mise à jour</strong></button>
+                                </form>
+                              </div>
+                            </div>
+
+                            <div class="panel panel-default" >
+                              <div class="red panel-heading">
+                                <h3 class="panel-title"><strong>Supprimer le compte</strong></h3>
+                              </div>
+                              <div class="panel-body">
+
+                              </div>
+                            </div>
+
+                        </div><!-- end Profile-->
+                    </div>
+                </div>
+            </div> <!-- end row -->
+        </div>
+HTML
+    );
+
+
+
+$p->appendToFooter(<<<Footer
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="style/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+    <script>
+    $(document).ready(function(){
+        $(".nav-tabs a").click(function(){
+            $(this).tab('show');
+        });
+    });
+    </script>
+Footer
+);
+echo $p->toHTML();
+}
