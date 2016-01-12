@@ -43,28 +43,32 @@ SQL
 	
   
 	public function valideAffectation( $num) {
-		  
+/*		  
 		$pdo = myPDO::getInstance();
-			$rq1 = $pdo->prepare(<<<SQL
-				SELECT loginEnseignant AS 'enseignant'
-				FROM Convention
-				WHERE numConvention = ?
+		$rq1 = $pdo->prepare(<<<SQL
+			SELECT loginEnseignant AS 'enseignant'
+			FROM Convention
+			WHERE numConvention = ?
 SQL
-			);
-			$rq1->execute(array($num)) ;
-			
+		);
+		$rq1->execute(array($num)) ;
 		$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-		    if (($$rq1 = $rq1->fetch()) !== false) {
+		
+		if (($rq1 = $rq1->fetch()) !== false) {
 		    	
+<<<<<<< HEAD
 			$rq2 = $pdo->prepare(<<<SQL
 			UPDATE Convention SET valide=1 WHERE id=?
+=======
+			$rq2 = $pdo->prepare(<<<SQL	
+				UPDATE Convention SET valide=1 WHERE id=?
+>>>>>>> 47c8afd686d443993941b3d0ef7526750b0182d8
 SQL
 			);
-			
 			$rq2->execute(array($rq1));
 			
-			}
-		  
+		}
+		  */
 	}
 	
 	public function imprimer( $stage) {
