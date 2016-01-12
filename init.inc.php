@@ -30,7 +30,7 @@ if (isset($_REQUEST['logout'])) {
 
     // no SSL validation for the CAS server
     phpCAS::setNoCasServerValidation();
-    phpCAS::logoutWithRedirectService("http://laudy001/GestionnaireStage/index.php");
+    phpCAS::logoutWithRedirectService("http://localhost/www/GestionnaireStage/index.php");
   }
   else{
     Utilisateur::logoutIfRequested();
