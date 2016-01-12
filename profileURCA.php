@@ -21,26 +21,26 @@ include_once "navbar.inc.php";
 if($user instanceof Etudiant){
 
 	if(isset($_POST['maj']) and isset($_POST['nomEtudiant']) and isset($_POST['prenomEtudiant']) and isset($_POST['mailEtudiant']) and isset($_POST['telEtudiant'])){
-
-		var_dump($_POST['nomEtudiant']);
+		
 		$nomM= htmlspecialchars($_POST['nomEtudiant']);
     		$prenomM = htmlspecialchars($_POST['prenomEtudiant']);
    		$mailM = htmlspecialchars($_POST['mailEtudiant']);
 		$telM = htmlspecialchars($_POST['telEtudiant']);
+		
 
-		if(sizeof($nomM)<1){
+		if(strlen($nomM)>1){
 			$user->setNom($nomM);
 		}
 
-		if(sizeof($prenomM)<1){
+		if(strlen($prenomM)>1){
 			$user->setPrenom($prenomM);
 		}
 
-		if(sizeof($mailM)<1){
+		if(strlen($mailM)>1){
 			$user->setNom($mailM);
 		}
 
-		if(sizeof($telM)<1){
+		if(strlen($telM)>1){
 			$user->setNom($telM);
 		}
 	}
@@ -133,9 +133,9 @@ Footer
 );
 echo $p->toHTML();
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 }
-=======
+//=======
 //}
 //elseif($user instanceof Administrateur){
 /*
@@ -253,4 +253,4 @@ Footer
 echo $p->toHTML();
 */
 //}
->>>>>>> 8f64b8c7094e35538ba8f202e40e4bf67ad2831f
+//>>>>>>> 8f64b8c7094e35538ba8f202e40e4bf67ad2831f

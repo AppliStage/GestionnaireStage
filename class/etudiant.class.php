@@ -134,7 +134,9 @@ SQL
 					WHERE loginEtudiant = ?
 SQL
 			);
-	    	$req->execute(array($nom,$id));
+		if($req->execute(array($nom,$this->id))){
+			$this->nom = $nom;
+		}
 	}
 
 	public function setPrenom($prenom){
@@ -145,21 +147,12 @@ SQL
 					WHERE loginEtudiant = ?
 SQL
 			);
-	    	$req->execute(array($prenom,$id));
+		if($req->execute(array($prenom,$this->id))){
+			$this->prenom = $prenom;
+		}
 	}
 
 	public function setTel($tel){
-		$pdo = myPDO::getInstance();
-	   	$req = $pdo->prepare(<<<SQL
-	    				UPDATE Etudiant
-					SET mail = ?
-					WHERE loginEtudiant = ?
-SQL
-			);
-	    	$req->execute(array($tel,$id));
-	}
-
-	public function setMail($mail){
 		$pdo = myPDO::getInstance();
 	   	$req = $pdo->prepare(<<<SQL
 	    				UPDATE Etudiant
@@ -167,7 +160,22 @@ SQL
 					WHERE loginEtudiant = ?
 SQL
 			);
-	    	$req->execute(array($mail,$id));
+		if($req->execute(array($tel,$this->id))){
+			$this->tel = $tel;
+		}
+	}
+
+	public function setMail($mail){
+		$pdo = myPDO::getInstance();
+	   	$req = $pdo->prepare(<<<SQL
+	    				UPDATE Etudiant
+					SET mail = ?
+					WHERE loginEtudiant = ?
+SQL
+			);
+		if($req->execute(array($mail,$this->id))){
+			$this->mail = $mail;
+		}
 	}
 
 
