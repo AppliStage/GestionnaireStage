@@ -24,9 +24,9 @@ if(phpCAS::forceAuthentication()) {
 	 * Si c'est un ensignant on vérifi qu'il soit pas un administrateur.
 	 */
 	if(preg_match ( "/^[-a-z]{5}[0-9]{3}$/" , phpCAS::getUser() )){
-		if( ($etudiant = Etudiant::createFromLogin(phpCAS::getUser())) != null)
+		if( ($etudiant = Etudiant::createFromLogin(phpCAS::getUser())) != null){
 			//$etudiant->saveIntoSession();
-		else {
+		}else {
 			try{
 				Etudiant::inscription(phpCAS::getUser());
 				$etudiant = Etudiant::createFromLogin(phpCAS::getUser());

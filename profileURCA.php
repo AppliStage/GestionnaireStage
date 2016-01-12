@@ -18,40 +18,63 @@ $p->appendCssUrl("style/profileStyle.css");
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
 
-//if($user instanceof Etudiant){
+if($user instanceof Etudiant){
 
-$p->appendContent(<<<HTML
-    <div class="container">
-        <p>Bonjour {$user->getID()} !</p>
-    </div>
-HTML
-);
+	if(isset($_POST['maj']) and isset($_POST['nomEtudiant']) and isset($_POST['prenomEtudiant']) and isset($_POST['mailEtudiant']) and isset($_POST['telEtudiant'])){
+
+		var_dump($_POST['nomEtudiant']);
+		$nomM= htmlspecialchars($_POST['nomEtudiant']);
+    		$prenomM = htmlspecialchars($_POST['prenomEtudiant']);
+   		$mailM = htmlspecialchars($_POST['mailEtudiant']);
+		$telM = htmlspecialchars($_POST['telEtudiant']);
+
+		if(sizeof($nomM)<1){
+			$user->setNom($nomM);
+		}
+
+		if(sizeof($prenomM)<1){
+			$user->setPrenom($prenomM);
+		}
+
+		if(sizeof($mailM)<1){
+			$user->setNom($mailM);
+		}
+
+		if(sizeof($telM)<1){
+			$user->setNom($telM);
+		}
+	}
 
  
     $nom= htmlspecialchars( $user->getNom() );
     $prenom = htmlspecialchars( $user->getPrenom() );
     $mail = htmlspecialchars( $user->getMail() );
-    $fonction = htmlspecialchars( $user->getFonction() );
     $tel = htmlspecialchars( $user->getTel() );
 
     $p->appendContent(<<<HTML
         <div class="container">
             <div class="row"> <!-- ROW  -->
-                <div class="col-md-3">
-                    <div class="list-group">
-                      <button type="button" data-toggle="tab" data-target="#profile" data-target="#1profile" class="list-group-item"><strong>Profile</strong></button>
-                    </div>
-                </div>
-
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="profile">
-                            <div class="panel panel-default">
+			<div class="tab-pane fade in active" id="profile">
+ 			   <div class="panel panel-default">
                               <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Profile</strong></h3>
+                                <h3 class="panel-title"><strong>Information Profile</strong></h3>
                               </div>
                               <div class="panel-body">
-                                <form>
+			        <strong>Nom : </strong>{$nom}<br>
+				<strong>Prénom : </strong>{$prenom}<br>
+				<strong>Adresse mail : </strong>{$mail}<br>
+				<strong>Téléphone : </strong>{$tel}
+                              </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h3 class="panel-title"><strong>Modification Profile</strong></h3>
+                              </div>
+                              <div class="panel-body">
+                                <form  method="POST" action="#">
                                   <div class="form-group">
                                     <label for="nomEtudiant">Nom</label>
                                     <input type="text" class="form-control" name="nomEtudiant" pattern="[a-zA-Z].+" placeholder="{$nom}">
@@ -68,30 +91,7 @@ HTML
                                     <label for="telEtudiant">Telephone</label>
                                     <input type="text" class="form-control" name="telEtudiant" placeholder="{$tel}">
                                   </div>
-                                  <button type="submit" class="btn btn-success "><strong>Mise à jour</strong></button>
-                                </form>
-                              </div>
-                            </div>
-
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Changer le mot de passe</strong></h3>
-                              </div>
-                              <div class="panel-body">
-                                <form>
-                                  <div class="form-group">
-                                    <label for="exampleInputEmail1">Ancien mot de passe</label>
-                                    <input type="password" class="form-control" name="exampleInputEmail1" >
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="exampleInputEmail1">Nouveau mot de passe</label>
-                                    <input type="password" class="form-control" name="exampleInputEmail1" >
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="exampleInputPassword1">Confirmer le mot de passe</label>
-                                    <input type="password" class="form-control" name="exampleInputPassword1" >
-                                  </div>
-                                  <button type="submit" class="btn btn-success "><strong>Mettre à jour le mot de passe</strong></button>
+                                  <button type="submit" class="btn btn-success " name="maj"><strong>Mise à jour</strong></button>
                                 </form>
                               </div>
                             </div>
@@ -133,4 +133,4 @@ Footer
 );
 echo $p->toHTML();
 
-//}
+}

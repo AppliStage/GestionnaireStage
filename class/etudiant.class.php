@@ -126,6 +126,50 @@ SQL
 			throw new wrongTypeFile("Le fichier n'est pas un PDF.");
 	}
 
+	public function setNom($nom){
+		$pdo = myPDO::getInstance();
+	   	$req = $pdo->prepare(<<<SQL
+	    				UPDATE Etudiant
+					SET nom = ?
+					WHERE loginEtudiant = ?
+SQL
+			);
+	    	$req->execute(array($nom,$id));
+	}
+
+	public function setPrenom($prenom){
+		$pdo = myPDO::getInstance();
+	   	$req = $pdo->prepare(<<<SQL
+	    				UPDATE Etudiant
+					SET prenom = ?
+					WHERE loginEtudiant = ?
+SQL
+			);
+	    	$req->execute(array($prenom,$id));
+	}
+
+	public function setTel($tel){
+		$pdo = myPDO::getInstance();
+	   	$req = $pdo->prepare(<<<SQL
+	    				UPDATE Etudiant
+					SET mail = ?
+					WHERE loginEtudiant = ?
+SQL
+			);
+	    	$req->execute(array($tel,$id));
+	}
+
+	public function setMail($mail){
+		$pdo = myPDO::getInstance();
+	   	$req = $pdo->prepare(<<<SQL
+	    				UPDATE Etudiant
+					SET tel = ?
+					WHERE loginEtudiant = ?
+SQL
+			);
+	    	$req->execute(array($mail,$id));
+	}
+
 
 }
 
