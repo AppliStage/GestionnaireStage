@@ -46,7 +46,7 @@ SQL
 		  
 		$pdo = myPDO::getInstance();
 			$rq1 = $pdo->prepare(<<<SQL
-				SELECT loginEnseignant AS 'enseignant', 
+				SELECT loginEnseignant AS 'enseignant'
 				FROM Convention
 				WHERE numConvention = ?
 SQL
