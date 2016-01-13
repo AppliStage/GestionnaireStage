@@ -46,10 +46,10 @@ if($user instanceof Etudiant){
                                 <h3 class="panel-title"><strong>Information Profile : {$user->getId()}</strong></h3>
                               </div>
                               <div class="panel-body">
-			        <strong>Nom : </strong>{$nom}<br>
-				<strong>Prénom : </strong>{$prenom}<br>
-				<strong>Adresse mail : </strong>{$mail}<br>
-				<strong>Téléphone : </strong>{$tel}
+                        			  <strong>Nom : </strong>{$nom}<br>
+                        				<strong>Prénom : </strong>{$prenom}<br>
+                        				<strong>Adresse mail : </strong>{$mail}<br>
+                        				<strong>Téléphone : </strong>{$tel}
                               </div>
                             </div>
 

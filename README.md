@@ -22,12 +22,6 @@ SRINT n°3
 
 SCRUM du 08/01/2016: 
 -----------------
-Théo
-Page profileURCA.php:
-
-	-Pour que le site reste responsive tout le contenu de la page sera affiché dans les balises de class ".col-sm-*" et "row"(voir http://getbootstrap.com/css/#grid )
-	-La page comportera une partie affichant les détails de l'utilisateur (dans une pannel http://getbootstrap.com/components/#panels-heading.(voir http://getbootstrap.com/css/#type-addresses ,  http://getbootstrap.com/css/#type-alignment )
-	-La seconde partie de la page est un formulaire pour modifier l'utilisateur.
 
 Remi
 Class Commentaire:

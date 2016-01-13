@@ -1,6 +1,8 @@
 <?php
+require_once 'commentaire.class.php';
+require_once 'stage.class.php';
 
-
+class wrongEntryException extends Exception { }
 
 class Enseignant extends Utilisateur {
 	
@@ -95,9 +97,15 @@ SQL
    /**
     * Ajoute un commentaire à la liste de commentaires.
     * @param Commentaire $e
+    * @throws Si le parametre n'est pas une instance de Commentaire 
+    * @throws Si le compte de l'enseignant est imcomplet
     */
    public function deposerCommentaire($e) {
-	if(strlen($this->nom)>1 and strlen($this->prenom)>1 and strlen($this->mail)>1 and strlen($this->tel)>1){
+   	if (!$e instanceof Commentaire){
+   		throw wrongEntryException("Le parametre entré n'es pas un Commentaire");
+   	}
+   		
+   	if($this->nom != "" && $this->prenom != "" && $this->mail != "" && $this->mail) {
 	  $this->_commentaire[] = $e;
 	}else{
 	  throw compteIncomplet("Votre profil n'est pas complet");
@@ -107,12 +115,17 @@ SQL
    /**
     * Ajoute un stage à la liste de stages.
     * @param Stage $stage
+    * @throws Si le parametre n'est pas une instance de Commentaire 
+    * @throws Si le compte de l'enseignant est imcomplet
     */
    public static function affecterStage($stage) {
-      if(strlen($this->nom)>1 and strlen($this->prenom)>1 and strlen($this->mail)>1 and strlen($this->tel)>1){
-	  $this->_affectations[] = $stage;
+   	if (!$e instanceof Stage){
+   		throw wrongEntryException("Le parametre entré n'es pas une instance de Stage");
+   	}
+      if($this->nom != "" && $this->prenom != "" && $this->mail != "" && $this->mail){
+	  	$this->_affectations[] = $stage;
       }else{
-	  throw compteIncomplet("Votre profil n'est pas complet");
+	  	throw compteIncomplet("Votre profil n'est pas complet");
       }
    }
 

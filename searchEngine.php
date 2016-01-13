@@ -4,7 +4,7 @@ include_once "class/stage.class.php";
 
  if(isset($_REQUEST['poste']) && isset($_REQUEST['ville']) && isset($_REQUEST['domaines'])){
         
-        $domaines = split(",", $_REQUEST['domaines']);
+        $domaines = explode(",", $_REQUEST['domaines']);
         if ($domaines[0]=="") $domaines=array();
         $pdo = myPDO::getInstance();
 

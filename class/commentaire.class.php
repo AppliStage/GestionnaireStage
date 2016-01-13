@@ -4,15 +4,28 @@
 class Commentaire {
 	
    //Contenu du commentaire
-   private  $_contenu;
+   private  $contenu;
+   private $dateEnvoi;
+   private $Enseignant;
 
     /**
     * Construire un commentaire
     */
-    public function __construct ( $contenu){
-       
-		$this->_contenu = $contenu;
-	   
+    public function __construct ($nom, $contenu, $date){
+	     $this->enseignant = $nom;
+       $$this->contenu = $contenu;
+       $this->dateEnvoi = $date;
     }
 
+    public function getContenu(){
+      return $this->contenu;
+    }
+
+    public function getDate(){
+      return $this->dateEnvoi;
+    }
+
+    public function getEnseignant(){
+      return $this->loginEnseignant;
+    }
 }

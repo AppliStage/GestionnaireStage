@@ -1,5 +1,7 @@
 <?php
 include_once "myPDO.include.php";
+require_once 'stage.class.php';
+require_once "autoload.inc.php";
 
 class Entreprise {
    
@@ -44,6 +46,20 @@ SQL
       	foreach($listEntreprise as $entreprise){
       		$entreprise->entrepreneur = $entrepreneur;
           $entreprise->stage = Stage::creatFromEntreprise($entreprise);
+
+          //Création d'un stage
+          $req1 = $pdo->prepare(<<<SQL
+            SELECT nom, prenom, contenu, dateEnvoi 
+            FROM Enseignant e, Commentaire c
+            WHERE e.loginEnseignant = c.loginEnseignant
+            AND numEntreprise = ?
+SQL
+          );
+          $req1->execute(array($id));
+
+          while(  ($value = $req1->fetch()) != null) {
+            $entreprise->avis[] = new Commentaire($value[0]." ".$value[1], $value[2], $value[4]);
+          }          
       	}
         return $listEntreprise;
     }
@@ -67,7 +83,24 @@ SQL
         );
         $req->execute(array($id));
         $req->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
-        return $req->fetch();
+        if(($entreprise = $req->fetch()) != null){
+          $entreprise->stage = Stage::creatFromEntreprise($entreprise);
+
+          $req1 = $pdo->prepare(<<<SQL
+            SELECT nom, prenom, contenu, dateEnvoi 
+            FROM Enseignant e, Commentaire c
+            WHERE e.loginEnseignant = c.loginEnseignant
+            AND numEntreprise = ?
+SQL
+          );
+          $req1->execute(array($id));
+
+          while(  ($value = $req1->fetch()) != null) {
+            $entreprise->avis[] = new Commentaire($value[0]." ".$value[1], $value[2], $value[4]);
+          }
+          return $entreprise;
+        }
+        return null;
   }
 
 
@@ -274,6 +307,10 @@ SQL
 
   public function getEntrepreneur(){
     return $this->entrepreneur ;
+  }
+
+  public function getAvis(){
+    return $this->avis;
   }
 
 }
