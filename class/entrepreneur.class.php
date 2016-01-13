@@ -6,7 +6,7 @@ include_once "entreprise.class.php";
 
 class AuthenticationException extends Exception { }
 
-class wrongEntryException extends Exception { }
+
 
 class MailUtiliser extends Exception { }
 

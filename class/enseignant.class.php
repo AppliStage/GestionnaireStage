@@ -2,7 +2,7 @@
 require_once 'commentaire.class.php';
 require_once 'stage.class.php';
 
-class wrongEntryException extends Exception { }
+
 
 class Enseignant extends Utilisateur {
 	

@@ -21,7 +21,7 @@ if($user instanceof Etudiant){
 
 	/*TO DO :
 	 * - Restreindre les fichier à une taille maximun et modifier le controle pour le fichier soit un PDF
-	 */
+	 
 
 	// Module d'upload -----------------------------------------------------------------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ if($user instanceof Etudiant){
 	$max_fichier_serveur = $config_serveur['upload_max_filesize'];
 	$max_post_serveur = $config_serveur['post_max_size'];
 	//----------------------------------------------------------------------------------------------------------------------------------------------------
-
+*/
 
 	/*
 	* TO DO :

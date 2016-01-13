@@ -1,7 +1,7 @@
 <?php
 Class SessionException extends Exception { }
 Class NotInSessionException extends Exception{ }
-
+class wrongEntryException extends Exception { }
 class compteIncomplet extends Exception {}
 
 abstract class Utilisateur{
