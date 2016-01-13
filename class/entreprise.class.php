@@ -1,4 +1,5 @@
 <?php
+require_once 'commentaire.class.php';
 include_once "myPDO.include.php";
 require_once 'stage.class.php';
 require_once "autoload.inc.php";
@@ -56,10 +57,7 @@ SQL
 SQL
           );
           $req1->execute(array($id));
-
-          while(  ($value = $req1->fetch()) != null) {
-            $entreprise->avis[] = new Commentaire($value[0]." ".$value[1], $value[2], $value[4]);
-          }          
+          $entreprise->avis = Commentaire::createFromEntreprise($entreprise->getId());       
       	}
         return $listEntreprise;
     }
@@ -94,10 +92,7 @@ SQL
 SQL
           );
           $req1->execute(array($id));
-
-          while(  ($value = $req1->fetch()) != null) {
-            $entreprise->avis[] = new Commentaire($value[0]." ".$value[1], $value[2], $value[4]);
-          }
+          $entreprise->avis = Commentaire::createFromEntreprise($entreprise->getId());
           return $entreprise;
         }
         return null;

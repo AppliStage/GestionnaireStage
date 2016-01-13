@@ -1,4 +1,5 @@
 <?php
+require_once 'utilisateur.class.php';
 require_once 'commentaire.class.php';
 require_once 'stage.class.php';
 
@@ -7,7 +8,6 @@ require_once 'stage.class.php';
 class Enseignant extends Utilisateur {
 	
    private $_affectations;   
-   public $_commentaire;
    
    /**
     * Constructeur d'un enseignant
@@ -17,8 +17,6 @@ class Enseignant extends Utilisateur {
 	   
 	 
 	   $this->_affectations = array();
-	   $this->_commentaire = array();
-	   
    }
    
     /**
@@ -44,8 +42,7 @@ SQL
 		    	$_SESSION[self::session_key]['connected'] = true;
 
 		    	$enseignant->_affectations = array();
-			$enseignant->_commentaire = array();
-			$enseignant->saveIntoSession();
+				$enseignant->saveIntoSession();
 		        return $enseignant;
 		    }
 		}
@@ -96,19 +93,24 @@ SQL
    
    /**
     * Ajoute un commentaire à la liste de commentaires.
-    * @param Commentaire $e
-    * @throws Si le parametre n'est pas une instance de Commentaire 
+    * @param Contenue de l'avis
+    * @param idEntreprise : numéro de l'entreprise
     * @throws Si le compte de l'enseignant est imcomplet
     */
-   public function deposerCommentaire($e) {
-   	if (!$e instanceof Commentaire){
-   		throw wrongEntryException("Le parametre entré n'es pas un Commentaire");
-   	}
+   public function deposerCommentaire($contenu, $idEntreprise) {
    		
    	if($this->nom != "" && $this->prenom != "" && $this->mail != "" && $this->mail) {
-	  $this->_commentaire[] = $e;
+
+		$pdo = myPDO::getInstance();
+		$req1 = $pdo->prepare(<<<SQL
+		INSERT INTO Commentaire (numCommentaire,loginEnseignant,contenu,dateEnvoi,numEntreprise)
+		VALUES('',?,?, now(),?)
+SQL
+		);
+		$ins = $req1->execute(array($this->getId(), $contenu, $idEntreprise));
+
 	}else{
-	  throw compteIncomplet("Votre profil n'est pas complet");
+		throw compteIncomplet("Votre profil n'est pas complet");
 	}
    }
    

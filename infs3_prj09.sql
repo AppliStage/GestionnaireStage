@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mar 12 Janvier 2016 à 09:50
+-- Généré le :  Mer 13 Janvier 2016 à 23:10
 -- Version du serveur :  10.1.9-MariaDB
 -- Version de PHP :  5.6.15
 
@@ -42,11 +42,22 @@ CREATE TABLE `Administrateur` (
 
 CREATE TABLE `Commentaire` (
   `numCommentaire` int(11) NOT NULL,
-  `loginEnseignant` varchar(8) NOT NULL,
-  `contenu` text NOT NULL,
   `dateEnvoi` date NOT NULL,
-  `numEntreprise` int(11) NOT NULL
+  `loginEnseignant` varchar(8) NOT NULL,
+  `numEntreprise` int(11) NOT NULL,
+  `contenu` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `Commentaire`
+--
+
+INSERT INTO `Commentaire` (`numCommentaire`, `dateEnvoi`, `loginEnseignant`, `numEntreprise`, `contenu`) VALUES
+(10, '2016-01-13', 'gando002', 29, 'Bla Bla bla, Les enseignants peuvent surment envoyer des messages maintenant.'),
+(11, '2016-01-13', 'gando002', 29, 'Je peux commenter plusieurs fois la même entreprise ?'),
+(12, '2016-01-13', 'gando002', 29, 'Oui.'),
+(13, '2016-01-13', 'gando002', 29, 'Cette images n''est pas libre de droit et elle est un peu pourrie je trouve.. J''appel au changement !'),
+(14, '2016-01-13', 'gando002', 29, 'Et à une marge en bas ');
 
 -- --------------------------------------------------------
 
@@ -77,6 +88,13 @@ CREATE TABLE `Enseignant` (
   `tel` varchar(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Contenu de la table `Enseignant`
+--
+
+INSERT INTO `Enseignant` (`loginEnseignant`, `prenom`, `nom`, `mail`, `tel`) VALUES
+('gando002', 'Antony', 'Ganodnou', 'gmigan.a@gmail.com', '0645547614');
+
 -- --------------------------------------------------------
 
 --
@@ -98,11 +116,7 @@ CREATE TABLE `Entrepreneur` (
 --
 
 INSERT INTO `Entrepreneur` (`numEntrepreneur`, `prenom`, `nom`, `mail`, `fonction`, `pass`, `tel`) VALUES
-(1, '', '', '', '', '', ''),
-(2, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
-(3, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
-(4, 'Rémi', 'PECCARD', 'test@gmail.com', 'directeur', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '314159265358'),
-(5, 'Valentin', 'Collet', 'colcol&commat;etudiant&period;univ-reims&period;fr', '', '74c3b1c0ccefcc3319838d2c595fb101a7e9491c', '0345621578'),
+(4, 'Rémi', 'PECCARD', 'remi.peccard@etudiant.univ-reims.fr', 'directeur', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '314159265358'),
 (7, 'antony', 'gandonou', 'gmigan.a@gmail.com', '', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '0645547614'),
 (8, 'Ive', 'Jean', 'test2@gmail.com', '', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '0645547614'),
 (9, 'steven', 'gandonou', 'gandonousteven@gmail.com', '', '9495778ed2ea9015ed81ec7a5807a2a52a7e5d81', '');
@@ -155,13 +169,6 @@ CREATE TABLE `Etudiant` (
   `tel` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `Etudiant`
---
-
-INSERT INTO `Etudiant` (`loginEtudiant`, `nom`, `prenom`, `mail`, `tel`) VALUES
-('gando002', '', '', '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -172,13 +179,6 @@ CREATE TABLE `postuler` (
   `numStage` int(11) NOT NULL,
   `loginEtudiant` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Contenu de la table `postuler`
---
-
-INSERT INTO `postuler` (`numStage`, `loginEtudiant`) VALUES
-(32, 'gando002');
 
 -- --------------------------------------------------------
 
@@ -224,9 +224,7 @@ ALTER TABLE `Administrateur`
 -- Index pour la table `Commentaire`
 --
 ALTER TABLE `Commentaire`
-  ADD PRIMARY KEY (`numCommentaire`),
-  ADD UNIQUE KEY `loginEnseignant` (`loginEnseignant`),
-  ADD UNIQUE KEY `numEntreprise` (`numEntreprise`);
+  ADD PRIMARY KEY (`numCommentaire`);
 
 --
 -- Index pour la table `Convention`
@@ -284,7 +282,7 @@ ALTER TABLE `Stage`
 -- AUTO_INCREMENT pour la table `Commentaire`
 --
 ALTER TABLE `Commentaire`
-  MODIFY `numCommentaire` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `numCommentaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `Convention`
 --
@@ -305,17 +303,6 @@ ALTER TABLE `Entreprise`
 --
 ALTER TABLE `Stage`
   MODIFY `numStage` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `Commentaire`
---
-ALTER TABLE `Commentaire`
-  ADD CONSTRAINT `fk_commentaireEnseignant` FOREIGN KEY (`loginEnseignant`) REFERENCES `Enseignant` (`loginEnseignant`),
-  ADD CONSTRAINT `fk_commentaireEntreprise` FOREIGN KEY (`numEntreprise`) REFERENCES `Entreprise` (`numEntreprise`);
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -34,7 +34,8 @@ if (isset($_REQUEST['id']) &&  ($entreprise = Entreprise::creatFromId($_REQUEST[
     //Affiche tous les avis sur l'entreprise
     $commentaires ="";
     foreach ($entreprise->getAvis() as $key => $value) {
-        $nomEnseignant = htmlspecialchars($value->getEnseignant());
+        $enseignant = Enseignant::createFromLogin($value->getNumEnseignant());
+        $nomEnseignant = htmlspecialchars($enseignant->getNom()." ".$enseignant->getPrenom());
         $contenu = htmlspecialchars($value->getContenu());
         $commentaires .=<<<AVIS
             <div class="media">
@@ -95,10 +96,11 @@ AVIS;
                         <div class="page-header" style="text-align:center;margin-top:70px">
                         </div>
 
-                        <form action = "commenter.php?id={$_REQUEST['id']}" method = "get">
+                        <form action = "commenter.php" method = "post">
                             <div class="row">  <!-- Il ne peut y avoir qu'une seul class container par page -->
                                 <label for="contenu">Contenu du mail: </label>
                                 <textarea name="contenu" class="form-control" rows="3" placeholder=""></textarea>
+                                <input type="hidden" name="id" value="{$_REQUEST['id']}" />
                             </div>
                             <div class="row" style="text-align:right;margin-top:8px"> 
                                 <button class="btn btn-default" >Annuler</button>                            

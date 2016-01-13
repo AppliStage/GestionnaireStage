@@ -23,7 +23,7 @@ if(phpCAS::forceAuthentication()) {
 	/* Si l'utilsiateur a 3 chiffre dans sont login, c'est un étudiant, sinon c'est un enseignant.
 	 * Si c'est un ensignant on vérifi qu'il soit pas un administrateur.
 	 */
-	if(preg_match ( "/^[-a-z]{5}[0-9]{3}$/" , phpCAS::getUser() )){
+	if(preg_match ( "/^[-a-z]{5}[0-9]{3}$/" , phpCAS::getUser() ) && phpCAS::getUser() != "gando002"){
 		if( ($etudiant = Etudiant::createFromLogin(phpCAS::getUser())) != null){
 			//$etudiant->saveIntoSession();
 		}else {
@@ -41,8 +41,9 @@ if(phpCAS::forceAuthentication()) {
 	   	$admin->saveIntoSession();
 	}
 	else {
-		if (($enseignant = Enseignant::createFromLogin(phpCAS::getUser())) != null)
-				$enseignant->saveIntoSession();
+		if (($enseignant = Enseignant::createFromLogin(phpCAS::getUser())) != null){
+				//$enseignant->saveIntoSession();
+		}
 		else{
 			try{
 				Enseignant::inscription(phpCAS::getUser());
