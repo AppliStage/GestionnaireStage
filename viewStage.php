@@ -54,10 +54,13 @@ head
 	}
 
 	$droit="";
-	if(!$user instanceof Etudiant && $user->dejaConnu($_REQUEST['id']) ){
+	if(!$user instanceof Etudiant ){
 		$droit="disabled='disabled'";
 	}
-
+	else {
+		if ($user->dejaConnu($_REQUEST['id']))
+			$droit="disabled='disabled'";
+	}
 
 	//var_dump($stage->getEntreprise());
 	$p->appendContent(<<<HTML
