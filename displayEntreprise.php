@@ -52,12 +52,32 @@ if (isset($_REQUEST['id']) &&  ($entreprise = Entreprise::creatFromId($_REQUEST[
 AVIS;
     }
 
+  //Gestion des réponse de l'enregistrement d'un entrepreneur
+  if(isset($_GET['err']) && $_GET['err'] == 'cantComment' ){
+    $toggleScript="$('#alert').show();";
+    $action="danger";
+    $contenu = "Seul les enseignants peuvent commenter une entreprise.";
+  }
+  else{
+    $toggleScript="";
+    $action ="";
+    $contenu ="";
+  }
 
+    $droit="";
+    if(!$user->isComplet() || !$user instanceof Enseignant){
+      $droit="disabled='disabled'";
+    }
 
     $p->appendContent(<<<HTML
 
         <div class="container"> <!-- CONTIENT TOUTE LA PAGE -->
                 <div class="row">  
+
+                    <div id="alert" class="alert alert-{$action} collapse" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>{$contenu}</strong>
+                    </div>
                     <div class="col-md-12">
 
                         <div class="panel panel-default">
@@ -97,14 +117,12 @@ AVIS;
                         </div>
 
                         <form action = "commenter.php" method = "post">
-                            <div class="row">  <!-- Il ne peut y avoir qu'une seul class container par page -->
-                                <label for="contenu">Contenu du mail: </label>
-                                <textarea name="contenu" class="form-control" rows="3" placeholder=""></textarea>
-                                <input type="hidden" name="id" value="{$_REQUEST['id']}" />
-                            </div>
-                            <div class="row" style="text-align:right;margin-top:8px"> 
-                                <button class="btn btn-default" >Annuler</button>                            
-                                <button class="btn btn-primary" type="submit">Publier</button>
+                            <label for="contenu">Contenu du mail: </label>
+                            <textarea name="contenu" class="form-control" {$droit} rows="3" placeholder=""></textarea>
+                            <input type="hidden" name="id" value="{$_REQUEST['id']}" />
+                            <div  style="text-align:right;margin-top:8px"> 
+                                <button class="btn btn-default" {$droit} >Annuler</button>                            
+                                <button class="btn btn-primary" {$droit} type="submit">Publier</button>
                             </div>
                         </form>
                     </div>

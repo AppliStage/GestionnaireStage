@@ -2,7 +2,7 @@
 Class SessionException extends Exception { }
 Class NotInSessionException extends Exception{ }
 class wrongEntryException extends Exception { }
-class compteIncomplet extends Exception {}
+class CompteIncomplet extends Exception {}
 
 abstract class Utilisateur{
 	
@@ -49,7 +49,13 @@ abstract class Utilisateur{
         	session_start() ;
     }
 
-
+	/**
+	 * Vérifie si le compte utilisateur à un compte complet pour le fonctionnement de l'application
+	 * @return true si l'utilisateur à un nom, prenom et une adesse mail, sinon elle renvoi false
+	 */
+	public function isComplet(){
+		return ($this->nom != "" && $this->prenom != "" && $this->mail != "") ;
+	}
 
     /**
      * Lecture de l'objet User dans la session

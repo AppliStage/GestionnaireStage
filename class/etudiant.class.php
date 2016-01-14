@@ -57,7 +57,7 @@ SQL
 	* @throws si le parametre n'est pas un stage
 	 */
 	public function postulerStage($stage){
-		if(strlen($this->nom)>1 and strlen($this->prenom)>1 and strlen($this->mail)>1 and strlen($this->tel)>1){
+		if($this->isComplet()){
 			if( is_object($stage) && $stage instanceof Stage){
 				$this->offres[] = $stage;
 				$pdo = myPDO::getInstance();

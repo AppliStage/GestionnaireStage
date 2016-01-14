@@ -53,6 +53,11 @@ head
 		$contenu ="";
 	}
 
+	$droit="";
+	if(!$user instanceof Etudiant){
+		$droit="disabled='disabled'";
+	}
+
 
 	//var_dump($stage->getEntreprise());
 	$p->appendContent(<<<HTML
@@ -101,10 +106,10 @@ head
 			<form id = "form_file" enctype = "multipart/form-data" action = "postuler.php?id={$_REQUEST['id']}" method = "post" onsubmit = "Attente_Load('message_tele')">
 				<div class="row">  <!-- Il ne peut y avoir qu'une seul class container par page -->
 					<label for="titre">Sujet: </label>
-					<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" required>
+					<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" {$droit} required>
 
 					<label for="contenu">Contenu du mail: </label>
-					<textarea name="contenu" class="form-control" rows="10" placeholder=""></textarea>
+					<textarea name="contenu" class="form-control" rows="10" placeholder="" {$droit}></textarea>
 
 					<label for="photo[]">Ajouter des piéces jointes: </label>
 					<input type = "file" name = "photo[]"  multiple = "multiple" />
@@ -112,7 +117,7 @@ head
 					<button type="button" id = "add_load_file" onclick = "Add_Load_File('champ_file')">+</button>
 				</div>
 				<div class="row" style="text-align:center;margin-top:8px"> 
-					<button class="btn btn-lg btn-primary" id = "envoyer" name = "envoi_file" type="submit">Postuler au stage</button>
+					<button class="btn btn-lg btn-primary" id = "envoyer" name = "envoi_file" {$droit} type="submit">Postuler au stage</button>
 				</div>
 			</form>
 

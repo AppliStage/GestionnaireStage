@@ -1,8 +1,5 @@
 <?php
-require_once 'utilisateur.class.php';
-require_once 'commentaire.class.php';
-require_once 'stage.class.php';
-
+require_once 'autoload.inc.php';
 
 
 class Enseignant extends Utilisateur {
@@ -90,6 +87,7 @@ SQL
 		$this->mail = $mail;
 		$this->tel = $tel;
 	}
+
    
    /**
     * Ajoute un commentaire à la liste de commentaires.
@@ -98,8 +96,10 @@ SQL
     * @throws Si le compte de l'enseignant est imcomplet
     */
    public function deposerCommentaire($contenu, $idEntreprise) {
-   		
-   	if($this->nom != "" && $this->prenom != "" && $this->mail != "" && $this->mail) {
+	   if(!$this->isComplet()){
+	   		throw new CompteIncomplet("Votre profil n'est pas complet");
+	   }
+
 
 		$pdo = myPDO::getInstance();
 		$req1 = $pdo->prepare(<<<SQL
@@ -109,9 +109,6 @@ SQL
 		);
 		$ins = $req1->execute(array($this->getId(), $contenu, $idEntreprise));
 
-	}else{
-		throw compteIncomplet("Votre profil n'est pas complet");
-	}
    }
    
    /**
@@ -124,10 +121,10 @@ SQL
    	if (!$e instanceof Stage){
    		throw wrongEntryException("Le parametre entré n'es pas une instance de Stage");
    	}
-      if($this->nom != "" && $this->prenom != "" && $this->mail != "" && $this->mail){
+      if($this->isComplet()){
 	  	$this->_affectations[] = $stage;
       }else{
-	  	throw compteIncomplet("Votre profil n'est pas complet");
+	  	throw new CompteIncomplet("Votre profil n'est pas complet");
       }
    }
 
