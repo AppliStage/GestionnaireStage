@@ -138,6 +138,6 @@ Footer
 echo $p->toHTML();
 
 }
-elseif($user instanceof Administrateur){
+else if($user instanceof Administrateur){
   header("Location: pageAdmin.php");
 }

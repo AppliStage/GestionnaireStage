@@ -8,13 +8,13 @@ class Administrateur extends Utilisateur {
 
     
     public  function __construct() {
-		
+		$this->_convention = array();
 	}
 	
      /**
-     * Constructeur d'un etudiant en fonction de son login
-     * @param login de l'étudiant
-     * @return une instance d'étudiant sinon renvoi null
+     * Constructeur d'un administrateur en fonction de son login
+     * @param login de l'administrateur
+     * @return une instance d'administrateur sinon renvoi null
      */
 	public static function createFromLogin($login){
 		self::startSession();
@@ -22,9 +22,9 @@ class Administrateur extends Utilisateur {
 		if( strlen($login) == 8){
 			$pdo = myPDO::getInstance();
 			$rq1 = $pdo->prepare(<<<SQL
-				SELECT loginEtudiant AS 'id', prenom, nom, mail, tel
-				FROM Etudiant
-				WHERE loginEtudiant = ?
+				SELECT numAdmin AS 'id'
+				FROM Administrateur
+				WHERE numAdmin = ?
 SQL
 			);
 			$rq1->execute(array($login)) ;
@@ -34,16 +34,23 @@ SQL
 		    	$_SESSION[self::session_key]['connected'] = true;
 
 		    	//$admin->convention  | crée une list de convention avec la class convention
-		    	//$admin->enseignant  | Recupérer tous les ensignant en crée une methode Enseignant::getAll() dans la class enseignant
+				$admin->_convention = Convention::createFromAdmin($admin->getId());
+				
+			   	//$admin->enseignant  | Recupérer tous les ensignant en crée une methode Enseignant::getAll() dans la class enseignant
+				$admin->saveIntoSession();
 		        return $admin ;
-		    }
+			}
+			else
+				return null;
 		}
-		return null;
+		else
+			throw new AuthenticationException("C'est pas un login  de l'URCA!");
 	}
+
 	
   
 	public function valideAffectation( $num) {
-/*		  
+	  
 		$pdo = myPDO::getInstance();
 		$rq1 = $pdo->prepare(<<<SQL
 			SELECT loginEnseignant AS 'enseignant'
@@ -56,24 +63,21 @@ SQL
 		
 		if (($rq1 = $rq1->fetch()) !== false) {
 		    	
-<<<<<<< HEAD
-			$rq2 = $pdo->prepare(<<<SQL
-			UPDATE Convention SET valide=1 WHERE id=?
-=======
-			$rq2 = $pdo->prepare(<<<SQL	
-				UPDATE Convention SET valide=1 WHERE id=?
->>>>>>> 47c8afd686d443993941b3d0ef7526750b0182d8
-SQL
-			);
-			$rq2->execute(array($rq1));
-			
-		}
-		  */
-	}
-	
-	public function imprimer( $stage) {
-		  
-		
+			    $sql = "UPDATE Convention SET valide=1 WHERE id=?";
+
+    // Prepare statement
+    $stmt = $conn->prepare($sql);
+
+    // execute the query
+    $stmt->execute($rq1);
+
+    // echo a message to say the UPDATE succeeded
+    echo $stmt->rowCount() . " records UPDATED successfully";
+    }
+
+
+$conn = null;
 		  
 	}
+
 }
