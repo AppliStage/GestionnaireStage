@@ -47,6 +47,38 @@ if (isset($_REQUEST['titre']) && isset($_REQUEST['description']) && isset($_REQU
 SQL
 		);
 	    $req->execute();
+	    
+	    // mail
+	    
+		  // récupération des adresses
+		  
+		$reqAdresses = $pdo->prepare(<<<SQL
+			SELECT mail
+			FROM Etudiant
+			WHERE 1
+SQL
+		);
+		$reqAdresses->execute();
+		$mails = $reqAdresses->fetchAll();
+		
+	    require_once('class/mail/class.phpmailer.php');
+	    
+	    $email = new PHPMailer();
+	    $email->Subject = "Proposition de stage";
+	    $email->Body = "plus tard...";
+	    
+	    foreach($mails as $mail) {
+			
+			if ($mail['mail'] != "") {
+			
+				$email->addCC($mail['mail']);
+	    
+			}
+	    
+	    }
+	    
+	    $email->Send();
+	    
 		header("Location: viewStage.php?id={$req->fetch()['numStage']}&stage=true");
 		exit;
 	}

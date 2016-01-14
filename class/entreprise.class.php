@@ -56,7 +56,7 @@ SQL
             AND numEntreprise = ?
 SQL
           );
-          $req1->execute(array($id));
+          $req1->execute(array($entrepreneur->getId()));
           $entreprise->avis = Commentaire::createFromEntreprise($entreprise->getId());       
       	}
         return $listEntreprise;
