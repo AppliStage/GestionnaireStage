@@ -88,8 +88,8 @@ SQL
 	require_once('class/mail/class.phpmailer.php');
 
 	$email = new PHPMailer();
-	var_dump($adresseMail);
-	var_dump($_REQUEST);
+	//var_dump($adresseMail);
+	//var_dump($_REQUEST);
 	//Set who the message is to be sent from
 	$email->setFrom($user->getMail(), $user->getNom() . " " . $user->getPrenom());
 	//Set an alternative reply-to address
@@ -99,19 +99,30 @@ SQL
 	$email->Subject = $_REQUEST['titre'];
 	$email->Body = $_REQUEST['contenu'];
 
-
-/*
-	$listFichiers = scandir ($dossier_pdf);
-	while (false !== ($entry = readdir($dossier_pdf))) {
-			if(fnmatch ($nomFichier."*", $entry)){
-				$email->AddAttachment( $dossier_pdf.$entry );
-				unlink ($dossier_pdf.$entry ); //Supprime le fichier
-			}
+	$dir = opendir("/home/Etudiants/pecca001/public_html/" . $dossier_pdf);
+	$match = null;
+	
+	while (false !== ($entry = readdir($dir))) {
+		
+		if(fnmatch ($nomFichier."*", $entry)){
+		
+			$email->AddAttachment( "../" . $dossier_pdf. "/" . $entry );
+			$match = $entry;
+		
+		}
+    
     }
-	*/
-	// envoi mail 
+	
+	// envoi mail et suppression des pdf uploadés
+	
 	$email->Send();
+	
+	if (isset($match)) {
+	
+	  unlink ("../" . $dossier_pdf . "/" . $match ); //Supprime le fichier
 
+	}
+	  
 	// mise à jour de la base de données
 	$user->postulerStage(Stage::creatFromId($_REQUEST['id']));
 
