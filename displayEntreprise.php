@@ -117,7 +117,7 @@ AVIS;
                         </div>
 
                         <form action = "commenter.php" method = "post">
-                            <label for="contenu">Contenu du mail: </label>
+                            <label for="contenu">Commnenter l'entreptise :</label>
                             <textarea name="contenu" class="form-control" {$droit} rows="3" placeholder=""></textarea>
                             <input type="hidden" name="id" value="{$_REQUEST['id']}" />
                             <div  style="text-align:right;margin-top:8px"> 

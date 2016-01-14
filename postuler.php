@@ -100,14 +100,14 @@ SQL
 	$email->Body = $_REQUEST['contenu'];
 
 	$dir = opendir("/home/Etudiants/pecca001/public_html/" . $dossier_pdf);
-	$match = null;
+	$match = array();
 	
 	while (false !== ($entry = readdir($dir))) {
 		
 		if(fnmatch ($nomFichier."*", $entry)){
 		
 			$email->AddAttachment( "../" . $dossier_pdf. "/" . $entry );
-			$match = $entry;
+			$match[] = $entry;
 		
 		}
     
@@ -117,9 +117,9 @@ SQL
 	
 	$email->Send();
 	
-	if (isset($match)) {
+	foreach ($match as $key => $value) {
 	
-	  unlink ("../" . $dossier_pdf . "/" . $match ); //Supprime le fichier
+	  unlink ("../" . $dossier_pdf . "/" . $value ); //Supprime le fichier
 
 	}
 	  

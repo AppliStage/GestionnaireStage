@@ -1,5 +1,5 @@
 <?php
-require_once 'enseignant.class.php';
+include_once 'autoload.inc.php';
 
 /** Commentaire laissé par l'enseignant, aprés son passage dans une entreprise */
 class Commentaire {

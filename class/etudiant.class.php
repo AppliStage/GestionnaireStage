@@ -50,6 +50,20 @@ SQL
 		return null;
 	}
 
+	public function dejaConnu($idEntreprise){
+			$pdo = myPDO::getInstance();
+			$rq1 = $pdo->prepare(<<<SQL
+				SELECT 'a'
+				FROM postuler
+				WHERE loginEtudiant = ?
+				AND numStage = ?
+SQL
+			);
+			$rq1->execute(array($this->nom, $idEntreprise)) ;
+			($rq1->fetch() == 'a')?$rep=true: $rep=false;
+			return $rep;
+	}
+
 	/** 
 	* Ajoute un stage à la listes des candidatures de l'étudiant et envoie le mail.
 	* La BD est aussi mise à jour.

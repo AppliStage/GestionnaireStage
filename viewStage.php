@@ -54,7 +54,7 @@ head
 	}
 
 	$droit="";
-	if(!$user instanceof Etudiant){
+	if(!$user instanceof Etudiant && $user->dejaConnu($_REQUEST['id']) ){
 		$droit="disabled='disabled'";
 	}
 
