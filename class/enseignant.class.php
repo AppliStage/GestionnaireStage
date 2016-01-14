@@ -127,5 +127,22 @@ SQL
 	  	throw new CompteIncomplet("Votre profil n'est pas complet");
       }
    }
+   
+   /**
+    * Retourne la liste des tous les enseignants
+    * 
+    */
+    
+    public function getAll(){
+    		$pdo = myPDO::getInstance();
+		$req1 = $pdo->prepare(<<<SQL
+		SELECT *
+		FROM Enseignant
+SQL
+		);
+		$rq1->execute(array()) ;
+		$rq1->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+		return $rq1->fetchAll();
+    }
 
 }
