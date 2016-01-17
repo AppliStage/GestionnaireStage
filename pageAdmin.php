@@ -2,8 +2,7 @@
 include_once 'autoload.inc.php';
 include_once 'init.inc.php';
 
-
-$p = new webpage("Iut Stage");
+$p = new webpage("Administration");
 $p->appendToHead(<<<head
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,15 +19,41 @@ $p->appendJsUrl("js/request.js");
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
 
-var_dump($user);
+$p->appendContent(<<<HTML
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Panel heading</div>
 
-$p->appendToFooter(<<<Footer
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="style/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
-Footer
+  <!-- Table -->
+  <table class="table">
+  <tr><th scope="col">N°</th><th scope="col">Numéro convention</th><th scope="col">Entreprise</th><th scope="col">Enseignant réferent</th></tr>
+HTML
+);
+require_once 'myPDO.include.php';
+
+$db = myPDO::getInstance();
+$stmt = $db -> prepare(<<<SQL
+			  SELECT c.numConvention, e.nom, c.loginEnseignant
+			  FROM Convention c, Stage s, Entreprise e
+			  WHERE c.numStage = s.numStage AND s.numEntreprise = e.numEntreprise
+			  ORDER BY 1;
+SQL
+);
+$stmt -> setFetchMode(PDO::FETCH_CLASS, __CLASS__);
+$stmt -> execute();
+$res = null;
+$i=1;
+while(($res[] = $stmt->fetch())!== false){
+  $p->appendContent(<<<HTML
+<tr><th scope="row">$i</th><td>$res[0]</td><td>$res[1]</td><td>$res[2]</td></tr>
+HTML
+);
+$i++;
+}
+$p->appendContent(<<<HTML
+</table>
+</div>
+HTML
 );
 
 echo $p->toHTML();
