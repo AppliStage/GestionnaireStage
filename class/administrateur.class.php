@@ -36,7 +36,7 @@ SQL
 		    	//$admin->convention  | crée une list de convention avec la class convention
 				$admin->_convention = Convention::createFromAdmin($admin->getId());
 				
-			   	//$admin->enseignant  | Recupérer tous les ensignant en crée une methode Enseignant::getAll() dans la class enseignant
+			   	//$admin->enseignant  | Recupérer tous les enseignants grâce à une methode Enseignant::getAll() dans la class enseignant
 				$admin->saveIntoSession();
 		        return $admin ;
 			}
@@ -65,14 +65,10 @@ SQL
 		    	
 			    $sql = "UPDATE Convention SET valide=1 WHERE id=?";
 
-    // Prepare statement
     $stmt = $conn->prepare($sql);
 
-    // execute the query
     $stmt->execute($rq1);
 
-    // echo a message to say the UPDATE succeeded
-    echo $stmt->rowCount() . " records UPDATED successfully";
     }
 
 
