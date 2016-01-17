@@ -36,7 +36,9 @@ SQL
 		    	//$admin->convention  | crée une list de convention avec la class convention
 				$admin->_convention = Convention::createFromAdmin($admin->getId());
 				
-			   	//$admin->enseignant  | Recupérer tous les enseignants grâce à une methode Enseignant::getAll() dans la class enseignant
+			   	//$admin->enseignant  | Recupérer tous les ensignant en crée une methode Enseignant::getAll() dans la class enseignant
+				$admin->enseignant = Enseignant::getAll();
+				
 				$admin->saveIntoSession();
 		        return $admin ;
 			}
@@ -70,10 +72,5 @@ SQL
     $stmt->execute($rq1);
 
     }
-
-
-$conn = null;
-		  
-	}
 
 }
