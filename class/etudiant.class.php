@@ -88,7 +88,7 @@ SQL
 				throw new wrongTypeFile("Le paramentre n'est pas une stage.");
 			}
 		}else{
-			throw compteIncomplet("Votre profil n'est pas complet");
+			throw new CompteIncomplet("Votre profil n'est pas complet");
 		}
 	}
 
