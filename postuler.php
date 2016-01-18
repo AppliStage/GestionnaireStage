@@ -88,16 +88,23 @@ SQL
 	require_once('class/mail/class.phpmailer.php');
 
 	$email = new PHPMailer();
-	//var_dump($adresseMail);
-	//var_dump($_REQUEST);
 	//Set who the message is to be sent from
 	$email->setFrom($user->getMail(), $user->getNom() . " " . $user->getPrenom());
 	//Set an alternative reply-to address
 	//$email->addReplyTo($user->getMail(), $user->getNom() . " " . $user->getPrenom());	
 	$email->addAddress($adresseMail['mail']);
-	//$email->isHTML(true); 
+	$email->isHTML(true); 
 	$email->Subject = $_REQUEST['titre'];
 	$email->Body = $_REQUEST['contenu'];
+	$email->Body .=<<<HTML
+		<br/><br/>
+		<p>-------------------- <br/>
+		  <a href="candidature.php?id={$id}&loginEtudiant={$user->getId()}">Cliquez ici</a> pour valider la candidature.<br/>
+		  <a href="candidature.php?id={$id}&loginEtudiant={$user->getId()}">https://candidature.php?id={$id}&loginEtudiant={$user->getId()}<br/>
+		  ---------------------
+		</p>
+HTML
+;
 
 	$dir = opendir("/home/Etudiants/pecca001/public_html/" . $dossier_pdf);
 	$match = array();
