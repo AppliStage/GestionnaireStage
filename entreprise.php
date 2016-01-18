@@ -15,6 +15,89 @@ head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("style/profileStyle.css");
+$p->appendJs(<<<JS
+  function controlDate(){
+    res = false;
+    
+    dateDeb = document.getElementById('dateDeb').value;
+    dateFin = document.getElementById('dateFin').value;
+    
+    formatDateDeb = dateDeb.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/);
+    formatDateFin = dateFin.match(/[0-9]{2}\/[0-9]{2}\/[0-9]{4}/);
+    statutDateFin = false;
+    statutDateDeb = false;
+    
+    if(formatDateDeb != null && formatDateFin != null){
+      temp = dateDeb.split('/');
+      anDateDeb = temp[2];
+      jDateDeb= temp[0];
+      mDateDeb= temp[1];
+      temp = dateFin.split('/');
+      anDateFin = temp[2];
+      jDateFin = temp[0];
+      mDateFin = temp[1];
+      
+      if(anDateDeb <= anDateFin){
+	if(mDateDeb <= mDateFin){
+	  if(jDateDeb <= jDateFin){
+	    statutDateDeb = true;
+	    statutDateFin = true;
+	    res = true;
+	    if(mDateDeb == '02'){
+	      if(jDateDeb == '29'){
+		if(!((anDateDeb%400 == 0) && (anDateDeb%100 == 0))){
+		  statutDateDeb = false;
+		  res = false;
+		}
+	      }
+	    }
+	    if(mDateFin == '02'){
+	      if(jDateFin == '29'){
+		if(!((anDateFin%400 == 0) && (anDateFin%100 == 0))){
+		  statutDateFin = false;
+		  res = false;
+		}
+	      }
+	    }
+	  }
+	}
+      }
+    }
+    
+        
+    if(!statutDateDeb){
+      document.getElementById('formDateDeb').classList.add('has-error');
+      if(document.getElementById('formDateDeb').classList.contains('has-success')){
+	document.getElementById('formDateDeb').classList.remove('has-success');
+      }
+    }else{
+      document.getElementById('formDateDeb').classList.add('has-success');
+      if(document.getElementById('formDateDeb').classList.contains('has-error')){
+	document.getElementById('formDateDeb').classList.remove('has-error');
+      }
+    }
+    
+    if(!statutDateFin){
+      document.getElementById('formDateFin').classList.add('has-error');
+      if(document.getElementById('formDateFin').classList.contains('has-success')){
+	document.getElementById('formDateFin').classList.remove('has-success');
+      }
+    }else{
+      document.getElementById('formDateFin').classList.add('has-success');
+      if(document.getElementById('formDateFin').classList.contains('has-error')){
+	document.getElementById('formDateFin').classList.remove('has-error');
+      }
+    }
+    if(res){
+      document.getElementById('dateDeb').value = anDateDeb + "-" + mDateDeb + "-" + jDateDeb;
+      document.getElementById('dateFin').value = anDateFin + "-" + mDateFin + "-" + jDateFin;
+    }
+    return res;
+  }
+
+
+JS
+);
 
 //inclusion de la barre de navigation
 include_once "navbar.inc.php";
@@ -41,7 +124,7 @@ if(($user instanceof Entrepreneur ) && isset($_REQUEST['id'])){
 			<div class="panel panel-default"> <!-- Création Stage -->
 			  <div class="panel-heading"><strong>Crée un Stages</strong></div>
 			  <div class="panel-body">
-				  <form method="POST" action="creeStage.php">
+				  <form method="POST" action="creeStage.php"  onSubmit="return controlDate();">
 				  	<label for="titre">Intitulé du poste</label>
 				  	<input name="titre" type="text" class="form-control" placeholder="Tritre du stage" required>
 
@@ -64,13 +147,13 @@ if(($user instanceof Entrepreneur ) && isset($_REQUEST['id'])){
 				  	</div><!-- end row -->
 
 				  	<div class="row" > <!--row -->
-				  		<div class="col-lg-4">
+				  		<div class="col-lg-4" id="formDateDeb">
 				  			<label for="dateDebut">Date du début du stage</label>
-				  			<input name="dateDebut" type="date" class="form-control" placeholder="JJ/MM/AAAA" required>
+				  			<input name="dateDebut" id="dateDeb" type="date" class="form-control" placeholder="JJ/MM/AAAA" required>
 				  		</div>
-				  		<div class="col-lg-4">
+				  		<div class="col-lg-4" id="formDateFin">
 				  			<label for="dateFin">Date de fin du stage</label>
-				  			<input name="dateFin" type="date" class="form-control" placeholder="JJ/MM/AAAA" required>
+				  			<input name="dateFin" id="dateFin" type="date" class="form-control" placeholder="JJ/MM/AAAA" required>
 				  		</div>
 				  		<div class="col-lg-4">
 				  			<label for="nbPostes">Nombre de stagiaire</label>
