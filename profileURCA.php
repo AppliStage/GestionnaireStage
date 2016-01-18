@@ -121,8 +121,8 @@ JS
 
                 <div class="col-md-12">
                     <div class="tab-content">
-                			<div class="tab-pane fade in active" id="profile">
-                 			   <div class="panel panel-default">
+                	<div class="tab-pane fade in active" id="profile">
+			  <div class="panel panel-default">
                               <div class="panel-heading">
                                 <h3 class="panel-title"><strong>Information Profile : {$user->getId()}</strong></h3>
                               </div>
