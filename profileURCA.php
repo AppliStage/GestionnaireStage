@@ -44,6 +44,71 @@ if($user instanceof Etudiant || $user instanceof Enseignant){
     $action ="";
     $contenu ="";
   }
+  
+  
+  $p->appendJs(<<<JS
+  
+  function controlInfo(){
+  
+       if(document.getElementById('nom').value.match(/[A-Za-z]/)==null && document.getElementById('nom').value != ""){
+	  document.getElementById('formNom').classList.add("has-error");
+	  if(document.getElementById('formNom').classList.contains("has-success")){
+		document.getElementById('formNom').classList.remove("has-success");
+	  }
+       }else{
+	    if(document.getElementById('nom').value != ""){
+	      document.getElementById('formNom').classList.add("has-success");
+	      if(document.getElementById('formNom').classList.contains("has-error")){
+		document.getElementById('formNom').classList.remove("has-error");
+	      }
+	    }
+       }
+       
+       if(document.getElementById('prenom').value.match(/[A-Za-z]/)==null && document.getElementById('prenom').value != ""){
+	  document.getElementById('formPrenom').classList.add("has-error");
+	  if(document.getElementById('formPrenom').classList.contains("has-success")){
+		document.getElementById('formPrenom').classList.remove("has-success");
+	      }
+       }else{
+	  if(document.getElementById('prenom').value != ""){
+	    document.getElementById('formPrenom').classList.add("has-success");
+	    if(document.getElementById('formPrenom').classList.contains("has-error")){
+		document.getElementById('formPrenom').classList.remove("has-error");
+	      }
+	  }
+       }
+       
+       if(document.getElementById('mail').value.match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/)==null && document.getElementById('mail').value != ""){
+	  document.getElementById('formMail').classList.add("has-error");
+	  if(document.getElementById('formMail').classList.contains("has-success")){
+		document.getElementById('formMail').classList.remove("has-success");
+	      }
+       }else{
+	  if(document.getElementById('mail').value != ""){
+	    document.getElementById('formMail').classList.add("has-success");
+	    if(document.getElementById('formMail').classList.contains("has-error")){
+		document.getElementById('formMail').classList.remove("has-error");
+	      }
+	  }
+       }
+       
+       if(document.getElementById('tel').value.match(/(0|\\+33|0033)[1-9][0-9]{8}/) == null && document.getElementById('tel').value != ""){
+	  document.getElementById('formTel').classList.add("has-error");
+	  if(document.getElementById('formTel').classList.contains("has-success")){
+		document.getElementById('formTel').classList.remove("has-success");
+	    }
+       }else{
+       
+	  if(document.getElementById('tel').value != ""){
+	    document.getElementById('formTel').classList.add("has-success");
+	    if(document.getElementById('formTel').classList.contains("has-error")){
+		document.getElementById('formTel').classList.remove("has-error");
+	    }
+	  }
+       }
+  }
+JS
+  );
 
     $p->appendContent(<<<HTML
         <div class="container">
@@ -75,21 +140,21 @@ if($user instanceof Etudiant || $user instanceof Enseignant){
                               </div>
                               <div class="panel-body">
                                 <form  method="POST" action="updateProfile.php">
-                                  <div class="form-group">
+                                  <div class="form-group" id="formNom">
                                     <label for="nomEtudiant">Nom*</label>
-                                    <input type="text" class="form-control" name="nom" pattern="[a-zA-Z].+" placeholder="{$nom}" value="{$nom}">
+                                    <input type="text" class="form-control" id="nom" name="nom" pattern="[a-zA-Z].+" placeholder="{$nom}" value="{$nom}" onChange="controlInfo()">
                                   </div>
-                                  <div class="form-group">
+                                  <div class="form-group" id="formPrenom">
                                     <label for="prenomEtudiant">Prenom*</label>
-                                    <input type="text" class="form-control" name="prenom" pattern="[a-zA-Z].+" placeholder="{$prenom}" value="{$prenom}">
+                                    <input type="text" class="form-control" id="prenom" name="prenom" pattern="[a-zA-Z].+" placeholder="{$prenom}" value="{$prenom}" onChange="controlInfo()">
                                   </div>
-                                  <div class="form-group">
+                                  <div class="form-group" id="formMail">
                                     <label for="mailEtudiant">Email*</label>
-                                    <input type="email" class="form-control" name="mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}" value="{$mail}">
+                                    <input type="email" class="form-control" id="mail" name="mail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="{$mail}" value="{$mail}" onChange="controlInfo()"> 
                                   </div>
-                                  <div class="form-group">
+                                  <div class="form-group" id="formTel">
                                     <label for="telEtudiant">Telephone</label>
-                                    <input type="text" class="form-control" name="tel" placeholder="{$tel}" value="{$tel}">
+                                    <input type="text" class="form-control" id="tel" name="tel" placeholder="{$tel}" value="{$tel}" onChange="controlInfo()">
                                   </div>
                                   <button type="submit" class="btn btn-success " name="maj"><strong>Mise à jour</strong></button>
                                 </form>
