@@ -11,7 +11,7 @@ $pageCourrante =  $_SERVER['REQUEST_URI'];
 ($user instanceof Entrepreneur) ? $profilePage = "profileEntrepreneur.php" : $profilePage = "profileURCA.php";
 $p->appendContent(<<<HTML
     <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top ">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -27,7 +27,7 @@ $p->appendContent(<<<HTML
             <li class="active"><a href="home.php">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
-            <li><a href='{$profilePage}'>Profile</a></li>
+            <li><a href='{$profilePage}'>Profil</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>

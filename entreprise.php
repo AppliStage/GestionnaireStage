@@ -122,7 +122,7 @@ if(($user instanceof Entrepreneur ) && isset($_REQUEST['id'])){
 	    $p->appendContent(<<<HTML
 	    <div class="container">
 			<div class="panel panel-default"> <!-- Création Stage -->
-			  <div class="panel-heading"><strong>Crée un Stages</strong></div>
+			  <div class="blue panel-heading"><strong>Crée un Stages</strong></div>
 			  <div class="panel-body">
 				  <form method="POST" action="creeStage.php"  onSubmit="return controlDate();">
 				  	<label for="titre">Intitulé du poste</label>
@@ -139,9 +139,12 @@ if(($user instanceof Entrepreneur ) && isset($_REQUEST['id'])){
 				  		<div class="col-lg-6">
 						  	<label for="domaine">Domaine</label>
 			                <select name="domaine" class="form-control" aria-label="..." required>
-			                    <option value="informatique">informatique</option>
+			                    <option value="développement logiciel">Développement logiciel</option>
 			                    <option value="gestion">Gestion</option>
-			                    <option value="Droit">Droit</option>
+			                    <option value="marketing">Communication, Marketing, Media</option>
+			                    <option value="réseau">Réseau/Télécommunication</option>
+			                    <option value="informatique industrielle">Informatique industrielle</option>
+			                    <option value="développement web">Développement web</option>
 			                </select>
 				  		</div>
 				  	</div><!-- end row -->

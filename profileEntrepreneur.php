@@ -44,12 +44,34 @@ if($user instanceof Entrepreneur){
     $fonction = htmlspecialchars( $user->getFonction() );
     $tel = htmlspecialchars( $user->getTel() );
 
+    //Gestion des réponse de l'enregistrement d'un entrepreneur
+    if(isset($_GET['ins'])){
+      $toggleScript="$('#alert').show();";
+      if($_GET['ins']=="true") {
+        $action="success";
+        $contenu = "Une nouvelle entreprise à été créée.";
+      }else{
+        $action="danger";
+        $contenu = "L'entrerise n'à pas pu être créée.";
+      }
+    }
+    else{
+      $toggleScript="";
+      $action ="";
+      $contenu ="";
+    }
+
     $p->appendContent(<<<HTML
         <div class="container">
+            <div id="alert" class="alert alert-{$action} collapse" role="alert">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong><p class="text-center">{$contenu}</p></strong>
+            </div>
+
             <div class="row"> <!-- ROW  -->
                 <div class="col-md-3">
                     <div class="list-group">
-                      <button type="button" data-toggle="tab" data-target="#profile" data-target="#1profile" class="list-group-item"><strong>Profile</strong></button>
+                      <button type="button" data-toggle="tab" data-target="#profil" data-target="#1profil" class="list-group-item"><strong>Profil</strong></button>
                       <button type="button" data-toggle="tab" data-target="#ajout" class="list-group-item"><strong>Ajouter une entreprise</strong></button>
                       <button type="button" data-toggle="tab" data-target="#entreprises{$etat}" class="list-group-item {$etat}"><strong>Mes entreprises</strong></button>
                     </div>
@@ -57,10 +79,11 @@ if($user instanceof Entrepreneur){
 
                 <div class="col-md-9">
                     <div class="tab-content">
-                        <div class="tab-pane fade in active" id="profile">
+
+                        <div class="tab-pane fade in active" id="profil">
                             <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Profile</strong></h3>
+                              <div class="blue panel-heading">
+                                <h3 class="panel-title"><strong>Profil</strong></h3>
                               </div>
                               <div class="panel-body">
                                 <form>
@@ -90,7 +113,7 @@ if($user instanceof Entrepreneur){
                             </div>
 
                             <div class="panel panel-default">
-                              <div class="panel-heading">
+                              <div class="blue panel-heading">
                                 <h3 class="panel-title"><strong>Changer le mot de passe</strong></h3>
                               </div>
                               <div class="panel-body">
@@ -121,7 +144,7 @@ if($user instanceof Entrepreneur){
                               </div>
                             </div>
 
-                        </div><!-- end Profile-->
+                        </div><!-- end Profil-->
 
                         <div class="tab-pane fade in " id="entreprises">
 
@@ -147,7 +170,7 @@ if($user instanceof Entrepreneur){
                         <div class="tab-pane fade in " id="ajout">
 
                           <div class="panel panel-default " >
-                            <div class="panel-heading">
+                            <div class="blue panel-heading">
                               <h3 class="panel-title"><strong>Ajouter une entreprise</strong></h3>
                             </div>
                             <div class="panel-body">                       
@@ -165,59 +188,84 @@ if($user instanceof Entrepreneur){
                                   </div>-->
                                   <div class="row">
                                     <form methode="GET" action="ajout-Entreprise.php">
-                                      <div class="col-xs-6 ">
-                                          <div class="form-group">
-                                            <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" name="nomEntreprise" placeholder="Nom" pattern="[a-zA-Z].+" required>
-                                          </div>
-                                          <div class="form-group">
-                                            <label for="site">Site internet</label>
-                                            <input type="text" class="form-control" name="siteEntreprise" placeholder="ex: exemple.site.fr" >
-                                          </div>
-                                          <div class="form-group">
+
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                              <label for="nom">Nom</label>
+                                              <input type="text" class="form-control" name="nomEntreprise" placeholder="Nom" pattern="[a-zA-Z].+" required>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                              <label for="site">Site internet</label>
+                                              <input type="text" class="form-control" name="siteEntreprise" placeholder="ex: exemple.site.fr" >
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="form-group col-md-6">
                                             <label for="tel">Telephone</label>
                                             <input type="text" class="form-control" name="tel" placeholder=" 06 00 00 00 00 " required>
                                           </div>
-                                          <div class="form-group">
+                                          <div class="form-group col-md-6">
                                             <label for="pays">Pays</label>
                                             <input type="text" class="form-control" name="pays" placeholder="ex: France" required>
                                           </div>
-                                          <div class="form-group">
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="form-group col-md-6">
                                             <label for="codePostale">codePostale</label>
                                             <input type="text" class="form-control" name="codePostal" placeholder="ex: 51100" pattern="[0-9]{5}" required>
                                           </div>
-                                          <button type="submit" class="btn btn-success "><strong>Ajouter l'entreprise</strong></button>
-                                      </div>
-                                      <div class="col-xs-6 ">
-                                          <div class="form-group">
+
+                                          <div class="form-group col-md-6">
                                             <label for="ville">Ville</label>
                                             <input type="text" class="form-control" name="ville" placeholder="Reims" required>
                                           </div>
-                                          <div class="form-group">
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="form-group col-md-6">
                                             <label for="ville">Adresse</label>
-                                            <input type="text" class="form-control" name="adresse" placeholder="ex: 4 chemin des roulier" required>
+                                            <input type="text" class="form-control" name="adresse" placeholder="ex: 6 chemin des roulier" required>
                                           </div>
-                                          <div class="form-group">
+                                          <div class="form-group col-md-6">
                                             <label for="<SIREN">SIREN</label>
                                             <input type="text" class="form-control" name="SIREN" placeholder="" pattern="[0-9]{9}" required>
                                           </div>
-                                          <div class="form-group">
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="form-group col-md-6">
                                             <label for="SIRET">SIRET</label>
                                             <input type="text" class="form-control" name="SIRET" placeholder="" pattern="[0-9]{14}" required>
                                           </div>
  
-                                          <div class="form-group" >
-                                            <label for="typeJurydique">typeJurydique</label>
+                                          <div class="form-group col-md-6" >
+                                            <label style="display:block" for="typeJurydique">typeJurydique</label>
                                             <select name="typeJurydique" required>
                                               <option value="SA">SA</option>
                                               <option value="SARL">SARL</option>
                                             </select>
                                           </div>
-                                          <div class="form-group">
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="form-group col-md-6">
                                             <label for="codeAPE">codeAPE</label>
                                             <input type="text" class="form-control" name="codeAPE" placeholder="" required>
                                           </div>
-                                      </div>
+                                          <div class="form-group col-md-6 ">
+                                                <label for="logo">Upload un logo: </label>
+                                                <input name = "photo[]" type = "file" multiple = "multiple" /><br />   
+                                          </div>
+                                        </div>
+
+                                        <div class="row">
+                                          <div class="form-group col-md-6">
+                                            <button type="submit" id="envoyer" name = "form1" class="btn btn-success center"><strong>Ajouter l'entreprise</strong></button>
+                                          </div>                                  
+                                        </div>
+
                                     </form>
                                   </div>
 
@@ -247,6 +295,7 @@ $p->appendToFooter(<<<Footer
         $(".nav-tabs a").click(function(){
             $(this).tab('show');
         });
+        {$toggleScript}
     });
     </script>
 Footer

@@ -34,7 +34,18 @@ if (isset($_REQUEST['id']) &&  ($entreprise = Entreprise::creatFromId($_REQUEST[
     //Affiche tous les avis sur l'entreprise
     $commentaires ="";
     foreach ($entreprise->getAvis() as $key => $value) {
-        $enseignant = Enseignant::createFromLogin($value->getNumEnseignant());
+
+        $pdo = myPDO::getInstance();
+        $rq1 = $pdo->prepare(<<<SQL
+            SELECT loginEnseignant AS 'id', prenom, nom, mail, tel
+            FROM Enseignant
+            WHERE loginEnseignant = ?
+SQL
+        );
+        $rq1->execute(array($value->getNumEnseignant())) ;
+        $rq1->setFetchMode(PDO::FETCH_CLASS, "Enseignant");
+        $enseignant = $rq1->fetch();
+
         $nomEnseignant = htmlspecialchars($enseignant->getNom()." ".$enseignant->getPrenom());
         $contenu = htmlspecialchars($value->getContenu());
         $commentaires .=<<<AVIS
@@ -52,6 +63,15 @@ if (isset($_REQUEST['id']) &&  ($entreprise = Entreprise::creatFromId($_REQUEST[
 AVIS;
     }
 
+
+    if($entreprise->getLogo()!= null)
+        $logo =<<<img
+    <image src="{$entreprise->getLogo()}" alt="logo de l'entreprise"/>
+img;
+    else
+        $logo =<<<img
+    <image src="style/images/thumbnail.png" alt="logo de l'entreprise"/>
+img;
   //Gestion des réponse de l'enregistrement d'un entrepreneur
   if(isset($_GET['err']) && $_GET['err'] == 'cantComment' ){
     $toggleScript="$('#alert').show();";
@@ -103,7 +123,7 @@ AVIS;
                                 </address>
                             </div>
                             <div class="col-md-6">
-
+                                {$logo}
                             </div>
 
                           </div>
@@ -149,5 +169,4 @@ Footer
 );
 
 echo $p->toHTML();
-
 

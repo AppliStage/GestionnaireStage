@@ -21,6 +21,7 @@ include_once "class/stage.class.php";
             $addedSQL .= " AND upper(s.domaine) LIKE concat('%', upper(?) , '%')";
             $tab[] = $domaines[$i];
         }
+        $addedSQL.=" ORDER BY dateCreation DESC";
 
         $req = $pdo->prepare($addedSQL);
         //var_dump($req);
@@ -34,14 +35,17 @@ include_once "class/stage.class.php";
         //var_dump($entreprise);
         //Chaques entreprise crée a comme observeur l'entrepreneur passer en parametre
         foreach($listStage as $key => $stage){
-        	$entreprise = Entreprise::creatFromId($stage->getEntreprise());
+            $entreprise = Entreprise::creatFromId($stage->getEntreprise());
             $numEntreprise = $entreprise->getId();
-        	$titre = htmlspecialchars ($stage->getTitre());
-        	$nom = htmlspecialchars ($entreprise->getNom());
-        	$ville = htmlspecialchars ($entreprise->getVille());
-        	$pays = htmlspecialchars ($entreprise->getPays());
-			$id = $stage->getId();
-          	$html .="<tr><th scope='row'>{$id}</th> <td><a href='displayEntreprise.php?id={$numEntreprise}'>{$nom}</a></td> <td><a href=\"viewStage.php?id={$id}\">{$titre}</a></td> <td>{$pays}, {$ville}</td> </tr> </a>";
+            $titre = htmlspecialchars ($stage->getTitre());
+            $nom = htmlspecialchars ($entreprise->getNom());
+            $ville = htmlspecialchars ($entreprise->getVille());
+            $pays = htmlspecialchars ($entreprise->getPays());
+
+            $date = DateTime::createFromFormat('Y-m-d H:i:s', $stage->getDate() );
+            $wellFormedDate = $date->format('d/m/Y');
+            $id = $stage->getId();
+            $html .="<tr><th scope='row'>{$wellFormedDate}</th> <td><a href='displayEntreprise.php?id={$numEntreprise}'>{$nom}</a></td> <td><a href=\"viewStage.php?id={$id}\">{$titre}</a></td> <td>{$pays}, {$ville}</td> </tr> </a>";
         }
 
         echo $html;

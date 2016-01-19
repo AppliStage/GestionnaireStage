@@ -121,10 +121,10 @@ JS
 
                 <div class="col-md-12">
                     <div class="tab-content">
-                	<div class="tab-pane fade in active" id="profile">
+                	<div class="tab-pane fade in active" id="profil">
 			  <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Information Profile : {$user->getId()}</strong></h3>
+                              <div class="blue panel-heading">
+                                <h3 class="panel-title"><strong>Information Profil : {$user->getId()}</strong></h3>
                               </div>
                               <div class="panel-body">
                         			  <strong>Nom : </strong>{$nom}<br>
@@ -135,11 +135,11 @@ JS
                             </div>
 
                             <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h3 class="panel-title"><strong>Modification Profile</strong></h3>
+                              <div class="blue panel-heading">
+                                <h3 class="panel-title"><strong>Modification Profil</strong></h3>
                               </div>
                               <div class="panel-body">
-                                <form  method="POST" action="updateProfile.php">
+                                <form  method="POST" action="updateProfil.php">
                                   <div class="form-group" id="formNom">
                                     <label for="nomEtudiant">Nom*</label>
                                     <input type="text" class="form-control" id="nom" name="nom" pattern="[a-zA-Z].+" placeholder="{$nom}" value="{$nom}" onChange="controlInfo()">
@@ -170,7 +170,7 @@ JS
                               </div>
                             </div>
 
-                        </div><!-- end Profile-->
+                        </div><!-- end Profil-->
                     </div>
                 </div>
             </div> <!-- end row -->

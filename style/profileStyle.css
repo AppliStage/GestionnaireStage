@@ -16,3 +16,10 @@
         border: 1px solid #A00;
         color:#FFF;
     }
+
+    .panel-default > .blue.panel-heading {
+        border-color:#337ab7;
+        background-color:#337ab7;
+        border: 1px solid #337ab7;
+        color:#FFF;
+    }

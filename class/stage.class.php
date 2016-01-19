@@ -194,6 +194,10 @@ SQL
       return $this->dateFin ;
     }
 
+    public function getDate(){
+      return $this->dateCreation ;
+    }
+
     public function getDateDebut(){
       return $this->dateDebut ;
     }

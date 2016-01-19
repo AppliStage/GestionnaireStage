@@ -15,6 +15,7 @@ head
 );
 $p->appendCssUrl("style/bootstrap-3.3.5-dist/css/bootstrap.min.css");
 $p->appendCssUrl("style/searchEngine.css");
+$p->appendCssUrl("style/style.css");
 $p->appendJsUrl("js/request.js");
 
 //inclusion de la barre de navigation
@@ -56,12 +57,12 @@ $p->appendContent(<<<HTML
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Assurance"> Assurance, Banque
+                            <input name="liste_select" type="checkbox" value="développement logiciel"> Développement logiciel
                           </label>
                         </div>
                         <div class="checkbox">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Immobilier"> Immobilier
+                            <input name="liste_select" type="checkbox" value="développement web"> Développement web
                           </label>
                         </div>
                         <div class="checkbox ">
@@ -74,16 +75,16 @@ $p->appendContent(<<<HTML
                       <div class="col-md-4">
                         <div class="checkbox">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Droit"> Droit, Sc Politique
+                            <input name="liste_select" type="checkbox" value="marketing"> Communication, Marketing, Media
                         </div>
                         <div class="checkbox">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Economie"> Economie
+                            <input name="liste_select" type="checkbox" value="informatique industrielle"> Informatique industrielle
                           </label>
                         </div>
                         <div class="checkbox ">
                           <label>
-                            <input name="liste_select" type="checkbox" value="Informatique"> Informatique, Télécom
+                            <input name="liste_select" type="checkbox" value="réseau"> Réseau/Télécommunication
                           </label>
                         </div>
                       </div><!--end Colone -->
@@ -130,12 +131,12 @@ HTML
 
 $p->appendContent(<<<HTML
       <table class="table table-striped">
-    		<thead> 
-    		  <tr> <th>Ref</th> <th>Entreprise</th> <th>Intitulé du poste</th> <th>Lieu</th> </tr> 
-    		</thead> 
-    		<tbody id="liste_ajax"> 
+        <thead> 
+          <tr> <th>Date</th> <th>Entreprise</th> <th>Intitulé du poste</th> <th>Lieu</th> </tr> 
+        </thead> 
+        <tbody id="liste_ajax"> 
 
-    		</tbody>
+        </tbody>
       </table>
 
       <nav style="text-align:center;"> 
@@ -228,113 +229,3 @@ JS
 
 echo $p->toHTML();
 
-
-  /*
-
-      // Désactivation de l'envoi du formulaire
-    //document.forms['searchEngine'].onsubmit = function () { return false ; }
-  document.forms['searchEngine'].elements['submit'].onclick = function(){
-    var form = document.forms['searchEngine'];
-
-    var varnom = form.elements['nom'].value;
-      form.elements['nom'].value = "";
-      var varprenom = form.elements['prenom'].value; 
-      form.elements['prenom'].value=""; 
-      var varmail = form.elements['mail'].value;
-      form.elements['mail'].value=""; 
-      var varpass = SHA1(form.elements['pass'].value); 
-      form.elements['pass'].value=""; 
-      var vartel = form.elements['tel'].value;
-      form.elements['tel'].value=""; 
-
-      function crypter(){
-        new Request(
-            {
-                url        : "searchEngine.php",
-                method     : 'get',
-                handleAs   : 'text',
-                parameters : { nom : varnom , prenom : varprenom , mail : varmail , pass : varpass, tel : vartel },
-                onSuccess  : function(res) {
-                    document.getElementsByClassName('resRecherche').innerHTML = res;
-                    },
-                onError    : function(status, message) {
-                    // ...
-                    }
-        }) ;
-      }
-  }*/
-
-
-/*
-                    <p class="bg-primary" style="margin-top:8px;"><strong><em>En France: </em></strong></p>
-                    <div class="row"> <!-- ROW 2 -->
-                      <div class="col-md-4">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" value=""> Alsace
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Aquitaine
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Auvergne
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Basse-Normandie
-                          </label>
-                        </div>
-                      </div> <!--end Colone -->
-
-                      <div class="col-md-4">
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Bourgogne
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Bretagne
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Champagne-Ardenne
-                          </label>
-                        </div>
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" value=""> Corse
-                          </label>
-                        </div>
-                      </div><!--end Colone -->
-
-                      <div class="col-md-4">
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value=""> Haute-Normandie
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > île-de-France
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Limousin
-                          </label>
-                        </div>
-                        <div class="checkbox ">
-                          <label>
-                            <input type="checkbox" value="" > Lorraine
-                          </label>
-                        </div>
-                      </div><!--end Colone -->
-                    </div> <!--end row 2-->
-                    */
